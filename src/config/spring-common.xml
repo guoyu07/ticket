@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	<!-- Service Defined Area -->
+	<bean id="baseService" class="com.ticket.serviceImpl.BaseServiceImpl" />
+	<bean id="generateTemplateCodeService" class="com.ticket.serviceImpl.GenerateTemplateCodeServiceImpl" />
+	<bean id="commonAnnexService" class="com.ticket.serviceImpl.CommonAnnexServiceImpl" />
+	<bean id="smsService" class="com.ticket.serviceImpl.SmsServiceImpl" />
+	<bean id="treeService" class="com.ticket.serviceImpl.TreeServiceImpl"></bean>
+	
+	<!-- Action Defined Area -->
+	<bean id="baseAction" class="com.ticket.action.BaseAction" scope="prototype"/>
+	<bean id="verificateCodeAction" class="com.ticket.action.VerificateCodeAction" scope="prototype"/>
+	<bean id="generateTemplateCodeAction" class="com.ticket.action.GenerateTemplateCodeAction" scope="prototype"/>
+	<bean id="generalFileManagerAction" class="com.ticket.action.GeneralFileManagerAction" scope="prototype"/>
+	<bean id="swfUploadAction" class="com.ticket.action.SWFUploadAction" scope="prototype"/>
+	<bean id="smsAction" class="com.ticket.action.SmsAction" scope="prototype"/>
+	<bean id="kindEditorUploadAction" class="com.ticket.action.KindEditorUploadAction" scope="prototype"/>
+	<bean id="jQueryFileUpLoadAction" class="com.ticket.action.JQueryFileUpLoadAction" scope="prototype"/>
+	
+	<!-- DAO Defined Area -->
+	<bean id="dbDAO" class="com.ticket.daoImpl.DbDAOImpl" />
+	
+	<!-- util -->
+	<bean id="springUtil" class="com.ticket.util.SpringUtil" init-method="init"></bean>
+	<bean id="webContext" class="priv.tuyou.util.WebContext"></bean>
+</beans>

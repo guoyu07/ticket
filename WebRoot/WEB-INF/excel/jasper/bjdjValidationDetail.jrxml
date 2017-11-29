@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bjdjValidationDetail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fd628948-8d24-4d50-a252-2d78e712f1ea">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tableDS" uuid="277fe39d-1267-4669-abb6-6e613efb0bde">
+		<field name="time" class="java.lang.String"/>
+		<field name="code" class="java.lang.String"/>
+		<field name="hall" class="java.lang.String"/>
+		<field name="flightNo" class="java.lang.String"/>
+		<field name="flightTime" class="java.lang.String"/>
+		<field name="flightPerson" class="java.lang.String"/>
+		<field name="validPerson" class="java.lang.String"/>
+		<field name="appointMethod" class="java.lang.String"/>
+		<field name="packageName" class="java.lang.String"/>
+		<field name="price" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="title" class="java.lang.String"/>
+	<field name="validationReport" class="java.util.List"/>
+	<field name="validationDetailReport" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="53" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="595" height="53" uuid="7c81a198-d234-4d11-adf1-a79dbc198355"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<summary>
+		<band height="180" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="0" width="595" height="180" uuid="32f8d594-29e1-453b-8b40-89701240c754"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tableDS" uuid="2cdb3e05-91c8-4cfc-92cf-5f22a3430176">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{validationDetailReport})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="d8bc0b8b-62f8-4a0e-90ad-ed51a8fa3448">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="7c0830ce-86e7-480b-986b-200124e7587f"/>
+								<text><![CDATA[验证时间]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="e499379a-c427-46b1-80b4-013897a69b18"/>
+								<textFieldExpression><![CDATA[$F{time}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="12eb8d5c-c355-4488-b75e-958801ffbc20">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="fa98bef7-8d7f-4620-b992-22b3de6bcca8"/>
+								<text><![CDATA[服务码]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="72cbec10-1c81-4b8e-9c2c-eda2c874bd74"/>
+								<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="a24b3f34-e6e6-4222-aede-7398844b7e38">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="e3866ec7-a60d-468f-8eb8-90078fd7c622"/>
+								<text><![CDATA[服务厅]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="12530c6c-d0c4-4602-b0d0-0c4a27024ff3"/>
+								<textFieldExpression><![CDATA[$F{hall}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="105600f6-15db-4a9b-add3-172a588cdce6">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="b3d09b67-d6db-4493-9118-a346721a29ff"/>
+								<text><![CDATA[航班号]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="6ce4cc73-695d-4be9-9f62-1981eba990c4"/>
+								<textFieldExpression><![CDATA[$F{flightNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="563f85ed-149b-414e-8bb6-7225ef8383d5">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="33e751dd-5db3-4a2d-a179-3eb526936136"/>
+								<text><![CDATA[航班起飞时间]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="84e04a62-b437-40e9-a4bb-eae1c6e72ffc"/>
+								<textFieldExpression><![CDATA[$F{flightTime}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="b92412e8-408e-4cd3-8ef4-5b4b3685015e">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="b7a21181-665f-4a4b-86fe-900a4b2e3c60"/>
+								<text><![CDATA[乘机人]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="ab84ca26-7610-404d-8ed7-198fb07ef13b"/>
+								<textFieldExpression><![CDATA[$F{flightPerson}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e4ab1053-5e69-495e-84f1-492766d11d2c">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="dead30f0-9a5b-4ff9-8bfd-de31c3238cfa"/>
+								<text><![CDATA[操作人]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="22fd4d50-e11e-4517-9aed-3112ab68eea6"/>
+								<textFieldExpression><![CDATA[$F{validPerson}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="112" uuid="77199d5f-d2ea-4f62-ba0f-6aed3d38c661">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="112" height="30" uuid="fba99b94-c3e3-4ea0-b34d-2a3afeb1d82f"/>
+								<text><![CDATA[预约方式]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="112" height="20" uuid="e111237f-c0ce-480a-89ba-984ca32527ce"/>
+								<textFieldExpression><![CDATA[$F{appointMethod}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="418eaa9a-c6b9-4713-aee2-8cc5b64bd450">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="3145419e-bb41-44f6-a001-0217dd2095d7"/>
+								<text><![CDATA[套餐类型]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="2106ffaf-0a95-4927-adde-46e789659152"/>
+								<textFieldExpression><![CDATA[$F{packageName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="8c7a621e-0e11-4357-84f5-139c2df8f949">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="e717bcb6-3034-4352-9452-77ec347d5fdb"/>
+								<text><![CDATA[单价]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="eb192796-4e24-490c-bf94-4f031e4e43bf"/>
+								<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	
+  <servlet>
+    <servlet-name>IndexServlet</servlet-name>
+    <servlet-class>com.qq.connect.demo.IndexServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IndexServlet</servlet-name>
+    <url-pattern>/IndexServlet.do</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>AfterLoginRedirectServlet</servlet-name>
+    <servlet-class>com.qq.connect.demo.AfterLoginRedirectServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AfterLoginRedirectServlet</servlet-name>
+    <url-pattern>/AfterLoginRedirectServlet.do</url-pattern>
+  </servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<!-- Struts2 Filter -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>
+			org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.html</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.action</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.shtml</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<!-- Urlrewriter Filter -->
+	<filter>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<filter-class>
+			org.tuckey.web.filters.urlrewrite.UrlRewriteFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Include this if you are using Hibernate -->
+	<filter>
+		<filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
+		<filter-class>
+			org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Spring Encoding Filter -->
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>  
+	        <param-name>forceEncoding</param-name>  
+	        <param-value>true</param-value>  
+	    </init-param>  
+	</filter>
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Spring Listener -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/classes/applicationContext.xml,/WEB-INF/classes/spring-*.xml
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<!-- Initial Listener -->
+	<context-param>
+		<description>Config the Site name</description>
+		<param-name>domainName</param-name>
+		<param-value><![CDATA[ynticket.com]]></param-value>
+	</context-param>
+	<context-param>
+		<description>
+			show this message while data not found
+		</description>
+		<param-name>noDataMessage</param-name>
+		<param-value><![CDATA[没有数据]]></param-value>
+	</context-param>
+	<listener>
+		<display-name>InitialListener</display-name>
+		<listener-class>
+			com.ticket.listener.InitialListener
+		</listener-class>
+	</listener>
+	
+	<servlet>
+		<servlet-name>JspSupportServlet</servlet-name>
+		<servlet-class>
+			org.apache.struts2.views.JspSupportServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- AlanX Upload Servlet -->
+	<servlet>
+		<description>AlanX.cn Batch Upload Sample</description>
+		<display-name>AlanXUploadServlet</display-name>
+		<servlet-name>AlanXUploadServlet</servlet-name>
+		<servlet-class>
+			com.ticket.action.AlanXServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AlanXUploadServlet</servlet-name>
+		<url-pattern>/alanxServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- Customer Tags -->
+	<jsp-config>
+		<taglib>
+			<taglib-uri>http://www.ynticket.com/tags/</taglib-uri>
+			<taglib-location>/WEB-INF/classes/tags.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>alanxUpload</taglib-uri>
+			<taglib-location>/WEB-INF/classes/alanXUpload.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>oscache</taglib-uri>
+			<taglib-location>/WEB-INF/classes/oscache.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	
+	<session-config>   
+	   <!-- Is measured in minutes -->
+       <session-timeout>300</session-timeout>   
+	</session-config>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<error-code>501</error-code>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<error-code>502</error-code>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<error-code>503</error-code>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<error-code>504</error-code>
+		<location>/error.html</location>
+	</error-page>
+	
+	<mime-mapping>
+		<extension>svg</extension>
+		<mime-type>image/svg+xml</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>woff</extension>
+		<mime-type>application/x-font-woff</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>woff2</extension>
+		<mime-type>application/x-font-woff</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>ttf</extension>
+		<mime-type>application/octet-stream</mime-type>
+	</mime-mapping>     
+	<mime-mapping>
+		<extension>otf</extension>
+		<mime-type>application/octet-stream</mime-type>
+	</mime-mapping>
+</web-app>

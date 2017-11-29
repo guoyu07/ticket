@@ -1,0 +1,1 @@
+function selected(a){var n=$(a),t=n.attr("src");$('input[name="images"]').val(t),$(".icon-plus").attr("src",t)}$(function(){$("#uploadImage").click(function(){TuYou.FileUpload.upload(function(a){$('input[name="images"]').val(a),$(".icon-plus").attr("src",a),JM.alert("修改成功",1500)})})});

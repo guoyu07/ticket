@@ -1,0 +1,1140 @@
+/**
+ * wap前台的JS方法
+ */
+
+jQuery(function(){
+	initValidForm();
+	sendSmsInit();
+	businessInit();
+	queryFlightInit();
+	focusFlightInit();
+	initCheckBox();
+	transferNoLuggageInit();
+	transfer();
+	
+	$(".setMessageToRead").bind("click",function(){
+		var message_id = $(this).attr("message_id");
+		$.ajax({
+			type:'POST',
+			dataType:'json',
+			url:'airportm_setMessageRead.action',
+			data:'id='+message_id,
+			success:function(data){
+				if(data.status=='y'){
+					window.location.reload();
+					return;
+				}else{
+					return;
+				}
+			}
+		});
+	});
+	$(".advertUrl").find("li").bind("click",function(){
+		var url = $(this).attr("href");
+		window.location.href = url;
+	});
+	$(".selectOrgCity").bind("click",function(){
+		window.location.href="/airport_selectCity.action?searchType=chufa";
+	});
+	$(".selectDesCity").bind("click",function(){
+		window.location.href="/airport_selectCity.action?searchType=daoda";
+	});
+	
+	$("#commonSearchBtn").bind("click", function(){
+		var keyword = $("#keyword");
+		if(JM.isNullByJQuery(keyword)) {
+			keyword.focus();
+			return false;
+		} else {
+			window.location.href = '/airport_commonSearch.action?commonKeyword='+JM.encode(keyword)+'&random='+JM.randomNumber;
+		}
+		return false;
+	});
+	
+	JM.selectSelect("personCount");
+	$(".regulationType").bind("click",function(){
+		window.location.href="/airport_employeeHome.action";
+	});
+	//会员取消关注航班
+	$(".removeFocus").bind("click",function(){
+		var id = $(this).attr("id");
+		var isYes = window.confirm("确定取消关注当前航班？");
+		if(isYes){
+			window.location.href="/airportm_deleteFocus.action?id="+id;
+		}
+	});
+	/**
+	 * 离港航班详情
+	 */
+	$(".departFlightDetail").bind("click",function(){
+		var flightNumber = $(this).attr("flightNumber");
+		var flightDate = $(this).attr("flightDate");
+		window.location.href = "/airport_departFlightDetail.action?flightNumber="+flightNumber+"&flightDate="+flightDate;
+	});
+	/**
+	 * 到港航班详情
+	 */
+	$(".arrivalFlightDetail").bind("click",function(){
+		var flightNumber = $(this).attr("flightNumber");
+		var flightDate = $(this).attr("flightDate");
+		window.location.href = "/airport_arrivalFlightDetail.action?flightNumber="+flightNumber+"&flightDate="+flightDate;
+	});
+	/**
+	 * 未关注离港航班详情
+	 */
+	$(".departFlightDetailNo").bind("click",function(){
+		var flightNumber = $(this).attr("flightNumber");
+		var flightDate = $(this).attr("flightDate");
+		window.location.href = "/airport_queryDepartFlightNoAndDate.action?flightNumber="+flightNumber+"&flightDate="+flightDate;
+	});
+	/**
+	 * 未关注到港航班详情
+	 */
+	$(".arrivalFlightDetailNo").bind("click",function(){
+		var flightNumber = $(this).attr("flightNumber");
+		var flightDate = $(this).attr("flightDate");
+		window.location.href = "/airport_queryArrivalFlightNoAndDate.action?flightNumber="+flightNumber+"&flightDate="+flightDate;
+	});
+	$("#takeLuggage").bind("click",function(){
+		if($(this).prop("checked",true)){
+			$("#luggageState").val("1");
+		}
+	});
+	$("#noLuggage").bind("click",function(){
+		if($(this).prop("checked",true)){
+			$("#luggageState").val("0");
+		}
+	});
+	/**
+	 * 旅程指南
+	 */
+	$(".flightNavigation").unbind().bind("click",function(){
+		var ifSet = $("#ifSet").val();
+		var focusId = $("#focusId").val();
+		var des = $(this).attr("des");
+		if(!JM.isNull(ifSet)){
+			window.location.href = "/airportm_flightNavigation.action?ifSet="+ifSet+"&id="+focusId+"&des="+des;
+		}else{
+			var luggageState = $("#luggageState").val();
+			var flightNumber = $(this).attr("flightNumber");
+			var flightDate =$(this).attr("flightDate");
+			var personCount = $("#personCount").val();
+			
+			var selectCount = 0;
+			/*var takePerson = $('input[name="specialPerson"]');
+			takePerson.each(function(){
+				if($(this).prop('checked')) {
+					selectCount += 1;
+				}
+			});*/
+			specialPerson = JM.getValueByCheckedName('specialPerson');
+			window.location.href = "/airportm_flightNavigation.action?flightNumber="
+				+flightNumber+"&flightDate="+flightDate+"&des="+des+"&luggageState="
+				+luggageState+"&personCount="+personCount+"&specialPerson="+specialPerson+"&id="+focusId;
+		}
+	});
+	/**
+	 * 编辑关注信息
+	 */
+	$(".editMemberFocus").bind("click",function(){
+		initCheckBox();
+		var luggageState = $("#luggageState").val();
+		var personCount = $("#personCount").val();
+		specialPerson = JM.getValueByCheckedName('specialPerson');
+		var focusId = $("#focusId").val();
+		var flightNumber = $(this).attr("flightNumber");
+		var flightDate =$(this).attr("flightDate");
+		window.location.href = "/airportm_saveMemberFocus.action?luggageState="
+			+luggageState+"&personCount="+personCount+"&specialPerson="+specialPerson+"&id="+focusId+
+			"&flightNumber="+flightNumber+"&flightDate="+flightDate;
+	});
+	/**
+	 * 进港乘机指南
+	 */
+	$(".arrivalFlightNav").bind("click",function(){
+		var org = $(this).attr("org");
+		window.location.href = "/airportm_reach.action?org="+org;
+	});
+	$(".OneKeyFocus").bind("click",function(){
+		var url=$(this).attr("url");
+		window.location.href = url;
+	});
+	
+	//根据城市查询航班信息
+	$(".queryBycity").bind("click",function(){
+		var setoutCity = $("#setoutCity").html();
+		var arrivalCity = $("#arrivalCity").html();
+		var departPortTime = $("#departPortTime").val();
+		window.location.href = "/airport_queryByCity.action?setoutCity="+setoutCity+"&arrivalCity="+arrivalCity+"&departPortTime="+departPortTime;
+	});
+	
+	//修改个人其它信息
+	$("#updateOtherInfo").bind("click",function(){
+		var formStr = "";
+		$("font").each(function(){
+		   var name = $(this).attr("name");
+		   var value = $(this).html();
+		   formStr += name + '=' + value + '&';
+		});
+		$.ajax({
+			type:'POST',
+			datatype:'text',
+			url:'/airportm_editMemberCompanyInfo.action',
+		   	data:formStr,
+		   	success:function(data){
+				data = $.parseJSON(data);
+				if(data.status=="y"){
+					alert(data.info);
+				}else{
+					alert(data.info);
+				}
+			}
+		});
+	});
+	
+	//修改个人公司信息
+	$("#updateCompanyInfo").bind("click",function(){
+		var formStr = "";
+		$("font").each(function(){
+		   var name = $(this).attr("name");
+		   var value = $(this).html();
+		   formStr += name + '=' + value + '&';
+		});
+		$.ajax({
+			type:'POST',
+			datatype:'text',
+			url:'/airportm_editMemberCompanyInfo.action',
+		   	data:formStr,
+		   	success:function(data){
+				data = $.parseJSON(data);
+				if(data.status=="y"){
+					alert(data.info);
+				}else{
+					alert(data.info);
+				}
+			}
+		});
+	});
+	
+	//修改个人详细信息
+	$("#updateDetailInfo").bind("click",function(){
+		var json = {};
+		$("font").each(function(){
+		   var name = $(this).attr("name");
+		   var value = $.trim($(this).html());
+		   json[name] = value;
+		});
+		var formStr = $.param(json);
+		$.ajax({
+			type:'POST',
+			datatype:'text',
+			url:'/airportm_editMemberDetailInfo.action',
+		   	data:formStr,
+		   	success:function(data){
+				data = $.parseJSON(data);
+				if(data.status=="y"){
+					alert(data.info);
+				}else{
+					alert(data.info);
+				}
+			}
+		});
+	});
+	
+	
+	//修改个人基本信息
+	$("#updateBaseInfo").bind("click",function(){
+		var formStr = "";
+		$("font").each(function(){
+		   var name = $(this).attr("name");
+		   var value = $(this).html();
+		   formStr += name + '=' + value + '&';
+		});
+		$.ajax({
+			type:'POST',
+			datatype:'text',
+			url:'/airportm_editMemberBaseInfo.action',
+		   	data:formStr,
+		   	success:function(data){
+			data = $.parseJSON(data);
+				if(data.status=="y"){
+					alert(data.info);
+				}else{
+					alert(data.info);
+				}
+			}
+		});
+	});
+	
+	//修改个人教育信息
+	$("#updateEducationInfo").bind("click",function(){
+		var formStr = "";
+		$("font").each(function(){
+		   var name = $(this).attr("name");
+		   var value = $(this).html();
+		   formStr += name + '=' + value + '&';
+		});
+		$.ajax({
+			type:'POST',
+			datatype:'text',
+			url:'/airportm_editMemberEducationInfo.action',
+		   	data:formStr,
+		   	success:function(data){
+				data = $.parseJSON(data);
+				if(data.status=="y"){
+					alert(data.info);
+				}else{
+					alert(data.info);
+				}
+			}
+		});
+	});
+	//搜索交通路线类别
+	$(".searchTrafficType").bind("click",function(){
+		var keyword = $("#keywordType").val();
+		if(JM.isNull(keyword)){
+			return false;
+		}
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'/airport_trafficTypeAjax.action',
+			data:'keyword='+keyword,
+			success:function(data){
+				$(".trafficTypeAjax").html(data);
+			}
+		});
+	});
+	//交通指南路线Ajax
+	$(".trafficLineAjax").find("li").bind("tap",function(){
+		var id = $(this).attr("trafficTypeId");
+		if(JM.isNull(id)){
+			return false;
+		}
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'/airport_trafficLineAjax.action',
+			data:'id='+id,
+			success:function(data){
+				$(".trafficLine").html(data);
+			}
+		});
+	});
+	//内部员工重置密码
+	$("#resetPwd").bind("click",function(){
+		window.location.href = "/airport_employeeResetPwd.action";
+	});
+	//机场文化详细
+	$(".cultureDetail").bind('click',function(){
+		var url=$(this).attr("url");
+		window.location.href="/airport/"+url+".ticket";
+	});
+	//商家详细信息
+	$(".businessDetail").bind("click",function(){
+		var businessId = $(this).attr("businessId");
+		window.location.href = "/airport_businessDetail.action?id="+businessId;
+		
+	});
+	
+	//机场商业类别切换
+	$(".businessTopType").bind("click",function(){
+		var typeId = $(this).attr("typeId");
+		$(".businessTopType").removeClass("bg-yello selected").addClass("bg-sub");
+		$(this).removeClass("bg-sub").addClass("bg-yello selected");
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'/airport_businessSecondTypeAjax.action',
+			data:'id='+typeId,
+			success:function(data){
+				$(".secondType").html(data);
+				return;
+			}
+		});
+	});
+	//删除已设置的快捷菜单
+	$(".deleteSetMenu").bind("click",function(){
+		var id = $(this).attr("memberQuickMenuId");
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'/airportm_deleteQuickMenu.action',
+			data:'id='+id,
+			success:function(data){
+				$(".centerMenuList").html(data);
+				jQuery.getScript('/template/wap/js/wap.js');
+				return;
+			}
+		});
+	});
+	//个人设置
+	$(".personalSetting").bind('click',function(){
+		window.location.href="/airportm_personalSetting.action";
+	});
+	//跳转到收藏页面
+	$(".toFavoritePage").bind('click',function(){
+		var newsClassAlias=$(this).attr("newsClassAlias");
+		var visitUrl = $(this).attr("visitUrl");
+		var url=$(this).attr("url");
+		if(!JM.isNull(newsClassAlias)){
+			window.location.href="/airport/"+newsClassAlias+".ticket";
+			return;
+		}
+		if(!JM.isNull(visitUrl)){
+			window.location.href="/airport/"+visitUrl+".ticket";
+			return;
+		}else{
+			window.location.href=url;
+		}
+	});
+	//会员收藏
+	$(".memberFavorite").bind('click',function(){
+		var objectId=$(this).attr("objectId");
+		var objectType=$(this).attr("objectType");
+		var title=$(this).attr("title");
+		var url=$(this).attr("url");
+		if(!JM.isNull(objectId)||!JM.isNull(objectType)){
+			$.ajax({
+				type:'POST',
+				dataType:'text',
+				url:'/airportm_favorite.action',
+				data:'objectId='+objectId+"&objectType="+objectType,
+				success:function(data){
+					if(data.length > 200){
+						var isYes = window.confirm("您还未登录，是否登录后收藏该页面？");
+						if(isYes){
+							window.location.href="/airportm_login.action";
+							return;
+						};
+					}else{
+						
+						$('.memberFavorite').toggleClass('icon-star');
+						$('.memberFavorite').toggleClass('icon-star-o');
+						data=$.parseJSON(data);
+						JM.alert(data.info);
+						return;
+					}
+				}
+			});
+			return;
+		}else if(!JM.isNull(title)&&!JM.isNull(url)){
+			$.ajax({
+				type:'POST',
+				dataType:'text',
+				url:'/airportm_favorite.action',
+				data:'title='+title+"&url="+url,
+				success:function(data){
+					if(data.length > 200){
+						var isYes = window.confirm("您还未登录，是否登录后收藏该页面？");
+						if(isYes){
+							window.location.href="/airportm_login.action";
+							return;
+						};
+					}else{
+						
+						$('.memberFavorite').toggleClass('icon-star');
+						$('.memberFavorite').toggleClass('icon-star-o');
+						data=$.parseJSON(data);
+						JM.alert(data.info);
+						return;
+					}
+				}
+			});
+		}
+		
+	});
+	$("#bjdj").bind('click',function(){
+		window.location.href = '/airport/bianjiedengji.ticket';
+	});
+	$("#memberLogin").bind('click',function(){
+		window.location.href = "/airportm_login.action";
+	});
+	//我的收藏
+	$("#myFavorite").bind('click',function(){
+		window.location.href = "/airportm_myFavorite.action";
+	});
+	//加载更多
+	$(".notice_ft").bind("click",loadMore);
+	//爱心服务选择模板
+	$(".selectCaring").bind("click",function(){
+		$(".selectCaring").removeClass('selected');
+		$(this).addClass('selected');
+		var news_id = $(this).attr("news_id");
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'airport_caringAjax.action',
+			data:'id='+news_id,
+			success:function(data){
+			$(".c_content").html(data);
+		}
+		});
+	});
+	//切换模板Ajax
+	$(".changeFacilities").bind("click",function(){
+		$(".changeFacilities").removeClass('selected');
+		$(this).addClass('selected');
+		var news_id = $(this).attr("news_id");
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'airport_changeFacilitiesAjax.action',
+			data:'id='+news_id,
+			success:function(data){
+			$(".c_content").html(data);
+		}
+		});
+	});
+
+	//出发 
+	$(".setoutFrom").bind('click',setoutFrom);
+	//中转
+	$(".transfer").bind('click',transfer);
+	//中转左右切换
+	$(".changeLR").bind('click',function(){
+		var lValue = $("#leftValue").html();
+		var rValue = $("#rightValue").html();
+		$("#leftValue").html(rValue);
+		$("#rightValue").html(lValue);
+		transfer();
+	});
+	//中转无行李左右切换
+	$(".changeLRNoLuggage").bind('click',function(){
+		var lValue = $("#leftValue").html();
+		var rValue = $("#rightValue").html();
+		$("#leftValue").html(rValue);
+		$("#rightValue").html(lValue);
+		transferNoLuggage();
+		transfer();
+	});
+	$(".changeLuggageState").find("li").bind("tap",function(){
+		var href = $(this).attr("href");
+		if(JM.isNull(href) || href=='#'){
+			return false;
+		}else{
+			
+			var leftValue = $('#leftValue').text();
+			leftValue = $.trim(leftValue)=='国内' ? 'inner' : 'outer';
+			var rightValue = $('#rightValue').text();
+			rightValue = $.trim(rightValue)=='国内' ? 'inner' : 'outer';
+			
+			href = href + "&left="+leftValue+"&right="+rightValue;
+			window.location.href = href; 
+		}
+	});
+	$(".changeLuggageState2").find("li").bind("tap",function(){
+		var href = $(this).attr("href");
+		if(JM.isNull(href) || href=='#'){
+			return false;
+		}else{
+			window.location.href = href;
+//			alert(leftValue + "/" + rightValue);
+		}
+	});
+	
+	//到达
+	$(".reach").bind('click',reach);
+	//下拉选择航空公司
+	$(".luggageQuery").find("li").bind('tap',function(){
+		var news_id = $(this).attr("news_id");
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'airport_luggageQueryAjax.action',
+			data:'id='+news_id,
+			success:function(data){
+			$(".c_content").html(data);
+		}
+		});
+	});
+	//下拉查看行李寄存
+	$(".luggageConsign").find("li").bind("tap",function(){
+		var news_id = $(this).attr("news_id");
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'airport_luggageConsignAjax.action',
+			data:'id='+news_id,
+			success:function(data){
+				$(".c_content").html(data);
+			}
+		});
+	});
+	//选择航空公司查看信息
+	$(".flightAjax").find("li").bind('tap',function(){
+		var flightid = $(this).attr("flightCompanyid");
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'airport_flightAjax.action',
+			data:'id='+flightid,
+			success:function(data){
+			$(".flightContent").html(data);
+		}
+		});
+	});
+	//选择航空公司
+	$(".selectFlightCompany").find("li").unbind('click').bind('click',function(){
+		var flightCompanyid = $(this).attr("flightid");
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'airport_selectFlightCompanyAjax.action',
+			data:'id='+flightCompanyid,
+			success:function(data){
+			$(".flightCompanyContent").html(data);
+		}
+		});
+	});
+	setQuickMenuInit();
+	customerMenuInit();
+	transferInit();
+	indexClickInit();
+	$("#cityKeyword").bind("keyup", function(){
+		selectCityAjax();
+	}).bind("keydown", function(){
+		selectCityAjax();
+	}).bind("input", function(){
+		selectCityAjax();
+	});
+});
+//-->
+function setQuickMenuInit() {
+	//取消设置快捷菜单
+	$(".cancelSetQuickMenu").unbind().bind("click",function(){
+		var id = $(this).attr("memberMenuId");
+		var obj = $(this);
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'/airportm_deleteQuickMenu.action',
+			data:'id='+id,
+			success:function(data){
+				queryMenuStatus(id, 0, obj);
+			}
+		});
+	});
+	//会员设置快捷菜单
+	$(".setQuickMenu").unbind().bind('click',function(){
+		var obj = $(this);
+		var quickMenu_id = $(this).attr("quickMenu_id");
+		var defaultShowPosition = $("#defaultShowPosition").val();
+		var flightQuickMenu = $("#flightQuickMenu").val();
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'/quickMenuMemberSetting_add.action',
+			data:'quickMenu_id='+quickMenu_id+"&defaultShowPosition="+defaultShowPosition+"&flightQuickMenu="+flightQuickMenu,
+			success:function(data){
+				data=$.parseJSON(data);
+				if(data.info=='已达上限'){
+					JM.alert('已达上限');
+				}else{
+					//window.location.reload();
+					queryMenuStatus(quickMenu_id, defaultShowPosition, obj);
+				}
+				
+			}
+		});
+	});
+}
+function customerMenuInit() {
+	/**
+	 * 会员设置快捷菜单
+	 */
+	$(".custom_menu_btn").bind('click',function(){
+		var defaultPosition = $(this).attr("defaultPosition");
+		var flightQuickMenu = $(this).attr("flightQuickMenu");
+		window.location.href = '/airportm_setQuickMenu.action?defaultPosition='+defaultPosition+"&flightQuickMenu="+flightQuickMenu;
+	});
+}
+//加载更多信息
+function loadMore(){
+	var newsClass_id = $("#newsClass_id").val();
+	var startSize = parseInt($(this).attr("startSize"));
+	var getCount = parseInt($(this).attr("getCount"));
+	$.ajax({
+		type:'POST',
+		dataType:'text',
+		url:'airport_infoTypeAjax.action',
+		data:'id='+newsClass_id+'&ajaxType=newsAjax'+'&startSize='+startSize+'&pageCount='+getCount,
+		success:function(data){
+		$(".notice_ft").attr("startSize",startSize+getCount);
+		$("#loadNews").append(data);
+	}
+	});
+}
+
+//出发Ajax
+function setoutFrom(){
+	var flag = $(this).attr('flag');
+	$(".setoutFrom").removeClass("selected");
+	$(this).addClass("selected");
+	$.ajax({
+		type:'POST',
+		dataType:'text',
+		url:'airport_setoutAjax.action',
+		data:'flag='+flag,
+		success:function(data){
+		$("#positionNavigatesetout").html(data);
+		setOutInit();
+		$('.pic1 area').eq(6).click();
+	}
+	});
+}
+//中转Ajax
+function transfer(){
+	var luggageState = $("#luggageState");
+	var leftValue = $("#leftValue");
+	var rightValue = $("#rightValue");
+	$.ajax({
+		type:'POST',
+		dataType:'text',
+		url:'airport_transferAjax.action',
+		data:'transferLeft='+JM.encodeByValue(leftValue.html())+'&transferRight='+JM.encodeByValue(rightValue.html())+'&luggageState='+luggageState.val()+'&random='+JM.randomNumber,
+		success:function(data){
+		$("#positionNavigate").html(data);
+	}
+	});
+}
+//中转无行李Ajax
+function transferNoLuggage(){
+	var leftValue = $("#leftValue");
+	var rightValue = $("#rightValue");
+	$.ajax({
+		type:'POST',
+		dataType:'text',
+		url:'airport_transferNoLuggageAjax.action',
+		data:'transferLeft='+JM.encodeByValue(leftValue.html())+'&transferRight='+JM.encodeByValue(rightValue.html())+'&random='+JM.randomNumber,
+		success:function(data){
+			$("#positionNavigate").html(data);
+		}
+	});
+}
+
+//到达Ajax
+function reach(){
+	var flag = $(this).attr('flag');
+	var luggageState = $("#luggageState").val();
+	$(".reach").removeClass("selected");
+	$(this).addClass("selected");
+	$.ajax({
+		type:'POST',
+		dataType:'text',
+		url:'airport_reachAjax.action',
+		data:'flag='+flag+"&luggageState="+luggageState,
+		success:function(data){
+		$("#positionNavigate2").html(data);
+	}
+	});
+}
+function setOutInit() {
+	$('.pic1 area').eq(6).bind('click',function(){
+		$('.pic2').show();
+		$('.pic1').hide();
+	});
+	$('.pic2 area').eq(8).bind('click',function(){
+		$('.pic1').show();
+		$('.pic2').hide();
+	})
+}
+function transferInit() {
+	$(".leftDropMenuClass").find("li").bind("tap", function(){
+		var value = $(this).html();
+		$("#leftValue").html(value);
+		transfer();
+	});
+	$(".rightDropMenuClass").find("li").bind("tap", function(){
+		var value = $(this).html();
+		$("#rightValue").html(value);
+		transfer();
+	});
+}
+function transferNoLuggageInit() {
+	$(".leftDropMenuClassNoLuggage").find("li").bind("tap", function(){
+		var value = $(this).html();
+		$("#leftValue").html(value);
+		transferNoLuggage();
+	});
+	$(".rightDropMenuClassNoLuggage").find("li").bind("tap", function(){
+		var value = $(this).html();
+		$("#rightValue").html(value);
+		transferNoLuggage();
+	});
+}
+/**
+ * 游客注册
+ * @return
+ */
+function register(){
+	window.location.href = "/airportm_register.action?versionFlag=site";
+}
+/*返回上一页*/  
+function return_prepage()  
+{  
+	var isApp = GetQueryString("isApp");
+	if(JM.isNull(isApp)){
+		if(window.document.referrer==""||window.document.referrer==window.location.href)  
+		{  
+			window.location.href="{dede:type}[field:typelink /]{/dede:type}";  
+		}else  
+		{  
+			window.location.href=window.document.referrer;  
+		}  
+	}else{
+		
+	}
+}  
+//获取地址栏参数
+function GetQueryString(name)
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); 
+     return null;
+}
+
+
+/**
+ * ValidForm的tipType自定义函数
+ * @param msg
+ * @param o
+ * @param cssctl
+ * @return
+ */
+function tipTypeFun (msg, o, cssctl) {
+	//msg：提示信息;
+	//o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
+	//cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;
+	if(!o.obj.is("form")) {//验证表单元素时o.obj为该表单元素，全部验证通过提交表单时o.obj为该表单对象;
+		var objtip = o.obj.siblings(".Validform_checktip");
+		cssctl(objtip, o.type);
+		objtip.text(msg);
+	} else {
+		var objtip = o.obj.find("#msgdemo");
+		cssctl(objtip, o.type);
+		objtip.text(msg);
+	}
+}
+/**
+ * @description initial the memberForm to valid and submit.
+ * @author HiSay
+ * @datetime 2015-11-07 11:53:27
+ */
+function initValidForm() {
+	var memberForm = jQuery("#memberForm");
+	memberForm.Validform({
+		btnSubmit:"#submitBtn",
+		tiptype:tipTypeFun,
+		ajaxPost:true,
+		datatype:{
+			"double":/^$(\d{1,4})|^\d+(\.\d{1,5})?$/
+		},
+		beforeSubmit:function(curform){
+			memberForm.find("textarea").each(function(){
+				try {
+					var obj=$(this);
+					if(!JM.isNull(obj)){
+						try {
+							var objKE = eval(obj.attr("name"));
+							objKE.sync();//sync textarea editor content to commom's textarea
+						} catch(ee){}
+					}
+				} catch(e) {}
+			});
+			var alertConfirm = memberForm.attr("alertConfirm");
+			if(!JM.isNull(alertConfirm)) {
+				return true;
+			} else {
+				if(confirm('是否确认提交？')){
+				   return true;	
+				} else {
+					return false;
+				}
+			}
+		},callback:function(data){
+		   if(data.status == JM.YES) {
+			   JM.alert(data.info, 2000, function(){
+				   
+				   var manageLink = jQuery("#manageLink");
+				   if(!JM.isNull(manageLink)){
+					   window.location.href = manageLink.attr("href");
+				   }
+			   });
+			   
+		   } else {
+			   JM.alert(data.info);
+			   JM.flush();
+		   }
+		   return false;
+		}
+	});
+}
+
+/**
+ * 发送短信验证码
+ * @return
+ */
+function sendSmsInit() {
+	$(".sendSmsClass").unbind().bind("click", function(){
+		var sendSmsBtn = $(this);
+		sendSmsBtn.val("发验证码");
+		var sendType = sendSmsBtn.attr("sendType");
+		var elementId = sendSmsBtn.attr("elementId");
+		var mobile = $("#"+elementId);
+		if(JM.isNullByJQuery(mobile)) {
+			mobile.focus();
+			return false;
+		}
+		$.ajax({
+			type:'POST',
+			dataType:'json',
+			url:'/sms.action',
+			data:'sendType='+sendType+'&mobile='+JM.encode(mobile)+'&random=' + JM.randomNumber,
+			success:function(data){
+				if(data.status == JM.YES){
+  					sendSmsBtn.unbind();
+  					var surplus = 60;
+					var handler = setInterval(function(){
+						
+						if(surplus > 0){
+							$(".sendSmsClass").html(--surplus + '秒后重新发送...');
+						}else{
+							$(".sendSmsClass").html('发送验证码');
+							clearInterval(handler);
+						}
+					}, 1000);
+//  					$(".sendSmsClass").html("已发送");
+//  					sendSmsBtn.val("已发送");
+  					window.setTimeout(sendSmsInit, 60000);
+  				} else if(data.status == JM.NO) {
+  					alert(data.info);
+  				}
+			}
+		});
+	});
+}
+function queryMenuStatus(menuId, showDefaultPosition, obj) {
+	$.ajax({
+		type:'POST',
+		dataType:'text',
+		url:'/quickMenuMemberSetting_queryCurrentStatus.action',
+		data:'quickMenu_id='+menuId+'&defaultShowPosition='+showDefaultPosition,
+		success:function(data){
+			data = $.parseJSON(data);
+			if(data.flag == '1') {//已设置过，变灰
+				$(obj).removeClass().addClass("gray cancelSetQuickMenu");
+				$(obj).attr("memberMenuId",data.memberMenuId);
+ 			} else { //没设置过，变成有颜色
+ 				$(obj).removeClass().addClass("setQuickMenu");
+ 			}
+			setQuickMenuInit();
+		}
+	});
+	return false;
+}
+$(function(){
+	$('body').on('tap','.tab_ls dt', function() {
+        var _this = $(this);
+        if (_this.find('span').hasClass('icon-plus')) {
+            _this.find('span').attr('class', 'icon-minus');
+            _this.parent().find('dd').slideDown();
+        } else {
+            _this.find('span').attr('class', 'icon-plus');
+            _this.parent().find('dd').slideUp();
+        }
+    })
+});
+
+function businessInit(){
+	//根据商家类别查询商家列表
+	$(".businessInfoListByType").bind('click',function(){
+		var typeId = $(this).attr("typeId");
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'/airport_businessListAjax.action',
+			data:'id='+typeId,
+			success:function(data){
+				$("#businessList").html(data);
+				businessInit();
+			}
+		});
+	});
+}
+function focusFlightInit(){
+	/**
+	 * 会员关注航班
+	 */
+	$(".focusFlight").unbind().bind("click",function(){
+		var flightNumber = $("#flightNumber").val();
+		var flightDate = $("#flightDate").val();
+		var flightState = $("#flightState").val();
+		var personRole = $(this).attr("personRole");
+		var sessionMember = $("#sessionMember").val();
+		if(JM.isNull(sessionMember)){
+			var isYes = window.confirm("您还未登录，是否登录？");
+			if(isYes){
+			window.location.href='/airportm_focusFlight.action?flightNumber='+flightNumber+'&flightDate='+flightDate+"&memberRole="+personRole+"&flightState="+flightState;
+//				window.open('/airportm_focusFlight.action?flightNumber='+flightNumber+'&flightDate='+flightDate+"&memberRole="+personRole+"&flightState="+flightState);
+			}else{
+				return false;
+			}
+		}else{
+//			window.location.href='/airportm_focusFlight.action?flightNumber='+flightNumber+'&flightDate='+flightDate+"&memberRole="+personRole+"&flightState="+flightState;
+			window.open('/airportm_focusFlight.action?flightNumber='+flightNumber+'&flightDate='+flightDate+"&memberRole="+personRole+"&flightState="+flightState);
+		}
+	});
+}
+
+//航班查询方式Ajax
+function queryFlightInit(){
+	$(".queryFlight").bind("click",function(){
+		var flag=$(this).attr("flag");
+		$(".queryFlight").removeClass("selected");
+		$(this).addClass("selected");
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'airport_flightQueryTemplateAjax.action',
+			data:'flag='+flag,
+			success:function(data){
+				$(".queryFlightContent").html(data);
+				queryFlightInit();
+			}
+		});
+	});
+	$(".flightOrg").find("li").bind("tap",function(){
+		var org=$(this).attr("cityThreeCode");
+		$("#org").val(org);
+	});
+	
+	$(".flightDes").find("li").bind("tap",function(){
+		var org=$(this).attr("cityThreeCode");
+		$("#des").val(org);
+	});
+	/**
+	 * 根据航班编号和日期查询航班信息
+	 */
+	$(".queryFlightByNoAndDate").bind("click",function(){
+		var flightNumber = $("#flightNumber").val();
+		var flightDate = $("#flightDate").val();
+		if(JM.isNull(flightNumber)){
+			JM.alert("请填写航班号~");
+			$("#flightNumber").focus();
+			return false;
+		}
+		if(JM.isNull(flightDate)){
+			JM.alert("请选择日期~");
+			$("#flightDate").focus();
+			return false;
+		}
+		window.location.href = "/airport_queryByFlightNoAndDate.action?flightNumber="+flightNumber+"&flightDate="+flightDate;
+	});
+	/**
+	 * 根据城市查询航班信息
+	 */
+	$(".queryFlightByCity").bind("click",function(){
+		var org = $("#org").val();
+		var des = $("#des").val();
+		var flightDate = $("#flightDate").val();
+		if(JM.isNull(flightDate)){
+			JM.alert("请选择日期~");
+			$("#flightDate").focus();
+			return false;
+		}
+		window.location.href = "/airport_queryFlightByCity.action?org="+org+"&des="+des+"&flightDate="+flightDate;;
+	});
+}
+function initCheckBox(){
+	$('input:checkbox').each(function(){
+		var item = $(this);
+		if(item.attr('check') == 'true'){
+			item.prop('checked', true);
+		}
+		if(item.attr('check') == 'false'){
+			item.prop('checked', false);
+		}
+		item.unbind().bind("click",function(){
+			if(item.attr('check') == 'true'){
+				item.attr('check','false');
+			}
+			else{
+				item.attr('check','true');
+			}
+		});
+	});
+}
+function selectCity() {
+	var keyword = $("#cityKeyword");
+	var searchType = $("#searchType");
+	if(JM.isNullByJQuery(keyword)){
+		keyword.focus();
+		return false;
+	} else {
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'/airport_queryCiyInfo.action',
+			data:'searchType='+searchType.val()+'&keyword='+JM.encode(keyword)+'&random='+JM.randomNumber+'',
+			success:function(data){
+				if(JM.SUCCESS == data) {
+					window.location.href = '/airport/hangbanchaxun.ticket';
+				} else {
+					keyword.focus();
+				}
+			}
+		});
+	}
+}
+function selectCityAjax() {
+	var keyword = $("#cityKeyword");
+	var searchType = $("#searchType");
+	if(JM.isNullByJQuery(keyword)){
+		keyword.focus();
+		return false;
+	} else {
+		$.ajax({
+			type:'POST',
+			dataType:'text',
+			url:'/airport_selectCityAjax.action',
+			data:'searchType='+searchType.val()+'&keyword='+JM.encode(keyword)+'&random='+JM.randomNumber+'',
+			success:function(data){
+				if(!JM.isNull(data)) {
+					$("#selectCityDiv").html(data);
+					$("#selectCityDiv").find("li").bind("tap", function(){
+						$.ajax({
+							type:'POST',
+							dataType:'text',
+							url:'/airport_queryCiyInfo.action',
+							data:'searchType='+searchType.val()+'&keyword='+JM.encodeByValue($(this).attr("value"))+'&random='+JM.randomNumber+'',
+							success:function(data){
+								if(JM.SUCCESS == data) {
+									window.location.href = '/airport/hangbanchaxun.ticket';
+								} else {
+									keyword.focus();
+								}
+							}
+						});
+					});
+				}
+			}
+		});
+	}
+}
+function indexClickInit() {
+	$(".drop-menu").find("li").each(function(){
+		var obj = $(this);
+		obj.bind("tap", function(){
+			if(obj.attr("dataType") == "bjdj") {
+				window.location.href = '/bjdj.action';
+			} else if(obj.attr("dataType") == "jpyd") {
+				return false;
+			} else if(obj.attr("dataType") == "hbyw") {
+				window.location.href = '/airport_flightDelay.action';
+			}
+		});
+	});
+}
+

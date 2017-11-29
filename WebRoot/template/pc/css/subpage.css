@@ -1,0 +1,158 @@
+/* 
+* @Author: gavin
+* @Date:   2015-07-05 13:34:11
+* @Last Modified by:   gavin
+* @Last Modified time: 2016-02-25 15:40:08
+*/
+@import url('icons.css');
+body{background: #fff}
+
+/*公共*/
+a.effect{text-decoration: none; transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+a.effect:hover{text-decoration: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;color: #e70e0e}
+button.effect{ transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+button.effect:hover{ transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+.button{border-radius: 0px;}
+.effect img{transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+.effect:hover img{transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1) 0s; transform:scale(1.2);}
+.wp{width: 990px;margin:0 auto;}
+.posr{position: relative;}
+.t_c{text-align: center !important;}
+.noborder{border:0px !important;}
+.scroll_top{background: url(../image/scroll_top.png) no-repeat;width: 82px;height: 38px;left:50%;margin-left:-41px;top:-38px;position: absolute;}
+.mr40{margin:40px;}
+.mr30{margin:30px;}
+.mrtb30{margin:30px 0px;}
+.mrtb40{margin:40px 0px;}
+.mrlr30{margin:0px 30px;}
+.mrlr40{margin:0px 40px;}
+.b_blue{background: #00AAFF}
+.b_yello{background: #F3B512}
+.c_white{color: #fff}
+.c_blue{color: #00AAFF}
+.c_yello{color: #F3B512}
+.c_777{color: #777}
+.c_666{color: #666}
+.c_999{color: #999}
+.f12{font-size: 12px;}.f14{font-size: 14px;}.f16{font-size: 16px;}.f18{font-size: 18px;}.f20{font-size: 20px;}.f22{font-size: 22px;}.f24{font-size: 24px;}
+
+.header{background: url(../image/head.bg.jpg) repeat-x;height: 166px;}
+.header .min_header{height: 72px;}
+.header .min_header .logo{background: url(../image/logo.png) no-repeat;width: 85px;height: 29px;display: block;float: left;position: relative;top:20px;}
+.header .min_header .header_right{float: right;width: 200px;padding-top:20px;}
+.header .min_header .header_right .login_btn{background: url(../image/reg_login_btns.png) no-repeat left top;width: 57px;height: 32px;display: block;float: left;margin-right:20px;}
+.header .min_header .header_right .reg_btn{background: url(../image/reg_login_btns.png) no-repeat -76px top;width: 57px;height: 32px;display: block;float: left;margin-right:20px;}
+.header .menu{}
+.header .menu li{width: 140px;float: left;height: 93px;position: relative;}
+.header .menu li em{background: url(../image/menu_line.png) no-repeat;width: 2px;height: 92px;position: absolute;right:0px;top:0px;}
+.header .menu li a{text-align: center;font-size: 16px;color: #fff;display: block;padding-top:25px;}
+.header .menu li a p{font-size: 12px;font-family: Arial;color: #fff}
+
+/* .kv{height:320px;position: relative;} */
+.kv .wp{position: relative;height: 100%;}
+.flight_kv{background: url(../image/pics/flight_kv.jpg) no-repeat center center;}
+.online_kv{background: url(../image/pics/online_kv.jpg) no-repeat center center;}
+
+.search{width: 345px;height: 340px;position: absolute;right:0px;bottom:-68px;z-index: 2;background: url(../image/bg_black_0.7.png)}
+.search .title{border-left:10px solid #F3B512;height: 58px;color: #fff;line-height: 90px;font-size: 20px;padding-left:20px;}
+.search .title span{font-size:20px;font-family: Arial;font-weight: bold}
+.search form{margin:35px 30px;position: relative;}
+.search form input{width: 286px;height: 45px;padding:10px 45px 10px 10px;border:0px;}
+.search form button{width: 39px;height: 39px;background: url(../image/search_btn.png) no-repeat center center #F3B512;position: absolute;right:3px;top:3px;border:0px;}
+.search .quick_menu{padding:0 30px;}
+.search .quick_menu .tit{color: #FFFFFF;font-size: 14px;line-height: 30px;}
+.search .quick_menu .tit a.more{float: right;background: url(../image/more1.png) no-repeat center center;width: 30px;height: 30px;}
+.search .quick_menu ul{padding:20px 0px;}
+.search .quick_menu ul li{float: left;width: 25%; height: 93px;text-align: center;}
+.search .quick_menu ul li a{width: 60px;display: inline-block;height: 93px;}
+.search .quick_menu ul li a.q1{background: url(../image/quick_icons.png) no-repeat left top;}
+.search .quick_menu ul li a.q2{background: url(../image/quick_icons.png) no-repeat -77px top;}
+.search .quick_menu ul li a.q3{background: url(../image/quick_icons.png) no-repeat -154px top;}
+.search .quick_menu ul li a.q4{background: url(../image/quick_icons.png) no-repeat -231px top;}
+
+.footer{background: #130C11;height: 96px;line-height: 96px;}
+.footer .company{color: #666666;font-family: Arial;font-size:12px;}
+.footer .ft_share{float: right;text-align: right;padding-top:10px;}
+.footer .ft_share a{width: 35px;height: 30px;display: inline-block;margin:0 5px;}
+.footer .ft_share a.qq{background: url(../image/ft_share_icons.png) no-repeat left top;}
+.footer .ft_share a.wechat{background: url(../image/ft_share_icons.png) no-repeat -39px top;}
+.footer .ft_share a.sina{background: url(../image/ft_share_icons.png) no-repeat -77px top;}
+.footer .ft_share a.qq:hover{background: url(../image/ft_share_icons.png) no-repeat left -40px;}
+.footer .ft_share a.wechat:hover{background: url(../image/ft_share_icons.png) no-repeat -39px -40px;}
+.footer .ft_share a.sina:hover{background: url(../image/ft_share_icons.png) no-repeat -77px -40px;}
+
+.main_body{min-height: 500px;margin-bottom: 80px;}
+.main_body .title_map{padding:50px 0px;background: url(../image/title_map.png) no-repeat left center;padding-left:20px;color: #777}
+
+.filter{}
+.filter input{width: 309px;height: 46px;padding:10px;background: #F2F2F2;border:0px;float: left;}
+.filter button{float: left;width: 110px;height: 46px;border:0px;background: #F3B512;font-size: 18px;color: #fff;margin-right:20px;}
+.filter label{font-size: 14px;color: #666666;padding:0 20px;line-height: 46px;display: inline-block;height: 46px;background: #F2F2F2;margin:0 10px;}
+.filter label.selected{background:#F3B512;color: #fff}
+
+.flight_table{}
+.flight_table a.gz{position: absolute;background: #D1D1D1;left:-1px;right:-1px;bottom:-1px;top:-37px;font-size: 20px;color: #fff;padding-top:20px;}
+.flight_table a.gz.selected{background: #F3B512;}
+
+.main_box{border:1px solid #DADADA;padding:50px;}
+.main_box_no_padding{border:1px solid #DADADA;}
+
+/*自定义表单*/
+.my_form{}
+.my_form label{color: #777777;font-size: 16px;font-weight: normal;}
+.my_form .input{border-radius: 0px;box-shadow: 0px 0px 0px;height: 40px;font-size:14px;}
+.my_form .input.grey{background: #F2F2F2;border:0px;}
+.my_form .tips{color: #858585;font-size: 12px;}
+.my_form .tips font{color: #F2B412;}
+.my_form .blue_btn{background: #00AAFF;color: #fff;border:0px;border-radius: 0px;padding:10px 20px;font-size:17px;}
+.my_form .yello_btn{background: #F3B512;border:0px;border-radius: 0px;color: #fff}
+.my_form .grey_btn{background: #CCCCCC;border:0px;border-radius: 0px;padding:10px 20px;}
+/*提示*/
+.notice{padding-top:30px;}
+.notice h2{color: #87878B;font-size: 18px;}
+.notice .text{color: #A4A4A5;font-size: 12px;padding-top:20px;}
+/*online*/
+.online{}
+.online .f_box{margin:30px 0px;position: relative;height: 200px;}
+.online .f_box .f_box_con{border:1px solid #DDDDDD;width: 47%;height: 200px;text-align: center}
+.online .f_box .f_box_con h1{padding-top:30px;color: #333333;font-size: 40px;}
+.online .f_box .f_box_con h5{color: #666666;font-size: 15px;}
+.online .f_box .f_box_con h6{color: #666666;font-size: 12px;padding-top:30px;}
+.online .f_box .f_box_con h6 span{position: relative;top:3px;}
+.online .f_box .f_box_icon{position: absolute;left:50%;margin-left:-55px;top:50%;margin-top:-55px;}
+
+.main_right{width: 200px;float: right;border:1px solid #DADADA;}
+.main_right h1{height: 70px;line-height: 70px;font-size:22px;color: #F2B212;background: #F9F9F9;text-align: center;border-bottom:1px solid #DADADA; }
+.main_right dl{text-align: center;padding:20px;}
+.main_right dl dd a{font-size: 16px;color: #727272;border-bottom:1px solid #DADADA;display: block;padding-bottom:20px;}
+.main_right dl dd a.selected{color: #F2B412}
+.main_left{width: 750px;float: left;border:1px solid #DADADA;}
+
+.order_sucesss{background: url(../image/sucesss_icons.jpg) no-repeat center top;padding-top:35px;color: #666666;font-size: 16px;text-align: center;}
+.order_sucesss span{color: #00AAFF;font-size: 20px;}
+.order_sucesss button{width: 200px;height: 50px;line-height: 50px;color: #fff;font-size: 20px;background: #F3B512;border:0px;margin-top:20px;}
+
+.reg_login_box{background:url(../image/reg/login_bg.jpg) no-repeat center center;height: 740px;position: relative;}
+.reg_login_box .wp{height: 100%}
+.reg_login_box h3{font-size: 22px;color: #5D5D5D;font-weight: normal;}
+.reg_login_box label {margin-top:20px;height: 56px;display: inline-block;width: 100%;padding-left:50px;border:1px solid #D1D1D1;padding-right:20px;}
+.reg_login_box label .text_input{width: 100%;padding:10px 0px;height: 50px;border:0px;font-size: 16px;}
+.reg_login_box label.name_input{background: url(../image/reg/icons.png) no-repeat 10px 15px;}
+.reg_login_box label.phone_input{background: url(../image/reg/icons.png) no-repeat 10px -200px;}
+.reg_login_box label.email_input{background: url(../image/reg/icons.png) no-repeat 10px -130px;}
+.reg_login_box label.pwd_input{background: url(../image/reg/icons.png) no-repeat 10px -56px;}
+.reg_login_box .msg{color: #585858;font-size: 18px;padding:15px 0px;}
+.reg_login_box .msg a{color: #00AAFF}
+.reg_login_box .msg .checkbox_input{width: 15px;height: 15px;margin-right:10px;float: left;margin-top:5px;}
+.reg_login_box .yello_btn{background: #F9BE00;width: 100%;border-radius: 10px;color: #fff;font-size: 30px;line-height: 69px;height: 69px;border:0px;}
+.reg_login_box .code_btn{height: 56px;width: 166px;background: #00AAFF;font-size: 18px;line-height: 56px;float: right;border:0px;color: #fff;margin-top:20px;}
+.reg_login_box .d_btn{border:1px solid #D1D1D1;height: 69px;line-height: 69px;text-align: center;font-size: 18px;color: #585858;border-radius: 10px;margin-top:20px;}
+.reg_login_box .d_btn a{color: #00AAFF}
+.reg_box{width: 990px;height: 560px;position: absolute;left:50%;margin-left:-495px;margin-top:-280px;background: #fff;top:50%;;}
+.reg_box .reg_left{float: left;width: 500px;float: left;padding-top:45px;padding-left:70px;}
+.reg_box .reg_qrcode{margin-left:80px;padding-left:80px;width: 170px;float: left;border-left:1px dotted #ddd;margin-top:45px;}
+.login_box{width: 485px;height: 500px;position: absolute;left:0px;top:50%;margin-top:-250px;background: #fff}
+.login_box form{padding:30px;}
+.login_box .title_tabs{}
+.login_box .title_tabs a{width: 50%;height: 70px;line-height: 70px;float: left;color: #2D2D2D;text-align: center;font-size: 22px;}
+.login_box .title_tabs a.selected{background: #F3F4F6;color: #7C7C7C;}

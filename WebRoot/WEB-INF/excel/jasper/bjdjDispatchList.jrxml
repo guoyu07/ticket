@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="便捷登机核销管理" language="groovy" pageWidth="1600" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="1600" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="e4e62206-425f-420f-b55c-22cbe1505cb2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="974"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Users/apple/Documents/workspace/WorkSpace/ticket/WebRoot/WEB-INF/excel/jasper/"]]></defaultValueExpression>
+	</parameter>
+	<field name="validation.appointment.serviceCode.order.name" class="java.lang.String"/>
+	<field name="validation.appointment.serviceCode.code" class="java.lang.String"/>
+	<field name="validation.appointment.idCard" class="java.lang.String"/>
+	<field name="validation.appointment.name" class="java.lang.String"/>
+	<field name="validation.appointment.time" class="java.util.Date"/>
+	<field name="validation.appointment.way.text" class="java.lang.String"/>
+	<field name="validation.appointment.useTime" class="java.util.Date"/>
+	<field name="validation.appointment.flightNo" class="java.lang.String"/>
+	<field name="validation.time" class="java.util.Date"/>
+	<field name="dispatchList" class="java.util.List"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="f94429d5-0ed9-45c0-88d5-3a20115a94dd"/>
+				<text><![CDATA[订单名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="72f72a43-60ec-45de-b88a-69e955364991"/>
+				<text><![CDATA[服务码]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="3ead5581-c3ee-4e30-817f-f849064a4105"/>
+				<text><![CDATA[身份证号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="afa10b6e-ba85-40fd-9a58-84273d2c7b83"/>
+				<text><![CDATA[旅客姓名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="100" height="20" uuid="51cad03a-3711-44a2-981d-eb4f277e007a"/>
+				<text><![CDATA[预约时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="0" width="100" height="20" uuid="403e2ace-2d7a-4cad-b676-c7e6dbffac66"/>
+				<text><![CDATA[预约方式]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="0" width="100" height="20" uuid="7f4a6215-fe96-44e9-8630-2ad04df723b3"/>
+				<text><![CDATA[起飞时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="100" height="20" uuid="fcdba84a-dbb1-43b7-9fa6-7fe4c1c211e3"/>
+				<text><![CDATA[验证时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="800" y="0" width="100" height="20" uuid="24761835-51a0-4ad9-b162-4012875369d8"/>
+				<text><![CDATA[航班号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="900" y="0" width="100" height="20" uuid="c4bd21fc-f6ce-452a-adf8-41578b759e1c"/>
+				<text><![CDATA[分单名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1000" y="0" width="100" height="20" uuid="6deb15fc-cae2-4dc4-b1f1-43f11a7243a0"/>
+				<text><![CDATA[分单时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1100" y="0" width="100" height="20" uuid="1e693004-4fcd-4fd0-8409-e74999ca2931"/>
+				<text><![CDATA[服务人]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1200" y="0" width="100" height="20" uuid="6d6b4a47-386d-4673-8f2d-8df54bfc190d"/>
+				<text><![CDATA[状态]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1300" y="0" width="100" height="20" uuid="4e687cd2-1d41-432f-bd61-165fb42112cc"/>
+				<text><![CDATA[核销时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1400" y="0" width="100" height="20" uuid="3806c878-67f7-4be4-810a-00eccd25a4cc"/>
+				<text><![CDATA[核销类型]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1500" y="0" width="100" height="20" uuid="ac417fe8-0f96-46bc-89ba-c46f8ecc673c"/>
+				<text><![CDATA[问题反馈]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Immediate">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="50f7ac81-ffed-4dff-b411-dad140df3d11"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{validation.appointment.serviceCode.order.name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="100" height="20" uuid="89a3ed9d-f4c8-49b1-801b-3fd5e049db66"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{validation.appointment.serviceCode.code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="200" y="0" width="100" height="20" uuid="7e2d2892-cc18-4d48-a289-dfcfa1d2e736"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{validation.appointment.idCard}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="300" y="0" width="100" height="20" uuid="4997cde1-5284-4ba5-a2ca-c138353899e5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{validation.appointment.name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="100" height="20" uuid="b7e48d15-8095-4ab5-a12c-f831bbe6e64a"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format($F{validation.appointment.time})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="500" y="0" width="100" height="20" uuid="8f404082-7045-4070-bfcc-2cc5db79c01c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{validation.appointment.way.text}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="600" y="0" width="100" height="20" uuid="0d7ff4b5-0e82-426e-9350-3d00ab9f0a6d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format($F{validation.appointment.useTime})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="700" y="0" width="100" height="20" uuid="62c71204-d1cc-428a-b5bf-7bca4e8778de"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format($F{validation.time})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="800" y="0" width="100" height="20" uuid="21627702-c30a-4fd8-b162-d9270e2d1abc"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{validation.appointment.flightNo}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="900" y="0" width="700" height="20" uuid="c4d3af73-b3e1-43a1-a191-7589f21d1946"/>
+				<subreportParameter name="dispatchList"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{dispatchList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "bjdjDispatchList_subreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

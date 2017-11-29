@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bjdjOrder" language="groovy" pageWidth="1300" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="1300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="bd19aca2-90e5-4c8e-88c4-e648f9cf1084">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Users/apple/Documents/workspace/WorkSpace/ticket/WebRoot/WEB-INF/excel/jasper/"]]></defaultValueExpression>
+	</parameter>
+	<field name="number" class="java.lang.String"/>
+	<field name="member.phone" class="java.lang.String"/>
+	<field name="status.createTime" class="java.util.Date"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="state.value" class="java.lang.String"/>
+	<field name="count" class="java.lang.String"/>
+	<field name="price" class="java.lang.String"/>
+	<field name="payMember.phone" class="java.lang.String"/>
+	<field name="payTime" class="java.util.Date"/>
+	<field name="realPay" class="java.lang.String"/>
+	<field name="discountAmount" class="java.lang.String"/>
+	<field name="consumptionIntegral" class="java.lang.String"/>
+	<field name="serviceCodes" class="java.util.List"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="00a119c4-19cb-41cc-84f9-7bd483339ca9"/>
+				<text><![CDATA[订单号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="8f9e541a-355d-4787-a66f-aec2d8114402"/>
+				<text><![CDATA[下单用户]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="9ce660c8-4be6-4f26-a18d-2cd46f542fa5"/>
+				<text><![CDATA[下单时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="8003f35a-c450-4fdd-9d11-97334c8265a4"/>
+				<text><![CDATA[商品名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="100" height="20" uuid="7e75c5c5-ee08-4ef5-b740-4a86a6b3a81a"/>
+				<text><![CDATA[状态]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="0" width="100" height="20" uuid="cf657cc3-c80f-4e58-a41f-a61e4f70137f"/>
+				<text><![CDATA[数量]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="0" width="100" height="20" uuid="7adc7629-e508-40df-8aad-829c52048ef0"/>
+				<text><![CDATA[单价]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="100" height="20" uuid="28860e5a-c6c4-4a1a-b3ec-fd3474df96b3"/>
+				<text><![CDATA[支付用户]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="800" y="0" width="100" height="20" uuid="317153fc-5321-435c-94ba-d742d8d5c32f"/>
+				<text><![CDATA[支付时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="900" y="0" width="100" height="20" uuid="ebd495cf-d579-4ed5-8e2b-19e91eed217f"/>
+				<text><![CDATA[实付金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1000" y="0" width="100" height="20" uuid="3e330887-0a3f-4566-b73a-b30db158514f"/>
+				<text><![CDATA[优惠金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1100" y="0" width="100" height="20" uuid="c9d5d30e-c74f-4d51-bd4a-c7097b90c107"/>
+				<text><![CDATA[消耗积分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1200" y="0" width="100" height="20" uuid="cd61b89e-99b6-43d2-85c5-d2d0e3a7a340"/>
+				<text><![CDATA[服务码]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="8021ae0b-f0ca-4083-b4ea-e31ed7b99ec3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="100" height="20" uuid="41d417d0-26e2-4336-890e-b1ffdadcdcd4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{member.phone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="200" y="0" width="100" height="20" uuid="d4997203-01d0-4258-bf5e-5cfce334802f"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd HH:mm").format($F{status.createTime})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="300" y="0" width="100" height="20" uuid="ee54f10d-51e4-4d3e-97d0-8b0feba0cf78"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="100" height="20" uuid="2d13af2f-4894-40af-9483-f05400ade157"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{state.value}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="500" y="0" width="100" height="20" uuid="2692678c-b7c7-44e7-8e4f-96a8e0fb2ad8"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{count}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="600" y="0" width="100" height="20" uuid="e406e7f3-96f5-4dce-9b7d-f238e0ff512b"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="700" y="0" width="100" height="20" uuid="4f9e4450-4a9f-40ff-8ee6-79ac116a99bd"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{payMember.phone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="800" y="0" width="100" height="20" uuid="30a30c3d-0d3b-4735-833b-cb927f1fda13"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd HH:mm").format($F{payTime})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="900" y="0" width="100" height="20" uuid="968decbc-7c84-4756-a6f8-ffc11a0f96d1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{realPay}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1000" y="0" width="100" height="20" uuid="c80cddc1-7a48-4a19-8376-8226076173f4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{discountAmount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1100" y="0" width="100" height="20" uuid="4ee9c567-89f3-4edc-9f86-850ff99ebcf7"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{consumptionIntegral}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="1200" y="0" width="100" height="20" uuid="358b8ac1-577f-4247-88bc-bcfc5adda04e"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{serviceCodes})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "bjdjOrder_subreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

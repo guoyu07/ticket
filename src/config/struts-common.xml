@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<!-- config the commonPackage -->
+	<package name="commonPackage" extends="json-package">
+		<action name="verificateCode" class="verificateCodeAction"></action>
+		<action name="sms" class="smsAction"></action>
+		<action name="generalFile_*" method="{1}" class="generalFileManagerAction">
+			<result name="fileIndex">/WEB-INF/jsp/manager/filemanager/fileIndex.jsp</result>
+		</action>
+		<action name="swfUpload_*" method="{1}" class="swfUploadAction">
+        	<result name="swfUploadTest">/WEB-INF/jsp/manager/common/swfUploadTest.jsp</result>
+		</action>
+		<!-- KindEditor编辑器文件上传处理器 -->
+		<action name="upload" class="kindEditorUploadAction" method="fileUpload" />
+		<action name="uploadFileManager" class="kindEditorUploadAction" method="fileManager" />
+		<action name="uploadDeleteFile" class="kindEditorUploadAction" method="fileDelete" />
+		<!-- JQuery Uploadify 文件上传编辑器 -->
+		<action name="jQueryUpload_*" class="jQueryFileUpLoadAction" method="{1}">
+			<result name="fileList">/WEB-INF/jsp/manager/common/fileList.jsp</result>
+		</action>
+		
+		<action name="monitor_*" method="{1}" class="com.ticket.action.MonitorAction">
+			<result name="cpuUsage">/WEB-INF/jsp/manager/monitor/cpuUsage.jsp</result>
+			<result name="load">/WEB-INF/jsp/manager/monitor/load.jsp</result>
+			<result name="hardUsage">/WEB-INF/jsp/manager/monitor/hardUsage.jsp</result>
+			<result name="hardIO">/WEB-INF/jsp/manager/monitor/hardIO.jsp</result>
+			<result name="memoryUsage">/WEB-INF/jsp/manager/monitor/memoryUsage.jsp</result>
+			<result name="trafficUsage">/WEB-INF/jsp/manager/monitor/trafficUsage.jsp</result>
+		</action>
+	</package>
+</struts>

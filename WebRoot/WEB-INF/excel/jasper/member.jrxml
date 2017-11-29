@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="会员管理" language="groovy" pageWidth="712" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="712" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="eb1c38bf-e0ec-4e17-8b9d-a5041c5bb11d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="nickName" class="java.lang.String"/>
+	<field name="realName" class="java.lang.String"/>
+	<field name="IDCard" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="qq" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="status.createTime" class="java.util.Date"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="103" y="0" width="69" height="20" uuid="372e572f-7cc7-4e51-929e-5481fbb171bf"/>
+				<text><![CDATA[昵称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="0" width="89" height="20" uuid="452f6ba0-8f71-412d-ba70-af66fe3c7c43"/>
+				<text><![CDATA[真实名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="0" width="115" height="20" uuid="b9f4e658-e478-4d71-a56b-d7a81c58e9d6"/>
+				<text><![CDATA[身份证号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="376" y="0" width="77" height="20" uuid="a505ff95-7df1-4b9c-bbcb-fd559b0b59d9"/>
+				<text><![CDATA[手机号码]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="453" y="0" width="76" height="20" uuid="bb639b5c-d127-4438-802c-a1f4d6dbddb9"/>
+				<text><![CDATA[qq]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="529" y="0" width="84" height="20" uuid="9bf4b2a8-3edc-43ca-b2e3-fd9e8a8fd391"/>
+				<text><![CDATA[电子邮箱]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="613" y="0" width="102" height="20" uuid="630a2996-8ef2-4645-8f1c-bdcc273691a5"/>
+				<text><![CDATA[地址]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="103" height="20" uuid="79c50e10-6235-49ef-8628-47e154d8f8fe"/>
+				<text><![CDATA[创建时间]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="103" y="0" width="69" height="20" uuid="81943033-81ec-4f31-8795-d94c46de2c6e"/>
+				<textFieldExpression><![CDATA[$F{nickName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="172" y="0" width="89" height="20" uuid="3c453372-ba0f-4447-9158-f16f6f1101a7"/>
+				<textFieldExpression><![CDATA[$F{realName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="261" y="0" width="115" height="20" uuid="591d5526-bc98-4e10-8755-6b906a330ad8"/>
+				<textFieldExpression><![CDATA[$F{IDCard}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="376" y="0" width="77" height="20" uuid="1ce847bd-1041-4fa4-835a-b6cd6c83f0f6"/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="453" y="0" width="76" height="20" uuid="eb1ba8a0-ef14-4e21-8087-993367671b9a"/>
+				<textFieldExpression><![CDATA[$F{qq}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="529" y="0" width="84" height="20" uuid="7b2bbe72-6c63-4e7d-b2bd-ca7cfc373e4a"/>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="613" y="0" width="102" height="20" uuid="98969b1c-2b55-45a2-a9a9-1031e4595b5f"/>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="103" height="20" uuid="ffbabc36-928d-464c-97bb-dd463e239d83"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{status.createTime})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

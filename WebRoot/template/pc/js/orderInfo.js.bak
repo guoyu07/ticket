@@ -1,0 +1,1 @@
+function back(){JM.goUrl("pcOrder_allOrder.action")}function unactived(n){$.post("bjdjServiceCodeActivate_unActivate.action",{idsValue:n},function(n){JM.alert(n.info,3e3,function(){n.status==JM.YES&&JM.reload(null)})},"json")}

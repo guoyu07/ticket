@@ -1,0 +1,1 @@
+function logout(){$.getJSON("pcBjdjMember_logouts.action",function(o){"y"==o.status&&JM.alert(o.info,1e3,function(){window.location.reload()})})}$(function(){});

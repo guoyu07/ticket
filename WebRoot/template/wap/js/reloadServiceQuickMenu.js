@@ -1,0 +1,43 @@
+$(function(){
+	var quickMenuPosition = $("#quickMenuPosition").val();
+	var memberSelfMenuId = $("#memberSelfMenuId").val();
+	$.ajax({
+		type:'POST',
+		dataType:'text',
+		url:'airportm_reloadQuickMenu.action',
+		data:'quickMenuPosition='+quickMenuPosition+"&memberSelfMenuId="+memberSelfMenuId,
+		success:function(data){
+			if(quickMenuPosition=='h'){
+				$(".SDServiceQuickMenu").html(data);
+				customerMenuInit();
+				return;
+			}
+			if(quickMenuPosition=='i'){
+				$(".SIServiceQuickMenu").html(data);
+				customerMenuInit();
+				return;
+			}
+			if(quickMenuPosition=='j'){
+				$(".TTDServiceQuickMenu").html(data);
+				customerMenuInit();
+				return;
+			}
+			if(quickMenuPosition=='k'){
+				$(".TTIServiceQuickMenu").html(data);
+				customerMenuInit();
+				return;
+			}
+			if(quickMenuPosition=='l'){
+				$(".RDServiceQuickMenu").html(data);
+				customerMenuInit();
+				return;
+			}
+			if(quickMenuPosition=='m'){
+				$(".RIServiceQuickMenu").html(data);
+				customerMenuInit();
+				return;
+			}
+			customerMenuInit();
+		}
+	});
+});

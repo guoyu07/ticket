@@ -1,0 +1,240 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@page import="com.ticket.mq.FlightStatus"%>
+<%@page import="com.ticket.mq.BoardStatus"%>
+<%@page import="com.ticket.pojo.DepartFromPort"%>
+<!DOCTYPE html>
+<html>
+	<%@ include file="../common/head.jsp" %>
+		<style type="text/css">
+    .tit_tab a{ width:120px !important; height:120px !important; line-height:120px; border-radius:60px !important;}
+    
+    </style>
+	<ticket:cache group="资讯中心">
+	<body class="mobile">
+		<div class="mobile-view">
+			<div class="mobile-page">
+				<s:include value="../common/title.jsp">
+					<s:param name="title">航班详情</s:param>
+					<s:param name="url">javascript:window.location.assign($.cookie('listUrl'));</s:param>
+				</s:include>
+				<div class="mobile-main">
+				<input type="hidden" id="mid" name="mid" value="${mid }"/>
+				<input type="hidden" id="sessionMember" name="sessionMember" value="${session.sessionMember }">
+					<div class="new_fly_ls">
+		                <ul class="">
+		                    <li style='margin-bottom:0px;'>
+		                        <div class="fly_line clearfix no-background">
+		                            <span class='text-center'>
+										<ticket:common type="flightCompanyByTwoCode" value="${departFromPort.acw }"/>
+										<ticket:commonAnnex type="annex" entityUuid="${flightCompanyByTwoCode.id }" annexType="1" size="1"/>
+										<img src="<%=request.getScheme() %>://${image_server_url}${annex.annexPath }" height="24" width="24" style='position:relative;top:-2px;'>
+			                            &nbsp;${flightCompanyByTwoCode.name }&nbsp;
+			                            <em class='c_blue fz40 inline_block'>
+			                            		${departFromPort.flt }
+			                            </em>
+		                            </span>
+		                        </div>
+		                        <div class="fly_time clearfix text-center fz20">
+		                        	<div class='padding-bottom'>
+			                        <s:if test="#departFromPort.got != null">
+			                        	预计登机时间：<font class='c_black' style="font-size: 48px;">${departFromPort.got }</font>
+			                        </s:if>
+			                        </div>
+			                        <s:if test="departFromPort.boardStaus != null && departFromPort.boardStaus !='' ">
+									           登机口状态：<font class='c_blue'><%=Enum.valueOf(BoardStatus.class, ((DepartFromPort)request.getAttribute("departFromPort")).getBoardStaus().toUpperCase()).getText() %></font>
+			                        </s:if>
+			                        <s:if test="departFromPort.frs != null && departFromPort.frs !=''"> 
+							                        航班状态：<font class='c_blue'>
+			                        <%=Enum.valueOf(FlightStatus.class, ((DepartFromPort)request.getAttribute("departFromPort")).getFrs().toUpperCase()).getText() %>
+			                        </font>
+			                        </s:if>&nbsp;&nbsp; 飞机编号：<font class='c_blue'>${departFromPort.flt }</font>
+		                        </div>
+		                        
+		                    </li>
+		                </ul>
+		            </div>
+					<s:if test="#request.departFromPort != null">
+						<s:if test="stopover != null && stopover !='undefined'">
+							<div class='from_or_to_fly'>
+								<div class="c_content">
+									<s:if test="departFromPort.aan != null">
+			                        		<s:set name="setoutTime" var="setoutTime" value="departFromPort.aan"></s:set>
+				                        		<s:set name="planeFlag" var="planeFlag" value="'实际起飞'"></s:set>
+				                        	</s:if>
+				                        	<s:else>
+				                        		<s:set name="setoutTime" var="setoutTime" value="departFromPort.stn"></s:set>
+				                        		<s:set name="planeFlag" var="planeFlag" value="'预计起飞'"></s:set>
+				                        	</s:else>
+					                    <dl>
+				                        <dt>
+				                            <i class='from_fly'></i>
+				                            	<ticket:common type="airportInfoByThreeCode" value="${departFromPort.org }"/>
+				                            	${airportInfoByThreeCode.name }
+				                            <span><s:date name="departFromPort.std" format="MM-dd HH:mm"/></span><%--
+				                            <font class="float-right">阵雨<i class='cloud'></i> 24-29</font>
+				                        --%>
+				                        </dt>
+				                        <dd class='line'>
+				                            <div class="xl4"><s:property value="#planeFlag"/><p class='c_black' style="font-size: 48px;"><s:date name="#setoutTime" format="HH:mm"/></p></div>
+				                            <%-- <div class="xl4">值机柜台<p><a href="http://api.map.baidu.com/marker?location=${flightCompanyByTwoCode.latitude },${flightCompanyByTwoCode.longitude }&title=${departFromPort.cid }&content=${departFromPort.cid }&output=html" style="color: #00AAFF">${departFromPort.cid }</a></p></div> --%>
+				                            <div class="xl4">值机柜台<p><a href="<ticket:common type="infoPositionListByCounter2" value="${departFromPort.cid }"/>" style="color: #00AAFF">${departFromPort.cid }</a></p></div>
+				                            <div class="xl4">登机口<p><a href="<ticket:common type="flightPositionUrl" value="${departFromPort.gat }djk"/>" style="color: #00AAFF">${departFromPort.gat }</a></p></div>
+				                        </dd>
+				                    </dl>
+				                </div>
+				                <div class="c_content">
+				                    <dl>
+				                        <dt>
+				                            <i class='from_to'></i>
+				                            	<ticket:common type="airportInfoByThreeCode" value="${departFromPort.vi1 }"/>
+				                            	${airportInfoByThreeCode.name }
+				                             <span><s:date name="departFromPort.stn " format="MM-dd HH:mm"/></span>
+				                            <%--<font class="float-right">阵雨<i class='sun'></i> 24-29</font>
+				                        --%></dt>
+				                        <dd class='line'>
+				                            <div class="xl4">计划到达<p class='c_black' style="font-size: 48px;"><s:date name="departFromPort.stn " format="HH:mm"/></p></div>
+				                            <div class="xl4">行李转盘<p>--</p></div>
+				                            <div class="xl4">到达口<p>--</p></div>
+				                        </dd>
+				                    </dl>
+				                </div>
+							</div>
+						</s:if>
+						<s:else>
+							<div class='from_or_to_fly'>
+								<div class="c_content">
+									<s:if test="departFromPort.abt != null">
+			                        		<s:set name="setoutTime" var="setoutTime" value="departFromPort.abt"></s:set>
+				                        		<s:set name="planeFlag" var="planeFlag" value="'实际起飞'"></s:set>
+				                        	</s:if>
+				                        	<s:else>
+				                        		<s:set name="setoutTime" var="setoutTime" value="departFromPort.std"></s:set>
+				                        		<s:set name="planeFlag" var="planeFlag" value="'预计起飞'"></s:set>
+				                        	</s:else>
+					                    <dl>
+				                        <dt>
+				                            <i class='from_fly'></i>
+				                            	<ticket:common type="airportInfoByThreeCode" value="${departFromPort.org }"/>
+				                            	${airportInfoByThreeCode.name }
+				                            <span><s:date name="departFromPort.std" format="MM-dd HH:mm"/></span><%--
+				                            <font class="float-right">阵雨<i class='cloud'></i> 24-29</font>
+				                        --%>
+				                        </dt>
+				                        <dd class='line'>
+				                            <div class="xl4"><s:property value="#planeFlag"/><p class='c_black' style="font-size: 48px;"><s:date name="#setoutTime" format="HH:mm"/></p></div>
+				                            <%-- <div class="xl4">值机柜台<p><a href="http://api.map.baidu.com/marker?location=${flightCompanyByTwoCode.latitude },${flightCompanyByTwoCode.longitude }&title=${departFromPort.cid }&content=${departFromPort.cid }&output=html" style="color: #00AAFF">${departFromPort.cid }</a></p></div> --%>
+				                             <div class="xl4">值机柜台<p><a href="<ticket:common type="infoPositionListByCounter2" value="${departFromPort.cid }"/>" style="color: #00AAFF">${departFromPort.cid }</a></p></div>
+				                            <div class="xl4">登机口<p><a href="<ticket:common type="flightPositionUrl" value="${departFromPort.gat }djk"/>" style="color: #00AAFF">${departFromPort.gat }</a></p></div>
+				                        </dd>
+				                    </dl>
+				                </div>
+				                <s:if test="departFromPort.vi1 != null && departFromPort.vi1 != ''">
+				                	<div class="c_content">
+										<s:if test="departFromPort.aan != null">
+				                        		<s:set name="nextStationTime" var="nextStationTime" value="departFromPort.aan"></s:set>
+					                        		<s:set name="planeFlag" var="planeFlag" value="'下站实际到达'"></s:set>
+					                        	</s:if>
+					                        	<s:else>
+					                        		<s:set name="nextStationTime" var="nextStationTime" value="departFromPort.stn"></s:set>
+					                        		<s:set name="planeFlag" var="planeFlag" value="'下站预计到达'"></s:set>
+					                        	</s:else>
+						                    <dl>
+					                        <dt>
+					                            <i class='from_fly'></i>
+					                           	<s:set var="vi1" value="airportInfoService.queryByThreeCode(departFromPort.vi1,'site')"/>
+					                        	   经停地:	${vi1.name }
+					                            <span><s:date name="departFromPort.std" format="MM-dd HH:mm"/></span></dt>
+					                        <dd class='line'>
+					                            <div class="xl4"><s:property value="#planeFlag"/><p class='c_black' style="font-size: 48px;"><s:date name="#nextStationTime" format="HH:mm"/></p></div>
+					                            <div class="xl4">行李转盘<p>--</p></div>
+					                            <div class="xl4">到达口<p>--</p></div>
+					                        </dd>
+					                    </dl>
+					                </div>
+				                </s:if>
+				                <s:if test="departFromPort.vi2 != null && departFromPort.vi2 != ''">
+				                	<s:set var="vi2" value="airportInfoService.queryByThreeCode(#departFromPort.vi2,'site')"/>
+					                                     经停地:	${vi2.name }
+				                </s:if>
+				                <s:if test="departFromPort.vi3 != null && departFromPort.vi3 != ''">
+				                	<s:set var="vi3" value="airportInfoService.queryByThreeCode(#departFromPort.vi3,'site')"/>
+					                                     经停地:	${vi3.name }
+				                </s:if>
+				                <s:if test="departFromPort.vi4 != null && departFromPort.vi4 != ''">
+				                	<s:set var="vi4" value="airportInfoService.queryByThreeCode(#departFromPort.vi4,'site')"/>
+					                                     经停地:	${vi4.name }
+				                </s:if>
+				                <s:if test="departFromPort.vi5 != null && departFromPort.vi5 != ''">
+				                	<s:set var="vi5" value="airportInfoService.queryByThreeCode(#departFromPort.vi5,'site')"/>
+					                                     经停地:	${vi5.name }
+				                </s:if>
+				                <s:if test="departFromPort.vi6 != null && departFromPort.vi6 != ''">
+				                	<s:set var="vi6" value="airportInfoService.queryByThreeCode(#departFromPort.vi6,'site')"/>
+					                                     经停地:	${vi6.name }
+				                </s:if>
+				                <div class="c_content">
+				                    <dl>
+				                        <dt>
+				                            <i class='from_to'></i>
+				                            	<ticket:common type="airportInfoByThreeCode" value="${departFromPort.des }"/>
+				                            	${airportInfoByThreeCode.name }
+				                             <span><s:date name="departFromPort.tdes " format="MM-dd HH:mm"/></span>
+				                            <%--<font class="float-right">阵雨<i class='sun'></i> 24-29</font>
+				                        --%></dt>
+				                        <dd class='line'>
+				                            <div class="xl4">计划到达<p class='c_blue'>
+				                            	<s:if test="departFromPort.vi1 != null && departFromPort.vi1 !=''">
+				                            		<s:if test="departFromPort.stn == departFromPort.tdes">
+					                            		--
+				                            		</s:if>
+				                            		<s:else>
+				                            			<s:date name="departFromPort.tdes" format="HH:mm"/>
+				                            		</s:else>
+				                            	</s:if>
+				                            	<s:else>
+													<s:date name="departFromPort.stn" format="HH:mm"/>
+				                            	</s:else>
+											</p></div>
+				                            <div class="xl4">行李转盘<p>--</p></div>
+				                            <div class="xl4">到达口<p>--</p></div>
+				                        </dd>
+				                    </dl>
+				                </div>
+							</div>
+						</s:else>
+						<div class="tit_tab">
+							<s:if test="stopover != '1'">
+								<a href="#" class="journeyHelper" flightNumber="${departFromPort.flt }" flightDate="${departFromPort.flightDate }" flightState="depart" stopover="1">旅程助手</a>
+							</s:if>
+							<s:else>
+								<a href="#" class="journeyHelper" flightNumber="${departFromPort.flt }" flightDate="${departFromPort.flightDate }" flightState="depart">旅程助手</a>
+							</s:else>
+							<a href="/airport/bianjiedengji.ticket">便捷登机</a>
+							<a href="/airport_restaurant.action?flag=canyin&fromQuickMenu=true">餐饮服务</a>
+							<s:set var="checkinInfos" value="checkinInfoService.query(departFromPort.flt, departFromPort.flightDate)"></s:set>
+							<s:if test="#checkinInfos.size() > 0">
+								<a href="/airportm_checkinInfo.action?flightNumber=${departFromPort.flt }&flightDate=${departFromPort.flightDate }">网上值机</a>
+							</s:if>
+							<s:else>
+								<a href="/airport/wangshangzhiji.ticket">网上值机</a>
+							</s:else>
+						</div>
+					</s:if>
+					<s:else>
+						<div class="c_content">
+							${noDataMessage }
+						</div>
+						<div class="tit_tab">
+							<a href="javascript:return_prepage();">返回</a>
+						</div>
+					</s:else>
+				</div>
+				<%@ include file="../common/quickNav.jsp" %>
+			</div>
+		</div>
+		<div class="dialog" style="display: none;">
+			<%@ include file="../common/left.jsp" %>
+		</div>
+	</body>
+	</ticket:cache>
+</html>

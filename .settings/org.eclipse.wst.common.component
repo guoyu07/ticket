@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="www.yngk.com">
+        <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/manager"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/template"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/common"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/config"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/weixin"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/pc"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/qq"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/weibo"/>
+        <property name="context-root" value="/ROOT"/>
+        <property name="java-output-path" value="/www.yngk.com/WebRoot/WEB-INF/classes"/>
+        <property name="me-merge-utility-modules" value="true"/>
+    </wb-module>
+</project-modules>

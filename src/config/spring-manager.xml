@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+    
+    <!-- 导入规划数据 -->
+    <bean id="inDataService" class="com.ticket.serviceImpl.InDataServiceImpl"></bean>
+	
+	<!-- Service Defined Area -->
+	<bean id="systemConfigService" class="com.ticket.serviceImpl.SystemConfigServiceImpl" />
+	<bean id="systemUserService" class="com.ticket.serviceImpl.SystemUserServiceImpl" />
+	<bean id="systemUserLoginLogService" class="com.ticket.serviceImpl.SystemUserLoginLogServiceImpl" />
+	<bean id="systemUserOperationService" class="com.ticket.serviceImpl.SystemUserOperationServiceImpl" />
+	<bean id="systemModuleService" class="com.ticket.serviceImpl.SystemModuleServiceImpl" />
+	<bean id="articleService" class="com.ticket.serviceImpl.ArticleServiceImpl" />
+	<bean id="systemPluginService" class="com.ticket.serviceImpl.SystemPluginServiceImpl" />
+	<bean id="systemVersionService" class="com.ticket.serviceImpl.SystemVersionServiceImpl" />
+	<!-- 机场制度  -->
+	<bean id="regulationTypeService" class="com.ticket.serviceImpl.RegulationTypeServiceImpl" />
+	<bean id="regulationService" class="com.ticket.serviceImpl.RegulationServiceImpl" />
+
+	<!-- 机场交通 -->
+	<bean id="trafficTypeService" class="com.ticket.serviceImpl.TrafficTypeServiceImpl" />
+	<bean id="trafficLineService" class="com.ticket.serviceImpl.TrafficLineServiceImpl" />
+	<bean id="trafficStationService" class="com.ticket.serviceImpl.TrafficStationServiceImpl" />
+	<bean id="trafficLineAndStationService" class="com.ticket.serviceImpl.TrafficLineAndStationServiceImpl" />
+	<bean id="cityHistorySelectService" class="com.ticket.serviceImpl.CityHistorySelectServiceImpl" />
+	
+	<!-- 热线电话 -->
+	<bean id="hotLinePhoneService" class="com.ticket.serviceImpl.HotLinePhoneServiceImpl" />
+	
+	<!-- 机场商业 -->
+	<bean id="airportBusinessTypeService" class="com.ticket.serviceImpl.AirportBusinessTypeServiceImpl" />
+	<bean id="businessInfoService" class="com.ticket.serviceImpl.BusinessInfoServiceImpl" />
+	<bean id="friendlyLinkService" class="com.ticket.serviceImpl.FriendlyLinkServiceImpl" />
+	<!-- 机场部门员工 -->
+	<bean id="airportDepartmentService" class="com.ticket.serviceImpl.AirportDepartmentServiceImpl" />
+	<bean id="airportEmployeeService" class="com.ticket.serviceImpl.AirportEmployeeServiceImpl" scope="prototype"/>
+	
+	<!-- 销售CRM模块 -->
+	<bean id="myTextService" class="com.ticket.serviceImpl.MyTextServiceImpl" />
+	<bean id="employeeInfoZengLogDetailService" class="com.ticket.serviceImpl.EmployeeInfoZengLogDetailServiceImpl" />
+	<bean id="employeeInfoZengLogService" class="com.ticket.serviceImpl.EmployeeInfoZengLogServiceImpl" />
+	<bean id="industryService" class="com.ticket.serviceImpl.IndustryServiceImpl" />
+	<bean id="positionService" class="com.ticket.serviceImpl.PositionServiceImpl" />
+	<bean id="channelPositionService" class="com.ticket.serviceImpl.ChannelPositionServiceImpl" />
+	<bean id="letterStationService" class="com.ticket.serviceImpl.LetterStationServiceImpl" />
+	<bean id="stationLetterReadLogService" class="com.ticket.serviceImpl.StationLetterReadLogServiceImpl" />
+	<bean id="stationLetterSendRecordService" class="com.ticket.serviceImpl.StationLetterSendRecordServiceImpl" />
+	<bean id="hitSingleLogService" class="com.ticket.serviceImpl.HitSingleLogServiceImpl" />
+	<bean id="customerProtectLogService" class="com.ticket.serviceImpl.CustomerProtectLogServiceImpl" />
+	<bean id="departmentInfoService" class="com.ticket.serviceImpl.DepartmentInfoServiceImpl" />
+	<bean id="employeeInfoService" class="com.ticket.serviceImpl.EmployeeInfoServiceImpl" />
+	<bean id="employeeOutVisitService" class="com.ticket.serviceImpl.EmployeeOutVisitServiceImpl" />
+	<bean id="auditVisitRecordService" class="com.ticket.serviceImpl.AuditVisitRecordServiceImpl" />
+	<bean id="phoneVisitService" class="com.ticket.serviceImpl.PhoneVisitServiceImpl" />
+	<bean id="remarkVisitRecordService" class="com.ticket.serviceImpl.RemarkVisitRecordServiceImpl" />
+	<bean id="channelTypeService" class="com.ticket.serviceImpl.ChannelTypeServiceImpl" />
+	<bean id="channelCustomerInfoService" class="com.ticket.serviceImpl.ChannelCustomerInfoServiceImpl" />
+	<bean id="customerTransferLogService" class="com.ticket.serviceImpl.CustomerTransferLogServiceImpl" />
+	<bean id="rechargeRecordService" class="com.ticket.serviceImpl.RechargeRecordServiceImpl" />
+	<bean id="applayClassService" class="com.ticket.serviceImpl.ApplayClassServiceImpl" />
+	<bean id="agreementService" class="com.ticket.serviceImpl.AgreementServiceImpl" />
+	<bean id="orderInfoService" class="com.ticket.serviceImpl.OrderInfoServiceImpl" />
+	<bean id="orderInfoDetailService" class="com.ticket.serviceImpl.OrderInfoDetailServiceImpl" />
+	<bean id="survryModularService" class="com.ticket.serviceImpl.SurvryModularServiceImpl" />
+	<bean id="surveyQuestionnaireService" class="com.ticket.serviceImpl.SurveyQuestionnaireServiceImpl" />
+	<bean id="surveyQuestionService" class="com.ticket.serviceImpl.SurveyQuestionServiceImpl" />
+	<bean id="surveyOptionService" class="com.ticket.serviceImpl.SurveyOptionServiceImpl" />
+	<bean id="questionnaireSendRecordService" class="com.ticket.serviceImpl.QuestionnaireSendRecordServiceImpl" />
+	<bean id="questionnaireAnswerService" class="com.ticket.serviceImpl.QuestionnaireAnswerServiceImpl" />
+	<bean id="questionnaireSendLogService" class="com.ticket.serviceImpl.QuestionnaireSendLogServiceImpl" />
+	<bean id="favouredPolicyService" class="com.ticket.serviceImpl.FavouredPolicyServiceImpl" />
+	<bean id="receiptService" class="com.ticket.serviceImpl.ReceiptServiceImpl" />
+	<bean id="pickUpCustomerApplyService" class="com.ticket.serviceImpl.PickUpCustomerApplyServiceImpl" />
+	<bean id="saleTaskService" class="com.ticket.serviceImpl.SaleTaskServiceImpl" />
+	<bean id="dataAuthoritysService" class="com.ticket.serviceImpl.DataAuthoritysServiceImpl"></bean>
+	<bean id="positionDataAuthorityService" class="com.ticket.serviceImpl.PositionDataAuthorityServiceImpl"></bean>
+	<bean id="authCodeHelperService" class="com.ticket.serviceImpl.AuthCodeHelperServiceImpl"></bean>
+	
+	<!-- 资讯中心模块service -->
+	<bean id="newsClassService" class="com.ticket.serviceImpl.NewsClassServiceImpl"/>
+	<bean id="newsService" class="com.ticket.serviceImpl.NewsServiceImpl"/>
+	<bean id="newsCommentService" class="com.ticket.serviceImpl.NewsCommentServiceImpl" />
+	<bean id="infoPositionService" class="com.ticket.serviceImpl.InfoPositionServiceImpl" />
+	<bean id="pageRedirectTemplateService" class="com.ticket.serviceImpl.PageRedirectTemplateServiceImpl" />
+	<bean id="advertTypeService" class="com.ticket.serviceImpl.AdvertTypeServiceImpl" />
+	<bean id="advertService" class="com.ticket.serviceImpl.AdvertServiceImpl" />
+	<bean id="flightCompanyService" class="com.ticket.serviceImpl.FlightCompanyServiceImpl" />
+	<bean id="fCSelfCheckinPositionService" class="com.ticket.serviceImpl.FCSelfCheckinPositionServiceImpl" />
+	<bean id="lostGoodsInfoService" class="com.ticket.serviceImpl.LostGoodsInfoServiceImpl" />
+	<bean id="goodsLostPostionsService" class="com.ticket.serviceImpl.GoodsLostPostionsServiceImpl" />
+	<bean id="receiveRecordService" class="com.ticket.serviceImpl.ReceiveRecordServiceImpl" />
+	<bean id="airportInfoService" class="com.ticket.serviceImpl.AirportInfoServiceImpl" />
+	<bean id="flightSiteService" class="com.ticket.serviceImpl.FlightSiteServiceImpl" />
+	<bean id="autoSendMessageService" class="com.ticket.serviceImpl.AutoSendMessageServiceImpl" />
+	<bean id="advertFlightService" class="com.ticket.serviceImpl.AdvertFlightServiceImpl"/>
+	
+	 <!-- 会员中心模块service   -->
+	<bean id="memberLevelService" class="com.ticket.serviceImpl.MemberLevelServiceImpl"></bean>
+	<bean id="memberService" class="com.ticket.serviceImpl.MemberServiceImpl"></bean>
+	<bean id="memberDetailInfoService" class="com.ticket.serviceImpl.MemberDetailInfoServiceImpl"></bean>
+	<bean id="memberFavoriteService" class="com.ticket.serviceImpl.MemberFavoriteServiceImpl" scope="prototype"/>
+	<bean id="messageReminderService" class="com.ticket.serviceImpl.MessageReminderServiceImpl"></bean>
+	<bean id="messageReadLogService" class="com.ticket.serviceImpl.MessageReadLogServiceImpl"></bean>
+	<bean id="memberFocusFlightService" class="com.ticket.serviceImpl.MemberFocusFlightServiceImpl"></bean>
+	<bean id="specialPersonWithQuickMenuService" class="com.ticket.serviceImpl.SpecialPersonWithQuickMenuServiceImpl"></bean>
+	<bean id="massInfomationService" class="com.ticket.serviceImpl.MassInfomationServiceImpl"></bean>
+	<bean id="memberSendInfoService" class="com.ticket.serviceImpl.MemberSendInfoServiceImpl"></bean>
+	
+	<!-- 服务中心模块service -->
+	<bean id="serviceBookService" class="com.ticket.serviceImpl.ServiceBookServiceImpl"></bean>
+	
+	<!-- 权限中心service -->
+	<bean id="roleInfoService" class="com.ticket.serviceImpl.RoleInfoServiceImpl"></bean>
+	<bean id="privilegeInfoService" class="com.ticket.serviceImpl.PrivilegeInfoServiceImpl"></bean>
+	<bean id="userRoleService" class="com.ticket.serviceImpl.UserRoleServiceImpl"></bean>
+	<bean id="rolePrivilegeService" class="com.ticket.serviceImpl.RolePrivilegeServiceImpl"></bean>
+	
+	<bean id="departFromPortService" class="com.ticket.serviceImpl.DepartFromPortServiceImpl"></bean>
+	<bean id="arrivalAtPortService" class="com.ticket.serviceImpl.ArrivalAtPortServiceImpl"></bean>
+	<bean id="weatherService" class="com.ticket.serviceImpl.WeatherServiceImpl"></bean>
+	<bean id="departFromPortAction" class="com.ticket.action.DepartFromPortAction"></bean>
+	<bean id="arrivalAtPortAction" class="com.ticket.action.ArrivalAtPortAction"></bean>
+	
+	<!-- Action Defined Area -->
+	<bean id="systemConfigAction" class="com.ticket.action.SystemConfigAction" scope="prototype"/>
+	<bean id="systemUserAction" class="com.ticket.action.SystemUserAction" scope="prototype"/>
+	<bean id="systemUserLoginLogAction" class="com.ticket.action.SystemUserLoginLogAction" scope="prototype"/>
+	<bean id="systemUserOperationAction" class="com.ticket.action.SystemUserOperationAction" scope="prototype"/>
+	<bean id="systemModuleAction" class="com.ticket.action.SystemModuleAction" scope="prototype"/>
+	<bean id="articleAction" class="com.ticket.action.ArticleAction" scope="prototype" />
+	<bean id="systemPluginAction" class="com.ticket.action.SystemPluginAction" scope="prototype" />
+	<bean id="systemVersionAction" class="com.ticket.action.SystemVersionAction" scope="prototype" />
+	<!-- 机场制度 -->
+	<bean id="regulationTypeAction" class="com.ticket.action.RegulationTypeAction" scope="prototype" />
+	<bean id="regulationAction" class="com.ticket.action.RegulationAction" scope="prototype" />
+	
+	<!-- 机场交通 -->
+	<bean id="trafficTypeAction" class="com.ticket.action.TrafficTypeAction" scope="prototype" />
+	<bean id="trafficLineAction" class="com.ticket.action.TrafficLineAction" scope="prototype" />
+	<bean id="trafficStationAction" class="com.ticket.action.TrafficStationAction" scope="prototype" />
+	<bean id="trafficLineAndStationAction" class="com.ticket.action.TrafficLineAndStationAction" scope="prototype" />
+	
+	<!-- 热线电话 -->
+	<bean id="hotLinePhoneAction" class="com.ticket.action.HotLinePhoneAction" scope="prototype" />
+	
+	<!-- 机场商业 -->
+	<bean id="airportBusinessTypeAction" class="com.ticket.action.AirportBusinessTypeAction" scope="prototype" />
+	<bean id="businessInfoAction" class="com.ticket.action.BusinessInfoAction" scope="prototype" />
+	<bean id="friendlyLinkAction" class="com.ticket.action.FriendlyLinkAction" scope="prototype" />
+	
+	<!-- 机场部门员工 -->
+	<bean id="airportDepartmentAction" class="com.ticket.action.AirportDepartmentAction" scope="prototype" />
+	<bean id="airportEmployeeAction" class="com.ticket.action.AirportEmployeeAction" scope="prototype" />
+
+	<!-- 销售CRM action -->
+	<bean id="myTextAction" class="com.ticket.action.MyTextAction" scope="prototype" />
+	<bean id="employeeInfoZengLogDetailAction" class="com.ticket.action.EmployeeInfoZengLogDetailAction" scope="prototype" />
+	<bean id="employeeInfoZengLogAction" class="com.ticket.action.EmployeeInfoZengLogAction" scope="prototype" />
+	<bean id="industryAction" class="com.ticket.action.IndustryAction" scope="prototype" />
+	<bean id="channelPositionAction" class="com.ticket.action.ChannelPositionAction" scope="prototype" />
+	<bean id="positionAction" class="com.ticket.action.PositionAction" scope="prototype" />
+	<bean id="letterStationAction" class="com.ticket.action.LetterStationAction" scope="prototype" />
+	<bean id="stationLetterReadLogAction" class="com.ticket.action.StationLetterReadLogAction" scope="prototype" />
+	<bean id="stationLetterSendRecordAction" class="com.ticket.action.StationLetterSendRecordAction" scope="prototype" />
+	<bean id="hitSingleLogAction" class="com.ticket.action.HitSingleLogAction" scope="prototype" />
+	<bean id="customerProtectLogAction" class="com.ticket.action.CustomerProtectLogAction" scope="prototype" />
+	<bean id="departmentInfoAction" class="com.ticket.action.DepartmentInfoAction" scope="prototype" />
+	<bean id="employeeInfoAction" class="com.ticket.action.EmployeeInfoAction" scope="prototype" />
+	<bean id="employeeOutVisitAction" class="com.ticket.action.EmployeeOutVisitAction" scope="prototype" />
+	<bean id="auditVisitRecordAction" class="com.ticket.action.AuditVisitRecordAction" scope="prototype" />
+	<bean id="phoneVisitAction" class="com.ticket.action.PhoneVisitAction" scope="prototype" />
+	<bean id="remarkVisitRecordAction" class="com.ticket.action.RemarkVisitRecordAction" scope="prototype" />
+	<bean id="channelTypeAction" class="com.ticket.action.ChannelTypeAction" scope="prototype" />
+	<bean id="channelCustomerInfoAction" class="com.ticket.action.ChannelCustomerInfoAction" scope="prototype" />
+	<bean id="customerTransferLogAction" class="com.ticket.action.CustomerTransferLogAction" scope="prototype" />
+	<bean id="applayClassAction" class="com.ticket.action.ApplayClassAction" scope="prototype" />
+    <bean id="agreementAction" class="com.ticket.action.AgreementAction" scope="prototype" />
+	<bean id="orderInfoAction" class="com.ticket.action.OrderInfoAction" scope="prototype" />
+	<bean id="survryModularAction" class="com.ticket.action.SurvryModularAction" scope="prototype" />
+	<bean id="surveyQuestionnaireAction" class="com.ticket.action.SurveyQuestionnaireAction" scope="prototype" />
+	<bean id="surveyQuestionAction" class="com.ticket.action.SurveyQuestionAction" scope="prototype" />
+	<bean id="surveyOptionAction" class="com.ticket.action.SurveyOptionAction" scope="prototype" />
+	<bean id="questionnaireSendRecordAction" class="com.ticket.action.QuestionnaireSendRecordAction" scope="prototype" />
+	<bean id="questionnaireAnswerAction" class="com.ticket.action.QuestionnaireAnswerAction" scope="prototype" />
+	<bean id="questionnaireSendLogAction" class="com.ticket.action.QuestionnaireSendLogAction" scope="prototype" />
+	<bean id="rechargeRecordAction" class="com.ticket.action.RechargeRecordAction" scope="prototype" />
+	<bean id="favouredPolicyAction" class="com.ticket.action.FavouredPolicyAction" scope="prototype" />
+	<bean id="receiptAction" class="com.ticket.action.ReceiptAction" scope="prototype" />
+	<bean id="pickUpCustomerApplyAction" class="com.ticket.action.PickUpCustomerApplyAction" scope="prototype" />
+	<bean id="saleTaskAction" class="com.ticket.action.SaleTaskAction" scope="prototype" />
+	<bean id="dataAuthoritysAction" class="com.ticket.action.DataAuthoritysAction"></bean>
+	<bean id="positionDataAuthorityAction" class="com.ticket.action.PositionDataAuthorityAction"></bean>
+	
+	<!-- 资讯中心action -->
+	<bean id="newsClassAction" class="com.ticket.action.NewsClassAction" scope="prototype" />
+	<bean id="newsAction" class="com.ticket.action.NewsAction" scope="prototype" />
+	<bean id="newsCommentAction" class="com.ticket.action.NewsCommentAction" scope="prototype" />
+	<bean id="pageRedirectTemplateAction" class="com.ticket.action.PageRedirectTemplateAction" scope="prototype" />
+	<bean id="advertTypeAction" class="com.ticket.action.AdvertTypeAction" scope="prototype" />
+	<bean id="advertAction" class="com.ticket.action.AdvertAction" scope="prototype" />
+	<bean id="infoPositionAction" class="com.ticket.action.InfoPositionAction" scope="prototype" />
+	<bean id="flightCompanyAction" class="com.ticket.action.FlightCompanyAction" scope="prototype" />
+	<bean id="fCSelfCheckinPositionAction" class="com.ticket.action.FCSelfCheckinPositionAction" scope="prototype" />
+	<bean id="lostGoodsInfoAction" class="com.ticket.action.LostGoodsInfoAction" scope="prototype" />
+	<bean id="goodsLostPostionsAction" class="com.ticket.action.GoodsLostPostionsAction" scope="prototype" />
+	<bean id="receiveRecordAction" class="com.ticket.action.ReceiveRecordAction" scope="prototype" />
+	<bean id="airportInfoAction" class="com.ticket.action.AirportInfoAction" scope="prototype" />
+	<bean id="advertFlightAction" class="com.ticket.action.AdvertFlightAction" scope="prototype"></bean>
+	
+	 <!-- 会员中心action  -->
+	<bean id="memberLevelAction" class="com.ticket.action.MemberLevelAction" scope="prototype"></bean>
+	<bean id="memberAction" class="com.ticket.action.MemberAction" scope="prototype"></bean>
+	<bean id="memberDetailInfoAction" class="com.ticket.action.MemberDetailInfoAction" scope="prototype"></bean>
+	<bean id="memberFavoriteAction" class="com.ticket.action.MemberFavoriteAction" scope="prototype"></bean>
+	<bean id="messageReminderAction" class="com.ticket.action.MessageReminderAction" scope="prototype"></bean>
+	<bean id="messageReadLogAction" class="com.ticket.action.MessageReadLogAction" scope="prototype"></bean>
+	<bean id="memberFocusFlightAction" class="com.ticket.action.MemberFocusFlightAction" scope="prototype"></bean>
+	<bean id="specialPersonWithQuickMenuAction" class="com.ticket.action.SpecialPersonWithQuickMenuAction" scope="prototype"></bean>
+	<bean id="massInfomationAction" class="com.ticket.action.MassInfomationAction" scope="prototype"></bean>
+	<bean id="memberSendInfoAction" class="com.ticket.action.MemberSendInfoAction" scope="prototype"></bean>
+	
+	<!-- 服务中心 -->
+	<bean id="serviceBookAction" class="com.ticket.action.ServiceBookAction" scope="prototype"></bean>
+	<bean id="baiduExchangeRateAction" class="com.ticket.action.BaiduExchangeRateAction" scope="prototype" />
+	<!-- 权限中心 -->
+	<bean id="roleInfoAction" class="com.ticket.action.RoleInfoAction" scope="prototype"></bean>
+	<bean id="privilegeInfoAction" class="com.ticket.action.PrivilegeInfoAction" scope="prototype"></bean>
+	<bean id="userRoleAction" class="com.ticket.action.UserRoleAction" scope="prototype"></bean>
+	<bean id="rolePrivilegeAction" class="com.ticket.action.RolePrivilegeAction" scope="prototype"></bean>
+	<bean id="quickMenuAction" class="com.ticket.action.QuickMenuAction" scope="prototype"></bean>
+	<bean id="quickMenuMemberSettingAction" class="com.ticket.action.QuickMenuMemberSettingAction" scope="prototype"></bean>
+	
+	<!-- 评价设置action -->
+	<bean id="evaluationSettingAction" class="com.ticket.action.EvaluationSettingAction" scope="prototype"></bean>
+	
+	<bean id="memberAnnouncementAction" class="com.ticket.action.MemberAnnouncementAction"></bean>
+	<!-- 拦截器bean -->
+	<bean id="methodPermissionInterceptor" class="com.ticket.interceptor.MethodPermissionInterceptor" scope="singleton"></bean>
+	<bean id="menuPermissionInterceptor" class="com.ticket.interceptor.MenuPermissionInterceptor" scope="singleton"></bean>
+	
+	<!-- 系统字典 -->
+	<bean id="systemDictionaryService" class="com.ticket.serviceImpl.SystemDictionaryServiceImpl" ></bean>
+	<!-- 前端字典 -->
+	<bean id="frontMenuService" class="com.ticket.serviceImpl.FrontMenuServiceImpl" ></bean>
+	<!-- 系统组织机构 -->
+	<bean id="systemOrgService" class="com.ticket.serviceImpl.SystemOrgServiceImpl"></bean>
+	<!-- 页面缓存组 -->
+	<bean id="pageCacheGroupService" class="com.ticket.serviceImpl.PageCacheGroupServiceImpl" init-method="init"></bean>
+	<!-- 页面缓存key -->
+	<bean id="pageCacheKeyService" class="com.ticket.serviceImpl.PageCacheKeyServiceImpl" init-method="init"></bean>
+	<!-- 安全key管理 -->
+	<bean id="securityKeyService" class="com.ticket.serviceImpl.SecurityKeyServiceImpl"></bean>
+	
+	<!-- 服务码 -->
+	<bean id="bjdjServiceCodeService" class="com.ticket.serviceImpl.BjdjServiceCodeServiceImpl"></bean>
+	<bean id="serviceCodeLogService" class="com.ticket.serviceImpl.BjdjServiceCodeOperationServiceImpl"></bean>
+	<bean id="bjdjServiceCodeDelayRuleService" class="com.ticket.serviceImpl.BjdjServiceCodeDelayRuleServiceImpl"></bean>
+	<!-- 服务厅 -->
+	<bean id="bjdjHallService" class="com.ticket.serviceImpl.BjdjHallServiceImpl"></bean>
+	<bean id="ChannelHallRelationService" class="com.ticket.serviceImpl.ChannelHallRelationServiceImpl"></bean>
+	<!-- 服务套餐 -->
+	<bean id="bjdjServiceItemService" class="com.ticket.serviceImpl.BjdjServiceItemServiceImpl"></bean>
+	<bean id="bjdjServicePackageService" class="com.ticket.serviceImpl.BjdjServicePackageServiceImpl"></bean>
+	<bean id="bjdjServicePackageItemService" class="com.ticket.serviceImpl.BjdjServicePackageItemServiceImpl"></bean>
+	<!-- 便捷登机订单 -->
+	<bean id="bjdjOrderService" class="com.ticket.serviceImpl.BjdjOrderServiceImpl"></bean>
+	<bean id="bjdjRefundService" class="com.ticket.serviceImpl.BjdjRefundServiceImpl"></bean>
+	<!-- 评价 -->
+	<bean id="bjdjCommentService" class="com.ticket.serviceImpl.BjdjCommentServiceImpl"></bean>
+	<bean id="bjdjCommentKeywordStatisticsService" class="com.ticket.serviceImpl.BjdjCommentKeywordStatisticsServiceImpl"></bean>
+	<!-- 快捷菜单 -->
+	<bean id="quickMenuService" class="com.ticket.serviceImpl.QuickMenuServiceImpl"></bean>
+	<bean id="quickMenuMemberSettingService" class="com.ticket.serviceImpl.QuickMenuMemberSettingServiceImpl"></bean>
+	<!-- 预约 -->
+	<bean id="bjdjAppointmentService" class="com.ticket.serviceImpl.BjdjAppointmentServiceImpl"></bean>
+	<!-- 验证 -->
+	<bean id="bjdjValidationService" class="com.ticket.serviceImpl.BjdjValidationServiceImpl"></bean>
+	<!-- 分单 -->
+	<bean id="bjdjDispatchService" class="com.ticket.serviceImpl.BjdjDispatchServiceImpl"></bean>
+	<!-- 分单服务流程 -->
+	<bean id="bjdjDispatchListService" class="com.ticket.serviceImpl.BjdjDispatchListServiceImpl"></bean>
+	<!-- 评价设置 -->
+	<bean id="evaluationSettingService" class="com.ticket.serviceImpl.EvaluationSettingServiceImpl"></bean>
+	<!-- 评价系统 -->
+	<bean id="evaluationService" class="com.ticket.serviceImpl.EvaluationServiceImpl"></bean>
+	<!-- 评价模板 -->
+	<bean id="evaluationTemplateService" class="com.ticket.serviceImpl.EvaluationTemplateServiceImpl"></bean>
+	<!-- 评价报表任务 -->
+	<bean id="evaluationReportTaskService" class="com.ticket.serviceImpl.EvaluationReportTaskServiceImpl"></bean>
+	<!-- 后台管理员操作日志 -->
+	<bean id="systemOperationLogService" class="com.ticket.serviceImpl.SystemOperationLogServiceImpl"></bean>
+	<!-- 搜索词统计 -->
+	<bean id="countSearchService" class="com.ticket.serviceImpl.CountSearchServiceImpl"></bean>
+	<!-- 头像推荐 -->
+	<bean id="memberLogoService" class="com.ticket.serviceImpl.MemberLogoServiceImpl"></bean>
+	<!-- 便捷登机时间段分配 -->
+	<bean id="bjdjTimeService" class="com.ticket.serviceImpl.BjdjTimeServiceImpl"></bean>
+	<!-- 激活排队消息提醒 -->
+	<bean id="bjdjActivateQueueService" class="com.ticket.serviceImpl.BjdjActivateQueueServiceImpl"></bean>
+	
+	<bean id="memberAnnouncementService" class="com.ticket.serviceImpl.MemberAnnouncementServiceImpl"></bean>
+	<bean id="systemFreebackInfoService" class="com.ticket.serviceImpl.SystemFreebackInfoServiceImpl"></bean>
+	<bean id="systemFreebackInfoAction" class="com.ticket.action.SystemFreebackInfoAction" scope="prototype"></bean>
+	<bean id="bjdjPageService" class="com.ticket.serviceImpl.BjdjPageServiceImpl"></bean>
+	<bean id="bjdjPageAction" class="com.ticket.action.BjdjPageAction" scope="prototype"></bean>
+	<bean id="timeSearchService" class="com.ticket.serviceImpl.TimeSearchServiceImpl"></bean>
+	<bean id="feedbackService" class="com.ticket.serviceImpl.FeedbackServiceImpl"></bean>
+	<bean id="feedbackReplyService" class="com.ticket.serviceImpl.FeedbackReplyServiceImpl"></bean>
+	<bean id="bjdjPageTemplateService" class="com.ticket.serviceImpl.BjdjPageTemplateServiceImpl"></bean>
+	<!-- vpn断线 -->
+	<bean id="vpnBrokenService" class="com.ticket.serviceImpl.VpnBrokenServiceImpl"></bean>
+	<bean id="wifiAreaService" class="com.ticket.serviceImpl.WifiAreaServiceImpl"></bean>
+	<bean id="wifiService" class="com.ticket.serviceImpl.WifiServiceImpl"></bean>
+	<bean id="wifiPushService" class="com.ticket.serviceImpl.WifiPushServiceImpl"></bean>
+	<bean id="messageTemplateService" class="com.ticket.serviceImpl.MessageTemplateServiceImpl"></bean>
+	<bean id="wifiAreaMessageService" class="com.ticket.serviceImpl.WifiAreaMessageServiceImpl"></bean>
+	<bean id="memberMacService" class="com.ticket.serviceImpl.MemberMacServiceImpl"></bean>
+	
+	<!-- 搜索 -->
+	<bean id="keyWordLocationService" class="com.ticket.serviceImpl.KeyWordLocationServiceImpl" init-method="init"></bean>
+	<bean id="keyWordLocationPageService" class="com.ticket.serviceImpl.KeyWordLocationPageServiceImpl"></bean>
+	<bean id="wordsPackageService" class="com.ticket.serviceImpl.WordsPackageServiceImpl"></bean>
+	<bean id="unshieldNewsService" class="com.ticket.serviceImpl.UnshieldNewsServiceImpl"></bean>
+	<bean id="pageService" class="com.ticket.serviceImpl.PageServiceImpl"></bean>
+	<!-- 旅游景点 -->
+	<bean id="scenicSpotsService" class="com.ticket.serviceImpl.ScenicSpotsServiceImpl"></bean>
+	<bean id="scenicSpotsAction" class="com.ticket.action.ScenicSpotsAction" scope="prototype"></bean>
+	<!-- 商家活动 -->
+	<bean id="businessEventService" class="com.ticket.serviceImpl.BusinessEventServiceImpl"></bean>
+	<bean id="businessEventAction" class="com.ticket.action.BusinessEventAction" scope="prototype"></bean>
+	<!-- 商家活动绑定 -->
+	<bean id="businessEventBindService" class="com.ticket.serviceImpl.BusinessEventBindServiceImpl"></bean>
+	<bean id="businessEventBindAction" class="com.ticket.action.BusinessEventBindAction" scope="prototype"></bean>
+	<!-- 有赞出售中的商品 -->
+	<bean id="youZanGoodsInfoService" class="com.ticket.serviceImpl.YouZanGoodsInfoServiceImpl"></bean>
+	<bean id="youZanGoodsInfoAction" class="com.ticket.action.YouZanGoodsInfoAction"></bean>	
+	<!-- 绑定有赞商品 -->
+	<bean id="bindYouZanService" class="com.ticket.serviceImpl.BindYouZanServiceImpl"></bean>
+	<bean id="bindYouZanAction" class="com.ticket.action.BindYouZanAction"></bean>
+	
+	<!-- 定时获取有赞商品信息 -->
+	<bean id="youZanJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		<property name="targetObject" ref="youZanGoodsInfoService"/>  
+		<property name="targetMethod" value="getYouZanOpenData" />  
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="youZanSimpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">  
+		<property name="jobDetail" ref="youZanJob" />
+		  <!--调度工厂实例化后，经过0秒开始执行调度    -->
+		<property name="startDelay" value="0" />
+		  <!--每60秒调度一次  -->
+		<property name="repeatInterval" value="600000" />  
+	</bean>
+	<!-- 定期获取有赞商品的销量并绑定机场商家 -->
+	<bean id="youZanJob1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		<property name="targetObject" ref="businessInfoService"/>  
+		<property name="targetMethod" value="aotuSales" />  
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="youZanSimpleTrigger1" class="org.springframework.scheduling.quartz.SimpleTriggerBean">  
+		<property name="jobDetail" ref="youZanJob1" />
+		  <!--调度工厂实例化后，经过0秒开始执行调度    -->
+		<property name="startDelay" value="0" />
+		  <!--每600秒调度一次  -->
+		<property name="repeatInterval" value="600000" />  
+	</bean>
+	<!--订单超时检测  -->
+	<bean id="job1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		<property name="targetObject" ref="bjdjOrderService"/>  
+		<property name="targetMethod" value="checkExpire" />  
+		<property name="concurrent" value="false" />
+	</bean>
+	  <!--服务码过期定时器  -->
+	<bean id="job3" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		<property name="targetObject" ref="bjdjServiceCodeService"/>  
+		<property name="targetMethod" value="checkExpire" />  
+		<property name="concurrent" value="false" />
+	</bean> 
+	  <!--客保任务,将客保到期的客户放入公共池  -->
+	<bean id="customerProtectJob1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		<property name="targetObject" ref="customerProtectLogService"/>  
+		<property name="targetMethod" value="validateCustomerProtectIsToPublicPool" />  
+		<property name="concurrent" value="false" />
+	</bean>  
+	 <!--检车大厅是否有空余,然后发送短信  -->
+	<bean id="checkHallAndSendMessageJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		<property name="targetObject" ref="bjdjActivateQueueService"/>  
+		<property name="targetMethod" value="checkHallAndSendMessage" />  
+		<property name="concurrent" value="false" />
+	</bean>  
+	 <!--定时清理分享用户  -->
+	<bean id="clearShareMemberJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		<property name="targetObject" ref="memberService"/>  
+		<property name="targetMethod" value="clearShareMember" />  
+		<property name="concurrent" value="false" />
+	</bean>  
+	<bean id="clearmemberTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">  
+		<property name="jobDetail" ref="clearShareMemberJob" />  
+		  <!--每天12:00运行一次    -->
+		<!-- <property name="cronExpression" value="0 * * * * ?" />  --> 
+		<property name="startDelay" value="0" />
+		<property name="repeatInterval" value="60000" />
+	</bean> 
+	<bean id="simpleTrigger1" class="org.springframework.scheduling.quartz.SimpleTriggerBean">  
+		<property name="jobDetail" ref="job1" />
+		  <!--调度工厂实例化后，经过0秒开始执行调度    -->
+		<property name="startDelay" value="0" />
+		  <!--每60秒调度一次  -->
+		<property name="repeatInterval" value="60000" />  
+	</bean>
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+		<property name="jobDetail" ref="job3" />  
+		  <!--每天12:00运行一次    -->
+		<property name="cronExpression" value="0 * * * * ?" />  
+	</bean> 
+	<bean id="simpleTriggerCustomerProtectJob1" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+		<property name="jobDetail" ref="customerProtectJob1" />  
+		  <!--每天12:01运行一次    -->
+		<property name="cronExpression" value="0 1 0 * * ?" />  
+	</bean> 
+	<bean id="checkHallAndSendMessageTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">  
+		<property name="jobDetail" ref="checkHallAndSendMessageJob" />
+		  <!-- 调度工厂实例化后，经过0秒开始执行调度   --> 
+		<property name="startDelay" value="0" />
+		  <!-- 每60秒调度一次 --> 
+		<property name="repeatInterval" value="60000" />  
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+		<property name="triggers">  
+			<list>  
+				<ref bean="youZanSimpleTrigger"/>
+				<ref bean="youZanSimpleTrigger1"/>
+				<ref bean="simpleTrigger1" />  
+				<ref bean="cronTrigger" />
+				<ref bean="checkHallAndSendMessageTrigger" />
+				<ref bean="simpleTriggerCustomerProtectJob1" /> 
+				<ref bean="clearmemberTrigger"/>
+			</list>  
+		</property>  
+	</bean>
+</beans>

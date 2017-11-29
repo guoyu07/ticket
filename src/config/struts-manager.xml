@@ -1,0 +1,1090 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<!-- config the managerPackage -->
+	<package name="managerPackage" extends="json-package">
+		<!-- Defined myself interceptors -->
+		<interceptors>
+			<interceptor name="systemUserInterceptor" class="com.ticket.interceptor.SystemUserInterceptor">
+				<param name="excludeMethods">login,logout,querySubByParentId,traverse,getInfoPositionInterface, saveMenuId,
+					addGoUrl,getInfoPositionByName,getBusinessInfoMainSaleLike,flushMemory,getInfoPositionByCounter,addCountSearchInterface,
+					getInfoPositionByPositionAlias
+				</param>
+			</interceptor>
+			<interceptor name="paginationInterceptor" class="com.ticket.interceptor.PaginationInterceptor" />
+			<interceptor name="methodPermissionInterceptor" class="com.ticket.interceptor.MethodPermissionInterceptor">
+				<param name="excludeMethods">execute,login,logout,querySubByParentId,traverse,getInfoPositionInterface, saveMenuId,
+					addGoUrl,updatePassword
+				</param>
+			</interceptor>
+			<interceptor name="menuPermissionInterceptor" class="com.ticket.interceptor.MenuPermissionInterceptor">
+			</interceptor>
+			<interceptor-stack name="MyDefaultInterceptor">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="paginationInterceptor" />
+				<interceptor-ref name="systemUserInterceptor" />
+				<interceptor-ref name="methodPermissionInterceptor" />
+				<interceptor-ref name="menuPermissionInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="MyDefaultInterceptor" />
+		<global-results>
+			<result name="adminLogin">/WEB-INF/jsp/manager/common/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/manager/common/temp/error.jsp</result>
+		</global-results>
+		<action name="base_*" method="{1}" class="com.ticket.action.BaseAction"></action>
+		<action name="generateTemplateCode_*" method="{1}" class="generateTemplateCodeAction">
+			<result name="addTemplateCode">/WEB-INF/jsp/manager/generateTemplateCode/addTemplateCode.jsp</result>
+			<result name="deleteTemplateCode">/WEB-INF/jsp/manager/generateTemplateCode/deleteTemplateCode.jsp</result>
+		</action>
+		<action name="systemConfig_*" method="{1}" class="systemConfigAction">
+			<result name="setSystemConfig">/WEB-INF/jsp/manager/systemConfig/setSystemConfig.jsp</result>
+		</action>
+		<action name="ticket_*" method="{1}" class="systemUserAction">
+			<result name="login">/WEB-INF/jsp/manager/common/login.jsp</result>
+			<result name="success">/WEB-INF/jsp/manager/common/index.jsp</result>
+		</action>
+		<action name="systemUser_*" method="{1}" class="systemUserAction">
+			<result name="addSystemUser">/WEB-INF/jsp/manager/systemUser/addSystemUser.jsp</result>
+			<result name="manageSystemUser">/WEB-INF/jsp/manager/systemUser/manageSystemUser.jsp</result>
+			<result name="editSystemUser">/WEB-INF/jsp/manager/systemUser/editSystemUser.jsp</result>
+			<result name="recycleSystemUser">/WEB-INF/jsp/manager/systemUser/recycleSystemUser.jsp</result>
+			<result name="grantRole">/WEB-INF/jsp/manager/systemUser/grantRoleToUser.jsp</result>
+			<result name="login">/WEB-INF/jsp/manager/common/login.jsp</result>
+			<result name="success">/WEB-INF/jsp/manager/common/index.jsp</result>
+		</action>
+		<action name="systemUserOperation_*" method="{1}" class="systemUserOperationAction">
+			<result name="addSystemUserOperation">/WEB-INF/jsp/manager/systemUserOperation/addSystemUserOperation.jsp</result>
+			<result name="manageSystemUserOperation">/WEB-INF/jsp/manager/systemUserOperation/manageSystemUserOperation.jsp</result>
+			<result name="editSystemUserOperation">/WEB-INF/jsp/manager/systemUserOperation/editSystemUserOperation.jsp</result>
+			<result name="recycleSystemUserOperation">/WEB-INF/jsp/manager/systemUserOperation/recycleSystemUserOperation.jsp</result>
+		</action>
+		<action name="systemUserLoginLog_*" method="{1}" class="systemUserLoginLogAction">
+			<result name="addSystemUserLoginLog">/WEB-INF/jsp/manager/systemUserLoginLog/addSystemUserLoginLog.jsp</result>
+			<result name="manageSystemUserLoginLog">/WEB-INF/jsp/manager/systemUserLoginLog/manageSystemUserLoginLog.jsp</result>
+			<result name="editSystemUserLoginLog">/WEB-INF/jsp/manager/systemUserLoginLog/editSystemUserLoginLog.jsp</result>
+			<result name="recycleSystemUserLoginLog">/WEB-INF/jsp/manager/systemUserLoginLog/recycleSystemUserLoginLog.jsp</result>
+		</action>
+		<action name="systemModule_*" method="{1}" class="systemModuleAction">
+			<result name="addSystemModule">/WEB-INF/jsp/manager/systemModule/addSystemModule.jsp</result>
+			<result name="manageSystemModule">/WEB-INF/jsp/manager/systemModule/manageSystemModule.jsp</result>
+			<result name="editSystemModule">/WEB-INF/jsp/manager/systemModule/editSystemModule.jsp</result>
+			<result name="recycleSystemModule">/WEB-INF/jsp/manager/systemModule/recycleSystemModule.jsp</result>
+			<result name="changeSystemModule">/WEB-INF/jsp/manager/systemModule/changeSystemModule.jsp</result>
+			<result name="success" type="redirect">/systemModule_manage.action?versionFlag=${versionFlag}</result>
+			<result name="setNewsClassAsSystemModule">/WEB-INF/jsp/manager/systemModule/setNewsClassAsSystemModule.jsp</result>
+		</action>
+		
+		<action name="article_*" method="{1}" class="articleAction">
+			<result name="addArticle">/WEB-INF/jsp/manager/article/addArticle.jsp</result>
+			<result name="manageArticle">/WEB-INF/jsp/manager/article/manageArticle.jsp</result>
+			<result name="editArticle">/WEB-INF/jsp/manager/article/editArticle.jsp</result>
+			<result name="recycleArticle">/WEB-INF/jsp/manager/article/recycleArticle.jsp</result>
+		</action>
+		
+		<action name="systemPlugin_*" method="{1}" class="systemPluginAction">
+			<result name="addSystemPlugin">/WEB-INF/jsp/manager/systemPlugin/addSystemPlugin.jsp</result>
+			<result name="manageSystemPlugin">/WEB-INF/jsp/manager/systemPlugin/manageSystemPlugin.jsp</result>
+			<result name="editSystemPlugin">/WEB-INF/jsp/manager/systemPlugin/editSystemPlugin.jsp</result>
+			<result name="recycleSystemPlugin">/WEB-INF/jsp/manager/systemPlugin/recycleSystemPlugin.jsp</result>
+		</action>
+		<action name="systemVersion_*" method="{1}" class="systemVersionAction">
+			<result name="addSystemVersion">/WEB-INF/jsp/manager/systemVersion/addSystemVersion.jsp</result>
+			<result name="manageSystemVersion">/WEB-INF/jsp/manager/systemVersion/manageSystemVersion.jsp</result>
+			<result name="editSystemVersion">/WEB-INF/jsp/manager/systemVersion/editSystemVersion.jsp</result>
+			<result name="recycleSystemVersion">/WEB-INF/jsp/manager/systemVersion/recycleSystemVersion.jsp</result>
+		</action>
+		
+		<!-- 热线电话 -->
+		<action name="hotLinePhone_*" method="{1}" class="hotLinePhoneAction">
+			<result name="addHotLinePhone">/WEB-INF/jsp/manager/hotLinePhone/addHotLinePhone.jsp</result>
+			<result name="manageHotLinePhone">/WEB-INF/jsp/manager/hotLinePhone/manageHotLinePhone.jsp</result>
+			<result name="editHotLinePhone">/WEB-INF/jsp/manager/hotLinePhone/editHotLinePhone.jsp</result>
+			<result name="recycleHotLinePhone">/WEB-INF/jsp/manager/hotLinePhone/recycleHotLinePhone.jsp</result>
+		</action>
+		
+		<!-- 机场制度 -->
+		<action name="regulationType_*" method="{1}" class="regulationTypeAction">
+			<result name="addRegulationType">/WEB-INF/jsp/manager/regulationType/addRegulationType.jsp</result>
+			<result name="manageRegulationType">/WEB-INF/jsp/manager/regulationType/manageRegulationType.jsp</result>
+			<result name="editRegulationType">/WEB-INF/jsp/manager/regulationType/editRegulationType.jsp</result>
+			<result name="recycleRegulationType">/WEB-INF/jsp/manager/regulationType/recycleRegulationType.jsp</result>
+		</action>
+		
+		<action name="regulation_*" method="{1}" class="regulationAction">
+			<result name="addRegulation">/WEB-INF/jsp/manager/regulation/addRegulation.jsp</result>
+			<result name="manageRegulation">/WEB-INF/jsp/manager/regulation/manageRegulation.jsp</result>
+			<result name="editRegulation">/WEB-INF/jsp/manager/regulation/editRegulation.jsp</result>
+			<result name="recycleRegulation">/WEB-INF/jsp/manager/regulation/recycleRegulation.jsp</result>
+		</action>
+		
+		<!-- 机场交通 -->
+		<action name="trafficType_*" method="{1}" class="trafficTypeAction">
+			<result name="addTrafficType">/WEB-INF/jsp/manager/trafficType/addTrafficType.jsp</result>
+			<result name="manageTrafficType">/WEB-INF/jsp/manager/trafficType/manageTrafficType.jsp</result>
+			<result name="editTrafficType">/WEB-INF/jsp/manager/trafficType/editTrafficType.jsp</result>
+			<result name="recycleTrafficType">/WEB-INF/jsp/manager/trafficType/recycleTrafficType.jsp</result>
+		</action>
+		
+		<action name="trafficLine_*" method="{1}" class="trafficLineAction">
+			<result name="addTrafficLine">/WEB-INF/jsp/manager/trafficLine/addTrafficLine.jsp</result>
+			<result name="manageTrafficLine">/WEB-INF/jsp/manager/trafficLine/manageTrafficLine.jsp</result>
+			<result name="editTrafficLine">/WEB-INF/jsp/manager/trafficLine/editTrafficLine.jsp</result>
+			<result name="recycleTrafficLine">/WEB-INF/jsp/manager/trafficLine/recycleTrafficLine.jsp</result>
+		</action>
+		
+		<action name="trafficStation_*" method="{1}" class="trafficStationAction">
+			<result name="addTrafficStation">/WEB-INF/jsp/manager/trafficStation/addTrafficStation.jsp</result>
+			<result name="manageTrafficStation">/WEB-INF/jsp/manager/trafficStation/manageTrafficStation.jsp</result>
+			<result name="editTrafficStation">/WEB-INF/jsp/manager/trafficStation/editTrafficStation.jsp</result>
+			<result name="recycleTrafficStation">/WEB-INF/jsp/manager/trafficStation/recycleTrafficStation.jsp</result>
+		</action>
+		
+		<action name="trafficLineAndStation_*" method="{1}" class="trafficLineAndStationAction">
+			<result name="addTrafficLineAndStation">/WEB-INF/jsp/manager/trafficLineAndStation/addTrafficLineAndStation.jsp</result>
+			<result name="manageTrafficLineAndStation">/WEB-INF/jsp/manager/trafficLineAndStation/manageTrafficLineAndStation.jsp</result>
+			<result name="editTrafficLineAndStation">/WEB-INF/jsp/manager/trafficLineAndStation/editTrafficLineAndStation.jsp</result>
+			<result name="recycleTrafficLineAndStation">/WEB-INF/jsp/manager/trafficLineAndStation/recycleTrafficLineAndStation.jsp</result>
+		</action>
+		<!-- 机场商业 -->
+		<action name="airportBusinessType_*" method="{1}" class="airportBusinessTypeAction">
+			<result name="addAirportBusinessType">/WEB-INF/jsp/manager/airportBusinessType/addAirportBusinessType.jsp</result>
+			<result name="manageAirportBusinessType">/WEB-INF/jsp/manager/airportBusinessType/manageAirportBusinessType.jsp</result>
+			<result name="editAirportBusinessType">/WEB-INF/jsp/manager/airportBusinessType/editAirportBusinessType.jsp</result>
+			<result name="recycleAirportBusinessType">/WEB-INF/jsp/manager/airportBusinessType/recycleAirportBusinessType.jsp</result>
+		</action>
+		
+		<action name="businessInfo_*" method="{1}" class="businessInfoAction">
+			<result name="addBusinessInfo">/WEB-INF/jsp/manager/businessInfo/addBusinessInfo.jsp</result>
+			<result name="manageBusinessInfo">/WEB-INF/jsp/manager/businessInfo/manageBusinessInfo.jsp</result>
+			<result name="editBusinessInfo">/WEB-INF/jsp/manager/businessInfo/editBusinessInfo.jsp</result>
+			<result name="recycleBusinessInfo">/WEB-INF/jsp/manager/businessInfo/recycleBusinessInfo.jsp</result>
+			<result name="bindYouZanGoods">/WEB-INF/jsp/manager/businessInfo/bindYouzanGoods.jsp</result>
+		</action>
+		
+		<action name="friendlyLink_*" method="{1}" class="friendlyLinkAction">
+			<result name="addFriendlyLink">/WEB-INF/jsp/manager/friendlyLink/addFriendlyLink.jsp</result>
+			<result name="manageFriendlyLink">/WEB-INF/jsp/manager/friendlyLink/manageFriendlyLink.jsp</result>
+			<result name="editFriendlyLink">/WEB-INF/jsp/manager/friendlyLink/editFriendlyLink.jsp</result>
+			<result name="recycleFriendlyLink">/WEB-INF/jsp/manager/friendlyLink/recycleFriendlyLink.jsp</result>
+		</action>
+		<!-- 机场部门员工 -->
+		<action name="airportDepartment_*" method="{1}" class="airportDepartmentAction">
+			<result name="addAirportDepartment">/WEB-INF/jsp/manager/airportDepartment/addAirportDepartment.jsp</result>
+			<result name="manageAirportDepartment">/WEB-INF/jsp/manager/airportDepartment/manageAirportDepartment.jsp</result>
+			<result name="editAirportDepartment">/WEB-INF/jsp/manager/airportDepartment/editAirportDepartment.jsp</result>
+			<result name="recycleAirportDepartment">/WEB-INF/jsp/manager/airportDepartment/recycleAirportDepartment.jsp</result>
+		</action>
+		
+		<action name="airportEmployee_*" method="{1}" class="com.ticket.action.AirportEmployeeAction">
+			<result name="addAirportEmployee">/WEB-INF/jsp/manager/airportEmployee/addAirportEmployee.jsp</result>
+			<result name="manageAirportEmployee">/WEB-INF/jsp/manager/airportEmployee/manageAirportEmployee.jsp</result>
+			<result name="editAirportEmployee">/WEB-INF/jsp/manager/airportEmployee/editAirportEmployee.jsp</result>
+			<result name="recycleAirportEmployee">/WEB-INF/jsp/manager/airportEmployee/recycleAirportEmployee.jsp</result>
+		</action>
+		
+		
+		<!-- 后台CRM -->
+		<action name="phoneVisit_*" method="{1}" class="phoneVisitAction">
+			<result name="addPhoneVisit">/WEB-INF/jsp/manager/phoneVisit/addPhoneVisit.jsp</result>
+			<result name="managePhoneVisit">/WEB-INF/jsp/manager/phoneVisit/managePhoneVisit.jsp</result>
+			<result name="editPhoneVisit">/WEB-INF/jsp/manager/phoneVisit/editPhoneVisit.jsp</result>
+			<result name="recyclePhoneVisit">/WEB-INF/jsp/manager/phoneVisit/recyclePhoneVisit.jsp</result>
+			<result name="employeeAjax">/WEB-INF/jsp/manager/phoneVisit/employeeAjax.jsp</result>
+			<result name="view">/WEB-INF/jsp/manager/phoneVisit/view.jsp</result>
+		</action>
+		<action name="remarkVisitRecord_*" method="{1}" class="remarkVisitRecordAction">
+			<result name="addRemarkVisitRecord">/WEB-INF/jsp/manager/remarkVisitRecord/addRemarkVisitRecord.jsp</result>
+			<result name="manageRemarkVisitRecord">/WEB-INF/jsp/manager/remarkVisitRecord/manageRemarkVisitRecord.jsp</result>
+			<result name="editRemarkVisitRecord">/WEB-INF/jsp/manager/remarkVisitRecord/editRemarkVisitRecord.jsp</result>
+			<result name="recycleRemarkVisitRecord">/WEB-INF/jsp/manager/remarkVisitRecord/recycleRemarkVisitRecord.jsp</result>
+			<result name="employeeAjax">/WEB-INF/jsp/manager/remarkVisitRecord/employeeAjax.jsp</result>
+			<result name="remarkVisitRecordDetail">/WEB-INF/jsp/manager/remarkVisitRecord/remarkVisitRecordDetail.jsp</result>
+		</action>
+		
+		<action name="employeeOutVisit_*" method="{1}" class="employeeOutVisitAction">
+			<result name="addEmployeeOutVisit">/WEB-INF/jsp/manager/employeeOutVisit/addEmployeeOutVisit.jsp</result>
+			<result name="manageEmployeeOutVisit">/WEB-INF/jsp/manager/employeeOutVisit/manageEmployeeOutVisit.jsp</result>
+			<result name="editEmployeeOutVisit">/WEB-INF/jsp/manager/employeeOutVisit/editEmployeeOutVisit.jsp</result>
+			<result name="editEmployeeOutVisit2">/WEB-INF/jsp/manager/employeeOutVisit/editEmployeeOutVisit2.jsp</result>
+			<result name="recycleEmployeeOutVisit">/WEB-INF/jsp/manager/employeeOutVisit/recycleEmployeeOutVisit.jsp</result>
+			<result name="view">/WEB-INF/jsp/manager/employeeOutVisit/view.jsp</result>
+		</action>
+		
+		<action name="employeeInfo_*" method="{1}" class="employeeInfoAction">
+			<result name="bindChannelCustomerInfo">/WEB-INF/jsp/manager/employeeInfo/bindChannelCustomerInfo.jsp</result>
+			<result name="addEmployeeInfo">/WEB-INF/jsp/manager/employeeInfo/addEmployeeInfo.jsp</result>
+			<result name="manageEmployeeInfo">/WEB-INF/jsp/manager/employeeInfo/manageEmployeeInfo.jsp</result>
+			<result name="editEmployeeInfo">/WEB-INF/jsp/manager/employeeInfo/editEmployeeInfo.jsp</result>
+			<result name="recycleEmployeeInfo">/WEB-INF/jsp/manager/employeeInfo/recycleEmployeeInfo.jsp</result>
+		</action>
+		
+		<action name="departmentInfo_*" method="{1}" class="departmentInfoAction">
+			<result name="addDepartmentInfo">/WEB-INF/jsp/manager/departmentInfo/addDepartmentInfo.jsp</result>
+			<result name="manageDepartmentInfo">/WEB-INF/jsp/manager/departmentInfo/manageDepartmentInfo.jsp</result>
+			<result name="editDepartmentInfo">/WEB-INF/jsp/manager/departmentInfo/editDepartmentInfo.jsp</result>
+			<result name="editPrincipal">/WEB-INF/jsp/manager/departmentInfo/editDepartmentPrincipal.jsp</result>
+			<result name="recycleDepartmentInfo">/WEB-INF/jsp/manager/departmentInfo/recycleDepartmentInfo.jsp</result>
+		</action>
+		
+		<action name="channelType_*" method="{1}" class="channelTypeAction">
+			<result name="addChannelType">/WEB-INF/jsp/manager/channelType/addChannelType.jsp</result>
+			<result name="manageChannelType">/WEB-INF/jsp/manager/channelType/manageChannelType.jsp</result>
+			<result name="editChannelType">/WEB-INF/jsp/manager/channelType/editChannelType.jsp</result>
+			<result name="recycleChannelType">/WEB-INF/jsp/manager/channelType/recycleChannelType.jsp</result>
+		</action>
+		
+		<action name="channelCustomerInfo_*" method="{1}" class="channelCustomerInfoAction">
+			<result name="addChannelCustomerInfo">/WEB-INF/jsp/manager/channelCustomerInfo/addChannelCustomerInfo.jsp</result>
+			<result name="manageChannelCustomerInfo">/WEB-INF/jsp/manager/channelCustomerInfo/manageChannelCustomerInfo.jsp</result>
+			<result name="editChannelCustomerInfo">/WEB-INF/jsp/manager/channelCustomerInfo/editChannelCustomerInfo.jsp</result>
+			<result name="recycleChannelCustomerInfo">/WEB-INF/jsp/manager/channelCustomerInfo/recycleChannelCustomerInfo.jsp</result>
+			<result name="addBaseChannelCustomerInfo">/WEB-INF/jsp/manager/channelCustomerInfo/addBaseChannelCustomerInfo.jsp</result>
+			<result name="manageBaseChannelCustomerInfo">/WEB-INF/jsp/manager/channelCustomerInfo/manageBaseChannelCustomerInfo.jsp</result>
+			<result name="editBaseChannelCustomerInfo">/WEB-INF/jsp/manager/channelCustomerInfo/editBaseChannelCustomerInfo.jsp</result>
+			<result name="publicPoolChannelCustomerInfo">/WEB-INF/jsp/manager/channelCustomerInfo/publicPoolChannelCustomerInfo.jsp</result>
+			<result name="channelCustomerTransfer">/WEB-INF/jsp/manager/channelCustomerInfo/transferCustomerInfo.jsp</result>
+			<result name="customerPhoneVisitRecord">/WEB-INF/jsp/manager/channelCustomerInfo/customerPhoneVisitRecord.jsp</result>
+			<result name="customerOutVisitRecord">/WEB-INF/jsp/manager/channelCustomerInfo/customerOutVisitRecord.jsp</result>
+			<result name="customerFlow">/WEB-INF/jsp/manager/channelCustomerInfo/customerFlow.jsp</result>
+			<result name="view">/WEB-INF/jsp/manager/channelCustomerInfo/view.jsp</result>
+			<result name="intentionCustomerStatistic">/WEB-INF/jsp/manager/channelCustomerInfo/intentionCustomerStatistic.jsp</result>
+			<result name="intentionCustomerDetail">/WEB-INF/jsp/manager/channelCustomerInfo/intentionCustomerDetail.jsp</result>
+			<result name="phoneVisitDetail">/WEB-INF/jsp/manager/channelCustomerInfo/phoneVisitDetail.jsp</result>
+			<result name="outVisitDetail">/WEB-INF/jsp/manager/channelCustomerInfo/outVisitDetail.jsp</result>
+		</action>
+		
+		<action name="customerTransferLog_*" method="{1}" class="customerTransferLogAction">
+		
+		</action>
+		<action name="auditVisitRecord_*" method="{1}" class="auditVisitRecordAction">
+			<result name="addAuditVisitRecord">/WEB-INF/jsp/manager/auditVisitRecord/addAuditVisitRecord.jsp</result>
+			<result name="manageAuditVisitRecord">/WEB-INF/jsp/manager/auditVisitRecord/manageAuditVisitRecord.jsp</result>
+			<result name="showDetail">/WEB-INF/jsp/manager/auditVisitRecord/showDetail.jsp</result>
+		</action>
+		
+		<action name="favouredPolicy_*" method="{1}" class="favouredPolicyAction">
+			<result name="addFavouredPolicy">/WEB-INF/jsp/manager/favouredPolicy/addFavouredPolicy.jsp</result>
+			<result name="manageFavouredPolicy">/WEB-INF/jsp/manager/favouredPolicy/manageFavouredPolicy.jsp</result>
+			<result name="editFavouredPolicy">/WEB-INF/jsp/manager/favouredPolicy/editFavouredPolicy.jsp</result>
+			<result name="recycleFavouredPolicy">/WEB-INF/jsp/manager/favouredPolicy/recycleFavouredPolicy.jsp</result>
+		</action>
+		
+				
+		<action name="applayClass_*" method="{1}" class="applayClassAction">
+			<result name="addApplayClass">/WEB-INF/jsp/manager/applayClass/addApplayClass.jsp</result>
+			<result name="manageApplayClass">/WEB-INF/jsp/manager/applayClass/manageApplayClass.jsp</result>
+			<result name="editApplayClass">/WEB-INF/jsp/manager/applayClass/editApplayClass.jsp</result>
+			<result name="recycleApplayClass">/WEB-INF/jsp/manager/applayClass/recycleApplayClass.jsp</result>
+		</action>
+		
+		<action name="agreement_*" method="{1}" class="agreementAction">
+			<result name="addAgreement">/WEB-INF/jsp/manager/agreement/addAgreement.jsp</result>
+			<result name="addAgreement2">/WEB-INF/jsp/manager/agreement/addAgreement2.jsp</result>
+			<result name="manageEmployeeAgreement">/WEB-INF/jsp/manager/agreement/manageEmployeeAgreement.jsp</result>
+			<result name="manageAgreement">/WEB-INF/jsp/manager/agreement/manageAgreement.jsp</result>
+			<result name="manageSpAgreement">/WEB-INF/jsp/manager/agreement/manageSpAgreement.jsp</result>
+			<result name="manageQhAgreement">/WEB-INF/jsp/manager/agreement/manageQhAgreement.jsp</result>
+			
+			<result name="fafang">/WEB-INF/jsp/manager/agreement/fafangAgreement.jsp</result>
+			<result name="editAgreement">/WEB-INF/jsp/manager/agreement/editAgreement.jsp</result>
+			<result name="spAgreement">/WEB-INF/jsp/manager/agreement/spAgreement.jsp</result>
+			<result name="qhAgreement">/WEB-INF/jsp/manager/agreement/qhAgreement.jsp</result>
+			<result name="recycleAgreement">/WEB-INF/jsp/manager/agreement/recycleAgreement.jsp</result>
+			
+			<!-- 报表 -->
+			<result name="togetherReport">/WEB-INF/jsp/manager/agreement/togetherReport.jsp</result>
+			<result name="detailsReport">/WEB-INF/jsp/manager/agreement/detailsReport.jsp</result>
+			<result name="cumulativeReport">/WEB-INF/jsp/manager/agreement/cumulativeReport.jsp</result>
+			<result name="departmentReport">/WEB-INF/jsp/manager/agreement/departmentReport.jsp</result>
+			<result name="frontlineReport">/WEB-INF/jsp/manager/agreement/frontlineReport.jsp</result>
+		</action>
+		
+		<action name="orderInfo_*" method="{1}" class="orderInfoAction">
+			<result name="addOrderInfo">/WEB-INF/jsp/manager/orderInfo/addOrderInfo.jsp</result>
+			<result name="manageOrderInfo">/WEB-INF/jsp/manager/orderInfo/manageOrderInfo.jsp</result>
+			<result name="editOrderInfo">/WEB-INF/jsp/manager/orderInfo/editOrderInfo.jsp</result>
+			<result name="recycleOrderInfo">/WEB-INF/jsp/manager/orderInfo/recycleOrderInfo.jsp</result>
+		</action>
+		
+		
+		<action name="survryModular_*" method="{1}" class="survryModularAction">
+			<result name="addSurvryModular">/WEB-INF/jsp/manager/survryModular/addSurvryModular.jsp</result>
+			<result name="manageSurvryModular">/WEB-INF/jsp/manager/survryModular/manageSurvryModular.jsp</result>
+			<result name="editSurvryModular">/WEB-INF/jsp/manager/survryModular/editSurvryModular.jsp</result>
+			<result name="recycleSurvryModular">/WEB-INF/jsp/manager/survryModular/recycleSurvryModular.jsp</result>
+		</action>
+		
+		
+		<action name="surveyQuestionnaire_*" method="{1}" class="surveyQuestionnaireAction">
+			<result name="addSurveyQuestionnaire">/WEB-INF/jsp/manager/surveyQuestionnaire/addSurveyQuestionnaire.jsp</result>
+			<result name="manageSurveyQuestionnaire">/WEB-INF/jsp/manager/surveyQuestionnaire/manageSurveyQuestionnaire.jsp</result>
+			<result name="editSurveyQuestionnaire">/WEB-INF/jsp/manager/surveyQuestionnaire/editSurveyQuestionnaire.jsp</result>
+			<result name="recycleSurveyQuestionnaire">/WEB-INF/jsp/manager/surveyQuestionnaire/recycleSurveyQuestionnaire.jsp</result>
+			<result name="showQuestionnaireDetail">/WEB-INF/jsp/manager/surveyQuestionnaire/questionnaireDetail.jsp</result>
+			<result name="selectDeptAndCustomer">/WEB-INF/jsp/manager/surveyQuestionnaire/selectDeptAndCustomer.jsp</result>
+			<result name="questionnaireHasWrite">/WEB-INF/jsp/manager/surveyQuestionnaire/questionnaireHasWrite.jsp</result>
+			<result name="thanksActive">/WEB-INF/jsp/manager/surveyQuestionnaire/thanksActive.jsp</result>
+			<result name="questionnaireExpire">/WEB-INF/jsp/manager/surveyQuestionnaire/questionnaireExpire.jsp</result>
+			<result name="questionnaireStatisticResult">/WEB-INF/jsp/manager/surveyQuestionnaire/questionnaireStatisticResult.jsp</result>
+			<result name="answerDetail">/WEB-INF/jsp/manager/surveyQuestionnaire/answerDetail.jsp</result>
+		</action>
+				
+				
+		<action name="surveyQuestion_*" method="{1}" class="surveyQuestionAction">
+			<result name="addSurveyQuestion">/WEB-INF/jsp/manager/surveyQuestion/addSurveyQuestion.jsp</result>
+			<result name="manageSurveyQuestion">/WEB-INF/jsp/manager/surveyQuestion/manageSurveyQuestion.jsp</result>
+			<result name="editSurveyQuestion">/WEB-INF/jsp/manager/surveyQuestion/editSurveyQuestion.jsp</result>
+			<result name="recycleSurveyQuestion">/WEB-INF/jsp/manager/surveyQuestion/recycleSurveyQuestion.jsp</result>
+		</action>
+		
+		<action name="surveyOption_*" method="{1}" class="surveyOptionAction">
+			<result name="addSurveyOption">/WEB-INF/jsp/manager/surveyOption/addSurveyOption.jsp</result>
+			<result name="manageSurveyOption">/WEB-INF/jsp/manager/surveyOption/manageSurveyOption.jsp</result>
+			<result name="editSurveyOption">/WEB-INF/jsp/manager/surveyOption/editSurveyOption.jsp</result>
+			<result name="recycleSurveyOption">/WEB-INF/jsp/manager/surveyOption/recycleSurveyOption.jsp</result>
+		</action>
+		
+		<action name="saleTask_*" method="{1}" class="saleTaskAction">
+			<result name="addSaleTask">/WEB-INF/jsp/manager/saleTask/addSaleTask.jsp</result>
+			<result name="manageSaleTask">/WEB-INF/jsp/manager/saleTask/manageSaleTask.jsp</result>
+			<result name="editTask">/WEB-INF/jsp/manager/saleTask/editSaleTask.jsp</result>
+			<result name="publish">/WEB-INF/jsp/manager/saleTask/publishSaleTask.jsp</result>
+			<result name="overallDegree">/WEB-INF/jsp/manager/saleTask/saleTaskOverallDegree.jsp</result>
+			<result name="departmentDegree">/WEB-INF/jsp/manager/saleTask/saleTaskDepartmentDegree.jsp</result>
+			<result name="personalDegree">/WEB-INF/jsp/manager/saleTask/saleTaskPersonnalDegree.jsp</result>
+			<result name="recycleTask">/WEB-INF/jsp/manager/saleTask/recycleSaleTask.jsp</result>
+			<result name="configTaskPercent">/WEB-INF/jsp/manager/saleTask/configTaskPercent.jsp</result>
+		</action>
+		
+		<action name="position_*" method="{1}" class="positionAction">
+			<result name="addPosition">/WEB-INF/jsp/manager/position/addPosition.jsp</result>
+			<result name="managePosition">/WEB-INF/jsp/manager/position/managePosition.jsp</result>
+			<result name="editPosition">/WEB-INF/jsp/manager/position/editPosition.jsp</result>
+			<result name="recyclePosition">/WEB-INF/jsp/manager/position/recyclePosition.jsp</result>
+			<result name="grantPrivilege">/WEB-INF/jsp/manager/position/grantDataAuthorityToPosition.jsp</result>
+		</action>
+		
+		<action name="channelPosition_*" method="{1}" class="channelPositionAction">
+			<result name="addChannelPosition">/WEB-INF/jsp/manager/channelPosition/addChannelPosition.jsp</result>
+			<result name="manageChannelPosition">/WEB-INF/jsp/manager/channelPosition/manageChannelPosition.jsp</result>
+			<result name="editChannelPosition">/WEB-INF/jsp/manager/channelPosition/editChannelPosition.jsp</result>
+			<result name="recycleChannelPosition">/WEB-INF/jsp/manager/channelPosition/recycleChannelPosition.jsp</result>
+		</action>
+		
+		<action name="industry_*" method="{1}" class="industryAction">
+			<result name="addIndustry">/WEB-INF/jsp/manager/industry/addIndustry.jsp</result>
+			<result name="manageIndustry">/WEB-INF/jsp/manager/industry/manageIndustry.jsp</result>
+			<result name="editIndustry">/WEB-INF/jsp/manager/industry/editIndustry.jsp</result>
+			<result name="recycleIndustry">/WEB-INF/jsp/manager/industry/recycleIndustry.jsp</result>
+		</action>
+		
+		<!-- 资讯中心 -->
+		<action name="newsClass_*" method="{1}" class="newsClassAction">
+			<result name="addNewsClass">/WEB-INF/jsp/manager/newsClass/addNewsClass.jsp</result>
+			<result name="manageNewsClass">/WEB-INF/jsp/manager/newsClass/manageNewsClass.jsp</result>
+			<result name="editNewsClass">/WEB-INF/jsp/manager/newsClass/editNewsClass.jsp</result>
+			<result name="recycleNewsClass">/WEB-INF/jsp/manager/newsClass/recycleNewsClass.jsp</result>
+			<result name="success" type="redirect">/newsClass_manage.action?versionFlag=${versionFlag}</result>
+		</action>
+		
+		<action name="news_*" method="{1}" class="newsAction">
+			<result name="addNews">/WEB-INF/jsp/manager/news/addNews.jsp</result>
+			<result name="manageNews">/WEB-INF/jsp/manager/news/manageNews.jsp</result>
+			<result name="manageNewsByPermission">/WEB-INF/jsp/manager/news/manageNewsByPermission.jsp</result>
+			<result name="editNews">/WEB-INF/jsp/manager/news/editNews.jsp</result>
+			<result name="recycleNews">/WEB-INF/jsp/manager/news/recycleNews.jsp</result>
+			<result name="detailNews">/WEB-INF/jsp/manager/news/detailNews.jsp</result>
+		</action>
+		
+		<action name="newsComment_*" method="{1}" class="newsCommentAction">
+			<result name="addNewsComment">/WEB-INF/jsp/manager/newsComment/addNewsComment.jsp</result>
+			<result name="manageNewsComment">/WEB-INF/jsp/manager/newsComment/manageNewsComment.jsp</result>
+			<result name="editNewsComment">/WEB-INF/jsp/manager/newsComment/editNewsComment.jsp</result>
+			<result name="recycleNewsComment">/WEB-INF/jsp/manager/newsComment/recycleNewsComment.jsp</result>
+		</action>
+		
+		<action name="advertType_*" method="{1}" class="advertTypeAction">
+			<result name="addAdvertType">/WEB-INF/jsp/manager/advertType/addAdvertType.jsp</result>
+			<result name="manageAdvertType">/WEB-INF/jsp/manager/advertType/manageAdvertType.jsp</result>
+			<result name="editAdvertType">/WEB-INF/jsp/manager/advertType/editAdvertType.jsp</result>
+			<result name="recycleAdvertType">/WEB-INF/jsp/manager/advertType/recycleAdvertType.jsp</result>
+		</action>
+		
+		<action name="advert_*" method="{1}" class="advertAction">
+			<result name="addAdvert">/WEB-INF/jsp/manager/advert/addAdvert.jsp</result>
+			<result name="manageAdvert">/WEB-INF/jsp/manager/advert/manageAdvert.jsp</result>
+			<result name="editAdvert">/WEB-INF/jsp/manager/advert/editAdvert.jsp</result>
+			<result name="recycleAdvert">/WEB-INF/jsp/manager/advert/recycleAdvert.jsp</result>
+		</action>
+		
+		<action name="infoPosition_*" method="{1}" class="infoPositionAction">
+			<result name="addInfoPosition">/WEB-INF/jsp/manager/infoPosition/addInfoPosition.jsp</result>
+			<result name="manageInfoPosition">/WEB-INF/jsp/manager/infoPosition/manageInfoPosition.jsp</result>
+			<result name="editInfoPosition">/WEB-INF/jsp/manager/infoPosition/editInfoPosition.jsp</result>
+			<result name="recycleInfoPosition">/WEB-INF/jsp/manager/infoPosition/recycleInfoPosition.jsp</result>
+		</action>
+		
+		<action name="flightCompany_*" method="{1}" class="flightCompanyAction">
+			<result name="addFlightCompany">/WEB-INF/jsp/manager/flightCompany/addFlightCompany.jsp</result>
+			<result name="manageFlightCompany">/WEB-INF/jsp/manager/flightCompany/manageFlightCompany.jsp</result>
+			<result name="editFlightCompany">/WEB-INF/jsp/manager/flightCompany/editFlightCompany.jsp</result>
+			<result name="recycleFlightCompany">/WEB-INF/jsp/manager/flightCompany/recycleFlightCompany.jsp</result>
+		</action>
+		
+		<action name="fCSelfCheckinPosition_*" method="{1}" class="fCSelfCheckinPositionAction">
+			<result name="addFCSelfCheckinPosition">/WEB-INF/jsp/manager/fCSelfCheckinPosition/addfCSelfCheckinPosition.jsp</result>
+			<result name="manageFCSelfCheckinPosition">/WEB-INF/jsp/manager/fCSelfCheckinPosition/manageFCSelfCheckinPosition.jsp</result>
+			<result name="editFCSelfCheckinPosition">/WEB-INF/jsp/manager/fCSelfCheckinPosition/editFCSelfCheckinPosition.jsp</result>
+			<result name="recycleFCSelfCheckinPosition">/WEB-INF/jsp/manager/fCSelfCheckinPosition/recycleFCSelfCheckinPosition.jsp</result>
+		</action>
+		
+		<action name="lostGoodsInfo_*" method="{1}" class="lostGoodsInfoAction">
+			<result name="addLostGoodsInfo">/WEB-INF/jsp/manager/lostGoodsInfo/addLostGoodsInfo.jsp</result>
+			<result name="manageLostGoodsInfo">/WEB-INF/jsp/manager/lostGoodsInfo/manageLostGoodsInfo.jsp</result>
+			<result name="showLostGoodsInfo">/WEB-INF/jsp/manager/lostGoodsInfo/showLostGoodsInfo.jsp</result>
+			<result name="editLostGoodsInfo">/WEB-INF/jsp/manager/lostGoodsInfo/editLostGoodsInfo.jsp</result>
+			<result name="recycleLostGoodsInfo">/WEB-INF/jsp/manager/lostGoodsInfo/recycleLostGoodsInfo.jsp</result>
+			<result name="lostGoodsInfoDetail">/WEB-INF/jsp/manager/lostGoodsInfo/lostGoodsInfoDetail.jsp</result>
+			<result name="download">/WEB-INF/jsp/manager/lostGoodsInfo/allInfo.jsp</result>
+			<result type="stream" name="downloads">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		<action name="goodsLostPostions_*" method="{1}" class="goodsLostPostionsAction">
+			<result name="addGoodsLostPostions">/WEB-INF/jsp/manager/goodsLostPostions/addGoodsLostPostions.jsp</result>
+			<result name="manageGoodsLostPostions">/WEB-INF/jsp/manager/goodsLostPostions/manageGoodsLostPostions.jsp</result>
+			<result name="editGoodsLostPostions">/WEB-INF/jsp/manager/goodsLostPostions/editGoodsLostPostions.jsp</result>
+			<result name="recycleGoodsLostPostions">/WEB-INF/jsp/manager/goodsLostPostions/recycleGoodsLostPostions.jsp</result>
+		</action>
+		<action name="receiveRecord_*" method="{1}" class="receiveRecordAction">
+			<result name="addReceiveRecord">/WEB-INF/jsp/manager/receiveRecord/addReceiveRecord.jsp</result>
+			<result name="manageReceiveRecord">/WEB-INF/jsp/manager/receiveRecord/manageReceiveRecord.jsp</result>
+			<result name="editReceiveRecord">/WEB-INF/jsp/manager/receiveRecord/editReceiveRecord.jsp</result>
+			<result name="recycleReceiveRecord">/WEB-INF/jsp/manager/receiveRecord/recycleReceiveRecord.jsp</result>
+		</action>
+		
+		<action name="rechargeRecord_*" method="{1}" class="rechargeRecordAction">
+			<result name="addRechargeRecord">/WEB-INF/jsp/manager/rechargeRecord/addRechargeRecord.jsp</result>
+			<result name="manageRechargeRecord">/WEB-INF/jsp/manager/rechargeRecord/manageRechargeRecord.jsp</result>
+			<result name="editRechargeRecord">/WEB-INF/jsp/manager/rechargeRecord/editRechargeRecord.jsp</result>
+			<result name="recycleReceiveRecord">/WEB-INF/jsp/manager/rechargeRecord/recycleRechargeRecord.jsp</result>
+			<result name="detail">/WEB-INF/jsp/manager/rechargeRecord/detail.jsp</result>
+			<result name="togetherReport">/WEB-INF/jsp/manager/rechargeRecord/togetherReport.jsp</result>
+			<result name="detailsReport">/WEB-INF/jsp/manager/rechargeRecord/detailsReport.jsp</result>
+		</action>
+		
+		<action name="receipt_*" method="{1}" class="receiptAction">
+			<result name="addReceipt">/WEB-INF/jsp/manager/receipt/addReceipt.jsp</result>
+			<result name="manageReceipt">/WEB-INF/jsp/manager/receipt/manageReceipt.jsp</result>
+			<result name="editReceipt">/WEB-INF/jsp/manager/receipt/editReceipt.jsp</result>
+			<result name="recycleReceipt">/WEB-INF/jsp/manager/receipt/recycleReceipt.jsp</result>
+			<result name="detailReceipt">/WEB-INF/jsp/manager/receipt/detailReceipt.jsp</result>
+			<result name="view">/WEB-INF/jsp/manager/receipt/view.jsp</result>
+			<result name="addReceipt2">/WEB-INF/jsp/manager/receipt/addReceipt2.jsp</result>
+		</action>
+		
+		<action name="pickUpCustomerApply_*" method="{1}" class="pickUpCustomerApplyAction">
+			<result name="addPickUpCustomerApply">/WEB-INF/jsp/manager/pickUpCustomerApply/addPickUpCustomerApply.jsp</result>
+			<result name="managePickUpCustomerApply">/WEB-INF/jsp/manager/pickUpCustomerApply/managePickUpCustomerApply.jsp</result>
+			<result name="editPickUpCustomerApply">/WEB-INF/jsp/manager/pickUpCustomerApply/editPickUpCustomerApply.jsp</result>
+			<result name="recyclePickUpCustomerApply">/WEB-INF/jsp/manager/pickUpCustomerApply/recyclePickUpCustomerApply.jsp</result>
+		</action>
+		
+		<action name="customerProtectLog_*" method="{1}" class="customerProtectLogAction">
+			<result name="addCustomerProtectLog2">/WEB-INF/jsp/manager/customerProtectLog/addCustomerProtectLog2.jsp</result>
+			<result name="addCustomerProtectLog">/WEB-INF/jsp/manager/customerProtectLog/addCustomerProtectLog.jsp</result>
+			<result name="manageCustomerProtectLog">/WEB-INF/jsp/manager/customerProtectLog/manageCustomerProtectLog.jsp</result>
+			<result name="editCustomerProtectLog">/WEB-INF/jsp/manager/customerProtectLog/editCustomerProtectLog.jsp</result>
+			<result name="recycleCustomerProtectLog">/WEB-INF/jsp/manager/customerProtectLog/recycleCustomerProtectLog.jsp</result>
+		</action>
+		<action name="hitSingleLog_*" method="{1}" class="hitSingleLogAction">
+			<result name="view">/WEB-INF/jsp/manager/hitSingleLog/view.jsp</result>
+			<result name="addHitSingleLog">/WEB-INF/jsp/manager/hitSingleLog/addHitSingleLog.jsp</result>
+			<result name="manageHitSingleLog">/WEB-INF/jsp/manager/hitSingleLog/manageHitSingleLog.jsp</result>
+			<result name="editHitSingleLog">/WEB-INF/jsp/manager/hitSingleLog/editHitSingleLog.jsp</result>
+			<result name="getAgreenmentAndCustomer">/WEB-INF/jsp/manager/hitSingleLog/getAgreenmentAndCustomer.jsp</result>
+			<result name="recycleHitSingleLog">/WEB-INF/jsp/manager/hitSingleLog/recycleHitSingleLog.jsp</result>
+		</action>
+		<action name="letterStation_*" method="{1}" class="letterStationAction">
+			<result name="addLetterStation">/WEB-INF/jsp/manager/letterStation/addLetterStation.jsp</result>
+			<result name="manageLetterStation">/WEB-INF/jsp/manager/letterStation/manageLetterStation.jsp</result>
+			<result name="editLetterStation">/WEB-INF/jsp/manager/letterStation/editLetterStation.jsp</result>
+			<result name="view">/WEB-INF/jsp/manager/letterStation/view.jsp</result>
+			<result name="recycleLetterStation">/WEB-INF/jsp/manager/letterStation/recycleLetterStation.jsp</result>
+			<result name="selectSendLetterObject">/WEB-INF/jsp/manager/letterStation/selectSendLetterObject.jsp</result>
+			<result name="letterSendStatistic">/WEB-INF/jsp/manager/letterStation/letterSendStatistic.jsp</result>
+		</action>
+		<action name="stationLetterReadLog_*" method="{1}" class="stationLetterReadLogAction">
+			<result name="addStationLetterReadLog">/WEB-INF/jsp/manager/stationLetterReadLog/addStationLetterReadLog.jsp</result>
+			<result name="manageStationLetterReadLog">/WEB-INF/jsp/manager/stationLetterReadLog/manageStationLetterReadLog.jsp</result>
+			<result name="recycleStationLetterReadLog">/WEB-INF/jsp/manager/stationLetterReadLog/recycleStationLetterReadLog.jsp</result>
+			<result name="stationLetterDetail">/WEB-INF/jsp/manager/stationLetterReadLog/stationLetterDetail.jsp</result>
+		</action>
+		<action name="stationLetterSendRecord_*" method="{1}" class="stationLetterSendRecordAction">
+			<result name="addStationLetterSendRecord">/WEB-INF/jsp/manager/stationLetterSendRecord/addStationLetterSendRecord.jsp</result>
+			<result name="manageStationLetterSendRecord">/WEB-INF/jsp/manager/stationLetterSendRecord/manageStationLetterSendRecord.jsp</result>
+			<result name="recycleStationLetterSendRecord">/WEB-INF/jsp/manager/stationLetterSendRecord/recycleStationLetterSendRecord.jsp</result>
+		</action>
+		 
+		<!--会员中心 -->
+		<action name="memberLevel_*" method="{1}" class="memberLevelAction">
+			<result name="addMemberLevel">/WEB-INF/jsp/manager/memberLevel/addMemberLevel.jsp</result>
+			<result name="manageMemberLevel">/WEB-INF/jsp/manager/memberLevel/manageMemberLevel.jsp</result>
+			<result name="editMemberLevel">/WEB-INF/jsp/manager/memberLevel/editMemberLevel.jsp</result>
+			<result name="recycleMemberLevel">/WEB-INF/jsp/manager/memberLevel/recycleMemberLevel.jsp</result>
+		</action>
+		<action name="member_*" method="{1}" class="memberAction">
+			<result type="stream" name="download">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="bufferSize">1024</param>
+			</result>
+			<result name="addMember">/WEB-INF/jsp/manager/member/addMember.jsp</result>
+			<result name="manageMember">/WEB-INF/jsp/manager/member/manageMember.jsp</result>
+			<result name="editMember">/WEB-INF/jsp/manager/member/editMember.jsp</result>
+			<result name="recycleMember">/WEB-INF/jsp/manager/member/recycleMember.jsp</result>
+		</action>
+		<action name="memberDetailInfo_*" method="{1}" class="memberDetailInfoAction">
+			<result name="addMemberDetailInfo">/WEB-INF/jsp/manager/memberDetailInfo/addMemberDetailInfo.jsp</result>
+			<result name="manageMemberDetailInfo">/WEB-INF/jsp/manager/memberDetailInfo/manageMemberDetailInfo.jsp</result>
+			<result name="editMemberDetailInfo">/WEB-INF/jsp/manager/memberDetailInfo/editMemberDetailInfo.jsp</result>
+			<result name="recycleMemberDetailInfo">/WEB-INF/jsp/manager/memberDetailInfo/recycleMemberDetailInfo.jsp</result>
+		</action>
+		<action name="messageReminder_*" method="{1}" class="messageReminderAction">
+			<result name="addMessageReminder">/WEB-INF/jsp/manager/messageReminder/addMessageReminder.jsp</result>
+			<result name="manageMessageReminder">/WEB-INF/jsp/manager/messageReminder/manageMessageReminder.jsp</result>
+			<result name="editMessageReminder">/WEB-INF/jsp/manager/messageReminder/editMessageReminder.jsp</result>
+			<result name="recycleMessageReminder">/WEB-INF/jsp/manager/messageReminder/recycleMessageReminder.jsp</result>
+		</action>
+		<action name="messageReadLog_*" method="{1}" class="messageReadLogAction">
+			<result name="addMessageReadLog">/WEB-INF/jsp/manager/messageReadLog/addMessageReadLog.jsp</result>
+			<result name="manageMessageReadLog">/WEB-INF/jsp/manager/messageReadLog/manageMessageReadLog.jsp</result>
+			<result name="editMessageReadLog">/WEB-INF/jsp/manager/messageReadLog/editMessageReadLog.jsp</result>
+			<result name="recycleMessageReadLog">/WEB-INF/jsp/manager/messageReadLog/recycleMessageReadLog.jsp</result>
+		</action>
+		<action name="specialPersonWithQuickMenu_*" method="{1}" class="specialPersonWithQuickMenuAction">
+			<result name="addSpecialPersonWithQuickMenu">/WEB-INF/jsp/manager/specialPersonWithQuickMenu/addSpecialPersonWithQuickMenu.jsp</result>
+			<result name="manageSpecialPersonWithQuickMenu">/WEB-INF/jsp/manager/specialPersonWithQuickMenu/manageSpecialPersonWithQuickMenu.jsp</result>
+			<result name="editSpecialPersonWithQuickMenu">/WEB-INF/jsp/manager/specialPersonWithQuickMenu/editSpecialPersonWithQuickMenu.jsp</result>
+			<result name="recycleSpecialPersonWithQuickMenu">/WEB-INF/jsp/manager/specialPersonWithQuickMenu/recycleSpecialPersonWithQuickMenu.jsp</result>
+		</action>
+		<action name="memberFocusFlight_*" method="{1}" class="memberFocusFlightAction">
+		
+		</action>
+		
+		<!-- 服务中心 -->
+		<action name="electrombile_*" method="{1}" class="electrombileAction">
+			<result name="addElectrombile">/WEB-INF/jsp/manager/electrombile/addElectrombile.jsp</result>
+			<result name="manageElectrombile">/WEB-INF/jsp/manager/electrombile/manageElectrombile.jsp</result>
+			<result name="editElectrombile">/WEB-INF/jsp/manager/electrombile/editElectrombile.jsp</result>
+			<result name="recycleElectrombile">/WEB-INF/jsp/manager/electrombile/recycleElectrombile.jsp</result>
+		</action>
+		<action name="serviceBook_*" method="{1}" class="serviceBookAction">
+			<result name="addServiceBook">/WEB-INF/jsp/manager/serviceBook/addServiceBook.jsp</result>
+			<result name="manageServiceBook">/WEB-INF/jsp/manager/serviceBook/manageServiceBook.jsp</result>
+			<result name="editServiceBook">/WEB-INF/jsp/manager/serviceBook/editServiceBook.jsp</result>
+			<result name="recycleServiceBook">/WEB-INF/jsp/manager/serviceBook/recycleServiceBook.jsp</result>
+		</action>
+		
+		<!-- 权限中心 -->
+		<action name="roleInfo_*" method="{1}" class="roleInfoAction">
+			<result name="addRoleInfo">/WEB-INF/jsp/manager/roleInfo/addRoleInfo.jsp</result>
+			<result name="manageRoleInfo">/WEB-INF/jsp/manager/roleInfo/manageRoleInfo.jsp</result>
+			<result name="editRoleInfo">/WEB-INF/jsp/manager/roleInfo/editRoleInfo.jsp</result>
+			<result name="recycleRoleInfo">/WEB-INF/jsp/manager/roleInfo/recycleRoleInfo.jsp</result>
+			<result name="grantPrivilege">/WEB-INF/jsp/manager/roleInfo/grantPrivilegeToRole.jsp</result>
+		</action>
+		<action name="privilegeInfo_*" method="{1}" class="privilegeInfoAction">
+			<result name="addPrivilegeInfo">/WEB-INF/jsp/manager/privilegeInfo/addPrivilegeInfo.jsp</result>
+			<result name="managePrivilegeInfo">/WEB-INF/jsp/manager/privilegeInfo/managePrivilegeInfo.jsp</result>
+			<result name="editPrivilegeInfo">/WEB-INF/jsp/manager/privilegeInfo/editPrivilegeInfo.jsp</result>
+			<result name="recyclePrivilegeInfo">/WEB-INF/jsp/manager/privilegeInfo/recyclePrivilegeInfo.jsp</result>
+		</action>
+		<action name="userRole_*" method="{1}" class="userRoleAction">
+			<result name="addUserRole">/WEB-INF/jsp/manager/userRole/addUserRole.jsp</result>
+			<result name="manageUserRole">/WEB-INF/jsp/manager/userRole/manageUserRole.jsp</result>
+			<result name="editUserRole">/WEB-INF/jsp/manager/userRole/editUserRole.jsp</result>
+			<result name="recycleUserRole">/WEB-INF/jsp/manager/userRole/recycleUserRole.jsp</result>
+		</action>
+		<action name="rolePrivilege_*" method="{1}" class="rolePrivilegeAction">
+			<result name="addRolePrivilege">/WEB-INF/jsp/manager/rolePrivilege/addRolePrivilege.jsp</result>
+			<result name="manageRolePrivilege">/WEB-INF/jsp/manager/rolePrivilege/manageRolePrivilege.jsp</result>
+			<result name="editRolePrivilege">/WEB-INF/jsp/manager/rolePrivilege/editRolePrivilege.jsp</result>
+			<result name="recycleRolePrivilege">/WEB-INF/jsp/manager/rolePrivilege/recycleRolePrivilege.jsp</result>
+		</action>
+		
+		<action name="pageRedirectTemplate_*" method="{1}" class="pageRedirectTemplateAction">
+			<result name="addPageRedirectTemplate">/WEB-INF/jsp/manager/pageRedirectTemplate/addPageRedirectTemplate.jsp</result>
+			<result name="managePageRedirectTemplate">/WEB-INF/jsp/manager/pageRedirectTemplate/managePageRedirectTemplate.jsp</result>
+			<result name="editPageRedirectTemplate">/WEB-INF/jsp/manager/pageRedirectTemplate/editPageRedirectTemplate.jsp</result>
+			<result name="recyclePageRedirectTemplate">/WEB-INF/jsp/manager/pageRedirectTemplate/recyclePageRedirectTemplate.jsp</result>
+		</action>
+		
+		<!-- 字典管理 -->
+		<action name="systemDictionary_*" method="{1}" class="com.ticket.action.SystemDictionaryAction">
+			<result name="manageSystemDictionary">/WEB-INF/jsp/manager/systemDictionary/manageSystemDictionary.jsp</result>
+			<result name="addSystemDictionary">/WEB-INF/jsp/manager/systemDictionary/addSystemDictionary.jsp</result>
+			<result name="editSystemDictionary">/WEB-INF/jsp/manager/systemDictionary/editSystemDictionary.jsp</result>
+			<result name="manageDomCity">/WEB-INF/jsp/manager/systemDictionary/setDomHotAirport.jsp</result>
+			<result name="manageIntCity">/WEB-INF/jsp/manager/systemDictionary/setIntHotAirport.jsp</result>
+		</action>
+		
+		<!-- 前端菜单 -->
+		<action name="frontMenu_*" method="{1}" class="com.ticket.action.FrontMenuAction">
+			<result name="manageFrontMenu">/WEB-INF/jsp/manager/frontMenu/manageFrontMenu.jsp</result>
+			<result name="addFrontMenu">/WEB-INF/jsp/manager/frontMenu/addFrontMenu.jsp</result>
+			<result name="editFrontMenu">/WEB-INF/jsp/manager/frontMenu/editFrontMenu.jsp</result>
+		</action>
+		
+		<!-- 系统组织机构管理 -->
+		<action name="systemOrg_*" method="{1}" class="com.ticket.action.SystemOrgAction">
+			<result name="manageSystemOrg">/WEB-INF/jsp/manager/systemOrg/manageSystemOrg.jsp</result>
+			<result name="addSystemOrg">/WEB-INF/jsp/manager/systemOrg/addSystemOrg.jsp</result>
+			<result name="editSystemOrg">/WEB-INF/jsp/manager/systemOrg/editSystemOrg.jsp</result>
+		</action>
+		
+		<!-- 页面缓存group管理 -->
+		<action name="pageCacheGroup_*" method="{1}" class="com.ticket.action.PageCacheGroupAction">
+			<result name="managePageCacheGroup">/WEB-INF/jsp/manager/pageCacheGroup/managePageCacheGroup.jsp</result>
+			<result name="addPageCacheGroup">/WEB-INF/jsp/manager/pageCacheGroup/addPageCacheGroup.jsp</result>
+			<result name="editPageCacheGroup">/WEB-INF/jsp/manager/pageCacheGroup/editPageCacheGroup.jsp</result>
+		</action>
+		
+		<!-- 页面缓存key管理 -->
+		<action name="pageCacheKey_*" method="{1}" class="com.ticket.action.PageCacheKeyAction">
+			<result name="managePageCacheKey">/WEB-INF/jsp/manager/pageCacheKey/managePageCacheKey.jsp</result>
+			<result name="addPageCacheKey">/WEB-INF/jsp/manager/pageCacheKey/addPageCacheKey.jsp</result>
+			<result name="editPageCacheKey">/WEB-INF/jsp/manager/pageCacheKey/editPageCacheKey.jsp</result>
+		</action>
+		
+		<!-- 安全密钥管理 -->
+		<action name="securityKey_*" method="{1}" class="com.ticket.action.SecurityKeyAction">
+			<result name="manageSecurityKey">/WEB-INF/jsp/manager/securityKey/manageSecurityKey.jsp</result>
+			<result name="addSecurityKey">/WEB-INF/jsp/manager/securityKey/addSecurityKey.jsp</result>
+			<result name="editSecurityKey">/WEB-INF/jsp/manager/securityKey/editSecurityKey.jsp</result>
+		</action>
+		
+		<!-- 便捷登机 -->
+		<!-- 电瓶车 -->
+		<action name="bjdjCar_*" method="{1}" class="com.ticket.action.BjdjCarAction">
+			<result name="manageBjdjCar">/WEB-INF/jsp/manager/bjdjCar/manageBjdjCar.jsp</result>
+			<result name="addBjdjCar">/WEB-INF/jsp/manager/bjdjCar/addBjdjCar.jsp</result>
+			<result name="editBjdjCar">/WEB-INF/jsp/manager/bjdjCar/editBjdjCar.jsp</result>
+		</action>
+		<!-- 验证 -->
+		<action name="bjdjValidation_*" method="{1}" class="com.ticket.action.BjdjValidationAction">
+			<result name="manageBjdjValidation">/WEB-INF/jsp/manager/bjdjValidation/manageBjdjValidation.jsp</result>
+			<result name="manageElectromobileValidation">/WEB-INF/jsp/manager/bjdjValidation/manageElectromobileValidation.jsp</result>
+			<result name="addBjdjValidation">/WEB-INF/jsp/manager/bjdjValidation/addBjdjValidation.jsp</result>
+			<result name="addElectromobileValidation">/WEB-INF/jsp/manager/bjdjValidation/addElectromobileValidation.jsp</result>
+			<result name="editBjdjValidation">/WEB-INF/jsp/manager/bjdjValidation/editBjdjValidation.jsp</result>
+			
+			<!-- 报表 -->
+			<result name="togetherReport">/WEB-INF/jsp/manager/bjdjValidation/togetherReport.jsp</result>
+			<result name="detailsReport">/WEB-INF/jsp/manager/bjdjValidation/detailsReport.jsp</result>
+		</action>
+		<!-- 分单 -->
+		<action name="bjdjDispatch_*" method="{1}" class="com.ticket.action.BjdjDispatchAction">
+			<result name="manageBjdjDispatch">/WEB-INF/jsp/manager/bjdjDispatch/manageBjdjDispatch.jsp</result>
+			<result name="manageElectromobileDispatch">/WEB-INF/jsp/manager/bjdjDispatch/manageElectromobileDispatch.jsp</result>
+			<result name="manageBjdjValidation">/WEB-INF/jsp/manager/bjdjDispatch/manageBjdjValidation.jsp</result>
+			<result name="addBjdjDispatch">/WEB-INF/jsp/manager/bjdjDispatch/addBjdjDispatch.jsp</result>
+			<result name="addElectromobileDispatch">/WEB-INF/jsp/manager/bjdjDispatch/addElectromobileDispatch.jsp</result>
+			<result name="editBjdjDispatch">/WEB-INF/jsp/manager/bjdjDispatch/editBjdjDispatch.jsp</result>
+			<result name="addBatchBjdjDispatch">/WEB-INF/jsp/manager/bjdjDispatch/addBatchBjdjDispatch.jsp</result>
+			<result name="dispatchRole">/WEB-INF/jsp/manager/bjdjDispatch/setDispatchRole.jsp</result>
+		</action>
+		<!-- 分单流程(核销) -->
+		<action name="bjdjDispatchList_*" method="{1}" class="com.ticket.action.BjdjDispatchListAction">
+			<result name="manageBjdjDispatchList">/WEB-INF/jsp/manager/bjdjDispatchList/manageBjdjDispatchList.jsp</result>
+			<result name="serviceGather">/WEB-INF/jsp/manager/bjdjDispatchList/serviceGather.jsp</result>
+			<result name="serviceDetail">/WEB-INF/jsp/manager/bjdjDispatchList/serviceDetail.jsp</result>
+			<result name="manageElectromobileDispatchList">/WEB-INF/jsp/manager/bjdjDispatchList/manageEletromobileDispatchList.jsp</result>
+			<result name="addBjdjDispatchList">/WEB-INF/jsp/manager/bjdjDispatchList/addBjdjDispatchList.jsp</result>
+			<result name="editBjdjDispatchList">/WEB-INF/jsp/manager/bjdjDispatchList/editBjdjDispatchList.jsp</result>
+		</action>
+		<!-- 服务码 -->
+		<action name="bjdjServiceCode_*" method="{1}" class="com.ticket.action.BjdjServiceCodeAction">
+			<result name="manageBjdjServiceCode">/WEB-INF/jsp/manager/bjdjServiceCode/manageBjdjServiceCode.jsp</result>
+			<result name="assignmentBjdjServiceCode">/WEB-INF/jsp/manager/bjdjServiceCode/assignmentBjdjServiceCode.jsp</result>
+			<result name="addBjdjServiceCode">/WEB-INF/jsp/manager/bjdjServiceCode/addBjdjServiceCode.jsp</result>
+			<result name="editBjdjServiceCode">/WEB-INF/jsp/manager/bjdjServiceCode/editBjdjServiceCode.jsp</result>
+			<result name="editBjdjServiceCodeRule">/WEB-INF/jsp/manager/bjdjServiceCode/editBjdjServiceCodeRule.jsp</result>
+			<result name="activate">/WEB-INF/jsp/manager/bjdjServiceCode/activateBjdjServiceCode.jsp</result>
+			<result name="donation">/WEB-INF/jsp/manager/bjdjServiceCode/orderDonation.jsp</result>
+		</action>
+		<!-- 服务码延期规则 -->
+		<action name="bjdjServiceCodeDelayRule_*" method="{1}" class="com.ticket.action.BjdjServiceCodeDelayRuleAction">
+			<result name="manageBjdjServiceCodeDelayRule">/WEB-INF/jsp/manager/bjdjServiceCodeDelayRule/manageBjdjServiceCodeDelayRule.jsp</result>
+			<result name="addBjdjServiceCodeDelayRule">/WEB-INF/jsp/manager/bjdjServiceCodeDelayRule/addBjdjServiceCodeDelayRule.jsp</result>
+			<result name="editBjdjServiceCodeDelayRule">/WEB-INF/jsp/manager/bjdjServiceCodeDelayRule/editBjdjServiceCodeDelayRule.jsp</result>
+		</action>
+		<!-- 服务厅 -->
+		<action name="bjdjHall_*" method="{1}" class="com.ticket.action.BjdjHallAction">
+			<result name="manageBjdjHall">/WEB-INF/jsp/manager/bjdjHall/manageBjdjHall.jsp</result>
+			<result name="addBjdjHall">/WEB-INF/jsp/manager/bjdjHall/addBjdjHall.jsp</result>
+			<result name="editBjdjHall">/WEB-INF/jsp/manager/bjdjHall/editBjdjHall.jsp</result>
+		</action>
+		<action name="bjdjHallGate_*" method="{1}" class="com.ticket.action.BjdjHallGateAction">
+			<result name="manageBjdjHallGate">/WEB-INF/jsp/manager/bjdjHall/manageBjdjHallGate.jsp</result>
+			<result name="addBjdjHallGate">/WEB-INF/jsp/manager/bjdjHall/addBjdjHallGate.jsp</result>
+			<result name="editBjdjHallGate">/WEB-INF/jsp/manager/bjdjHall/editBjdjHallGate.jsp</result>
+		</action>
+		<action name="channelHallRelation_*" method="{1}" class="com.ticket.action.ChannelHallRelationAction">
+			<result name="manageChannelHallRelation">/WEB-INF/jsp/manager/channelHallRelation/manageChannelHallRelation.jsp</result>
+			<result name="addChannelHallRelation">/WEB-INF/jsp/manager/channelHallRelation/addChannelHallRelation.jsp</result>
+			<result name="editChannelHallRelation">/WEB-INF/jsp/manager/channelHallRelation/editChannelHallRelation.jsp</result>
+		</action>
+		<action name="bjdjServiceItem_*" method="{1}" class="com.ticket.action.BjdjServiceItemAction">
+			<result name="manageBjdjServiceItem">/WEB-INF/jsp/manager/bjdjServiceItem/manageBjdjServiceItem.jsp</result>
+			<result name="addBjdjServiceItem">/WEB-INF/jsp/manager/bjdjServiceItem/addBjdjServiceItem.jsp</result>
+			<result name="editBjdjServiceItem">/WEB-INF/jsp/manager/bjdjServiceItem/editBjdjServiceItem.jsp</result>
+		</action>
+		<action name="bjdjServicePackage_*" method="{1}" class="com.ticket.action.BjdjServicePackageAction">
+			<result name="manageBjdjServicePackage">/WEB-INF/jsp/manager/bjdjServicePackage/manageBjdjServicePackage.jsp</result>
+			<result name="addBjdjServicePackage">/WEB-INF/jsp/manager/bjdjServicePackage/addBjdjServicePackage.jsp</result>
+			<result name="editBjdjServicePackage">/WEB-INF/jsp/manager/bjdjServicePackage/editBjdjServicePackage.jsp</result>
+		</action>
+		<action name="bjdjServicePackageItem_*" method="{1}" class="com.ticket.action.BjdjServicePackageItemAction">
+			<result name="manageBjdjServicePackageItem">/WEB-INF/jsp/manager/bjdjServicePackageItem/manageBjdjServicePackageItem.jsp</result>
+			<result name="addBjdjServicePackageItem">/WEB-INF/jsp/manager/bjdjServicePackageItem/addBjdjServicePackageItem.jsp</result>
+			<result name="editBjdjServicePackageItem">/WEB-INF/jsp/manager/bjdjServicePackageItem/editBjdjServicePackageItem.jsp</result>
+		</action>
+		
+		<!-- 订单管理 -->
+		<action name="bjdjOrder_*" method="{1}" class="com.ticket.action.BjdjOrderAction">
+			<result name="manageBjdjOrder">/WEB-INF/jsp/manager/bjdjOrder/manageBjdjOrder.jsp</result>
+			<result name="editBjdjOrder">/WEB-INF/jsp/manager/bjdjOrder/editBjdjOrder.jsp</result>
+		</action>
+		<!-- 订单退款 -->
+		<action name="bjdjRefund_*" method="{1}" class="com.ticket.action.BjdjRefundAction">
+			<result name="manageBjdjRefund">/WEB-INF/jsp/manager/bjdjRefund/manageBjdjRefund.jsp</result>
+			<result name="editBjdjRefund">/WEB-INF/jsp/manager/bjdjRefund/editBjdjRefund.jsp</result>
+			<result name="toManage" type="redirectAction">bjdjRefund_manage</result>
+		</action>
+		<!-- 预约管理 -->
+		<action name="bjdjAppointment_*" method="{1}" class="com.ticket.action.BjdjAppointmentAction">
+			<result name="manageBjdjAppointment">/WEB-INF/jsp/manager/bjdjAppointment/manageBjdjAppointment.jsp</result>
+			<result name="editBjdjAppointment">/WEB-INF/jsp/manager/bjdjAppointment/editBjdjAppointment.jsp</result>
+			<result name="addBjdjAppointmentMobile">/WEB-INF/jsp/manager/bjdjAppointment/addBjdjAppointmentMobile.jsp</result>
+			<result name="addBjdjAppointmentHall">/WEB-INF/jsp/manager/bjdjAppointment/addBjdjAppointmentHall.jsp</result>
+			<result name="addBjdjAppointmentEmail">/WEB-INF/jsp/manager/bjdjAppointment/addBjdjAppointmentEmail.jsp</result>
+			<result name="realTimeDataPage">/WEB-INF/jsp/manager/bjdjAppointment/realTimeData.jsp</result>
+			<result name="appointmentData">/WEB-INF/jsp/manager/bjdjAppointment/appointmentData.jsp</result>
+		</action>
+		<!-- 电瓶车订单 -->
+		<action name="bjdjCarOrder_*" method="{1}" class="com.ticket.action.BjdjCarOrderAction">
+			<result name="manageBjdjCarOrder">/WEB-INF/jsp/manager/bjdjCarOrder/manageBjdjCarOrder.jsp</result>
+			<result name="editBjdjCarOrder">/WEB-INF/jsp/manager/bjdjCarOrder/editBjdjCarOrder.jsp</result>
+		</action>
+		<!-- 排队管理 -->
+		<action name="bjdjQueue_*" method="{1}" class="com.ticket.action.BjdjQueueAction">
+			<result name="manageBjdjQueue">/WEB-INF/jsp/manager/bjdjQueue/manageBjdjQueue.jsp</result>
+			<result name="editBjdjQueue">/WEB-INF/jsp/manager/bjdjQueue/editBjdjQueue.jsp</result>
+		</action>
+		<!-- 评价管理 -->
+		<action name="bjdjComment_*" method="{1}" class="com.ticket.action.BjdjCommentAction">
+			<result name="manageBjdjComment">/WEB-INF/jsp/manager/bjdjComment/manageBjdjComment.jsp</result>
+			<result name="editBjdjComment">/WEB-INF/jsp/manager/bjdjComment/editBjdjComment.jsp</result>
+		</action>
+		<!-- 评价系统 -->
+		<action name="evaluationAdmin_*" method="{1}" class="com.ticket.action.EvaluationAdminAction">
+			<result name="evaluationAdmin">/WEB-INF/jsp/manager/evaluation/evaluationAdmin.jsp</result>
+			<result name="evaluationAdmin-sended">/WEB-INF/jsp/manager/evaluation/evaluationAdmin-sended.jsp</result>
+			<result name="evaluationAdmin-feedback">/WEB-INF/jsp/manager/evaluation/evaluationAdmin-feedbacked.jsp</result>
+			<result name="feedbackPage">/WEB-INF/jsp/manager/evaluation/evaluationAdmin-feedback.jsp</result>
+			<result name="advancedAdmin">/WEB-INF/jsp/manager/evaluation/advancedAdmin.jsp</result>
+			<result name="publishAdmin">/WEB-INF/jsp/manager/evaluation/publishAdmin.jsp</result>
+			<result name="departmentAdmin">/WEB-INF/jsp/manager/evaluation/departmentAdmin.jsp</result>
+			<result name="sendToDepartmentPage">/WEB-INF/jsp/manager/evaluation/sendToDepartment.jsp</result>
+			<result name="departmentProcessPage">/WEB-INF/jsp/manager/evaluation/departmentProcess.jsp</result>
+			<result name="feedbackDepartmentPage">/WEB-INF/jsp/manager/evaluation/feedbackDepartment.jsp</result>
+			<result name="departmentFollowUpList">/WEB-INF/jsp/manager/evaluation/advancedAdmin-followup.jsp</result>
+			<result name="departmentFeedbackedList">/WEB-INF/jsp/manager/evaluation/advancedAdmin-feedbacked.jsp</result>
+			<result name="forbiddenMember">/WEB-INF/jsp/manager/evaluation/manageEvaluationForbidden.jsp</result>
+		</action>
+		<!-- 评价模板 -->
+		<action name="evaluationTemplate_*" method="{1}" class="com.ticket.action.EvaluationTemplateAction">
+			<result name="manageEvaluationTemplate">/WEB-INF/jsp/manager/evaluationTemplate/manageEvaluationTemplate.jsp</result>
+			<result name="addEvaluationTemplate">/WEB-INF/jsp/manager/evaluationTemplate/addEvaluationTemplate.jsp</result>
+			<result name="editEvaluationTemplate">/WEB-INF/jsp/manager/evaluationTemplate/editEvaluationTemplate.jsp</result>
+		</action>
+		<!-- 报表任务 -->
+		<action name="evaluationReportTask_*" method="{1}" class="com.ticket.action.EvaluationReportTaskAction">
+			<result name="manageEvaluationReportTask">/WEB-INF/jsp/manager/evaluationReportTask/manageEvaluationReportTask.jsp</result>
+			<result name="addEvaluationReportTask">/WEB-INF/jsp/manager/evaluationReportTask/addEvaluationReportTask.jsp</result>
+			<result name="editEvaluationReportTask">/WEB-INF/jsp/manager/evaluationReportTask/editEvaluationReportTask.jsp</result>
+		</action>
+		
+		<action name="quickMenu_*" method="{1}" class="quickMenuAction">
+			<result name="manageQuickMenu">/WEB-INF/jsp/manager/quickMenu/manageQuickMenu.jsp</result>
+			<result name="addQuickMenu">/WEB-INF/jsp/manager/quickMenu/addQuickMenu.jsp</result>
+			<result name="editQuickMenu">/WEB-INF/jsp/manager/quickMenu/editQuickMenu.jsp</result>
+			<result name="recycleQuickMenu">/WEB-INF/jsp/manager/quickMenu/recycleQuickMenu.jsp</result>
+		</action>
+		<action name="quickMenuMemberSetting_*" method="{1}" class="quickMenuMemberSettingAction">
+		</action>
+		<action name="departFromPort_*" method="{1}" class="departFromPortAction">
+			<result name="manageDepartFromPort">/WEB-INF/jsp/manager/departFromPort/manageDepartFromPort.jsp</result>
+			<result name="addDepartFromPort">/WEB-INF/jsp/manager/departFromPort/addDepartFromPort.jsp</result>
+			<result name="editDepartFromPort">/WEB-INF/jsp/manager/departFromPort/editDepartFromPort.jsp</result>
+			<result name="recycleDepartFromPort">/WEB-INF/jsp/manager/departFromPort/recycleDepartFromPort.jsp</result>
+		</action>
+		<action name="arrivalAtPort_*" method="{1}" class="arrivalAtPortAction">
+			<result name="manageArrivalAtPort">/WEB-INF/jsp/manager/arrivalAtPort/manage.jsp</result>
+		</action>
+		<action name="preResultDefinition_*" method="{1}" class="preResultDefinitionAction">
+			<result name="managePreResultDefinition">/WEB-INF/jsp/manager/preResultDefinition/managePreResultDefinition.jsp</result>
+			<result name="addPreResultDefinition">/WEB-INF/jsp/manager/preResultDefinition/addPreResultDefinition.jsp</result>
+			<result name="editPreResultDefinition">/WEB-INF/jsp/manager/preResultDefinition/editPreResultDefinition.jsp</result>
+			<result name="recyclePreResultDefinition">/WEB-INF/jsp/manager/preResultDefinition/recyclePreResultDefinition.jsp</result>
+			<result name="memory">/WEB-INF/jsp/manager/preResultDefinition/manageMemory.jsp</result>
+			<result name="showDeatils">/WEB-INF/jsp/manager/preResultDefinition/showMemoryDetails.jsp</result>
+		</action>
+		<action name="evaluationSetting_*" class="evaluationSettingAction" method="{1}">
+			<result name="manageEstimateSetManage">/WEB-INF/jsp/manager/estimateSetManage/manageEstimateSetManage.jsp</result>
+			<result name="addEstimateSetManage">/WEB-INF/jsp/manager/estimateSetManage/addEstimateSetManage.jsp</result>
+			<result name="editEstimateSetManage">/WEB-INF/jsp/manager/estimateSetManage/editEstimateSetManage.jsp</result>
+		</action>
+		<action name="memberSendInfo_*" class="memberSendInfoAction" method="{1}">
+			<result name="manageMemberSendInfo">/WEB-INF/jsp/manager/memberSendInfo/manageMemberSendInfo.jsp</result>
+			<result name="addMemberSendInfo">/WEB-INF/jsp/manager/memberSendInfo/addMemberSendInfo.jsp</result>
+			<result name="editMemberSendInfo">/WEB-INF/jsp/manager/memberSendInfo/editMemberSendInfo.jsp</result>
+		</action>
+		<action name="massInfomation_*" class="massInfomationAction" method="{1}">
+			<result name="manageMassInfomation">/WEB-INF/jsp/manager/massInfomation/manageMassInfomation.jsp</result>
+			<result name="addMassInfomation">/WEB-INF/jsp/manager/massInfomation/addMassInfomation.jsp</result>
+			<result name="editMassInfomation">/WEB-INF/jsp/manager/massInfomation/editMassInfomation.jsp</result>
+			<result name="addForFlightNoIsNI">/WEB-INF/jsp/manager/massInfomation/addForFlightNoIsNI.jsp</result>
+		</action>
+		<action name="systemOperationLog_*" method="{1}" class="com.ticket.action.SystemOperationLogAction">
+			<result name="manageSystemOperationLog">/WEB-INF/jsp/manager/systemOperationLog/manageSystemOperationLog.jsp</result>
+		</action>
+		<action name="countSearch_*" method="{1}" class="com.ticket.action.CountSearchAction">
+			<result name="manageCountSearch">/WEB-INF/jsp/manager/countSearch/manageCountSearch.jsp</result>
+			<result name="detail">/WEB-INF/jsp/manager/countSearch/countSearchDetail.jsp</result>
+			<result name="downLoad" type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		<action name="memberLogo_*" class="com.ticket.action.MemberLogoAction" method="{1}">
+			<result name="manageMemberLogo">/WEB-INF/jsp/manager/memberLogo/manageMemberLogo.jsp</result>
+			<result name="addMemberLogo">/WEB-INF/jsp/manager/memberLogo/addMemberLogo.jsp</result>
+		</action>
+		
+		<action name="airportPlan_*" class="com.ticket.action.AirPlanAction" method="{1}">
+			<result name="toPage">/WEB-INF/jsp/manager/airportPlan/airportPlan.jsp</result>
+		</action>
+		
+		<action name="bjdjTime_*" class="com.ticket.action.BjdjTimeAction" method="{1}">
+			<result name="addBjdjTime">/WEB-INF/jsp/manager/bjdjTime/addBjdjTime.jsp</result>
+			<result name="manageBjdjTime">/WEB-INF/jsp/manager/bjdjTime/manageBjdjTime.jsp</result>
+			<result name="editBjdjTime">/WEB-INF/jsp/manager/bjdjTime/editBjdjTime.jsp</result>
+		</action>
+		
+		<action name="airportInfo_*" method="{1}" class="airportInfoAction">
+			<result name="manageAirportInfo">/WEB-INF/jsp/manager/airportInfo/manageAirportInfo.jsp</result>
+			<result name="addAirportInfo">/WEB-INF/jsp/manager/airportInfo/addAirportInfo.jsp</result>
+			<result name="editAirportInfo">/WEB-INF/jsp/manager/airportInfo/editAirportInfo.jsp</result>
+			<result name="recycleAirportInfo">/WEB-INF/jsp/manager/airportInfo/recycleAirportInfo.jsp</result>
+		</action>
+		
+		<!-- 渠道客户管理员 -->
+		<action name="channelCustomerAdmin_*" method="{1}" class="channelCustomerAdminAction">
+			<result name="activateBjdjServiceCode">/WEB-INF/jsp/manager/channelCustomerAdmin/channelCustomerInfo/activateBjdjServiceCode.jsp</result>
+			<result name="myBjdjServiceCode">/WEB-INF/jsp/manager/channelCustomerAdmin/channelCustomerInfo/myBjdjServiceCode.jsp</result>
+			<result name="manageOrderInfo">/WEB-INF/jsp/manager/channelCustomerAdmin/channelCustomerInfo/manageOrderInfo.jsp</result>
+			<result name="buyBjdjServiceCode">/WEB-INF/jsp/manager/channelCustomerAdmin/channelCustomerInfo/buyBjdjServiceCode.jsp</result>
+			<result name="donationBjdjServiceCode">/WEB-INF/jsp/manager/channelCustomerAdmin/channelCustomerInfo/donationServiceCode.jsp</result>
+			<result name="login">/WEB-INF/jsp/manager/channelCustomerAdmin/channelCustomerInfo/userlogin.jsp</result>
+			<result name="success">/WEB-INF/jsp/manager/channelCustomerAdmin/channelCustomerInfo/userIndex.jsp</result>
+			<result name="detailChannelCustomerInfo">/WEB-INF/jsp/manager/channelCustomerAdmin/channelCustomerInfo/detailCustomerInfo.jsp</result>
+			<result name="addRechargeRecord">/WEB-INF/jsp/manager/channelCustomerAdmin/rechargeRecord/addRechargeRecord.jsp</result>
+			<result name="manageCustomerRechargeRecord">/WEB-INF/jsp/manager/channelCustomerAdmin/rechargeRecord/manageCustomerRechargeRecord.jsp</result>
+			<result name="memberAdd">/WEB-INF/jsp/manager/channelCustomerAdmin/member/memberAdd.jsp</result>
+			<result name="memberUpdate">/WEB-INF/jsp/manager/channelCustomerAdmin/member/memberUpdate.jsp</result>
+			<result name="memberManage">/WEB-INF/jsp/manager/channelCustomerAdmin/member/memberManage.jsp</result>
+			<result name="batchLeadingInMember">/WEB-INF/jsp/manager/channelCustomerAdmin/member/batchLeadingInMember.jsp</result>
+			<result name="batchLeadingInMemberSuccess">/WEB-INF/jsp/manager/channelCustomerAdmin/member/batchLeadingInMemberSuccess.jsp</result>
+		</action>
+		
+		<!-- 销售CRM报表 -->
+		<action name="cRMReport_*" method="{1}" class="com.ticket.action.CRMReportAction">
+			<result name="customerList">/WEB-INF/jsp/manager/CRMReport/customerList.jsp</result>
+			<result name="customerDetails">/WEB-INF/jsp/manager/CRMReport/customerDetails.jsp</result>
+			<result name="rechargeDetails">/WEB-INF/jsp/manager/CRMReport/rechargeDetails.jsp</result>
+			<result name="serviceCodeDetails">/WEB-INF/jsp/manager/CRMReport/serviceCodeDetails.jsp</result>
+			<result name="phoneVisitDetails">/WEB-INF/jsp/manager/CRMReport/phoneVisitDetails.jsp</result>
+			<result name="outVisitDetails">/WEB-INF/jsp/manager/CRMReport/outVisitDetails.jsp</result>
+		</action>
+		
+		<action name="dataAuthoritys_*" method="{1}" class="dataAuthoritysAction">
+			<result name="manageDataAuthoritys">/WEB-INF/jsp/manager/dataAuthoritys/manageDataAuthoritys.jsp</result>
+			<result name="addDataAuthoritys">/WEB-INF/jsp/manager/dataAuthoritys/addDataAuthoritys.jsp</result>
+			<result name="editDataAuthoritys">/WEB-INF/jsp/manager/dataAuthoritys/editDataAuthoritys.jsp</result>
+		</action>
+		
+		<action name="positionDataAuthority_*" method="{1}" class="positionDataAuthorityAction">
+			
+		</action>
+		
+		<action name="systemFreebackInfo_*" class="systemFreebackInfoAction" method="{1}">
+			<result name="manageSystemFreebackInfo">/WEB-INF/jsp/manager/systemFreebackInfo/manageSystemFreebackInfo.jsp</result>
+			<result name="addSystemFreebackInfo">/WEB-INF/jsp/manager/systemFreebackInfo/addSystemFreebackInfo.jsp</result>
+			<result name="editSystemFreebackInfo">/WEB-INF/jsp/manager/systemFreebackInfo/editSystemFreebackInfo.jsp</result>
+			<result name="systemFreebackInfoDetail">/WEB-INF/jsp/manager/systemFreebackInfo/systemFreebackInfoDetail.jsp</result>
+		</action>
+		
+		<action name="bjdjPage_*" class="bjdjPageAction" method="{1}">
+			<result name="addBjdjPage">/WEB-INF/jsp/manager/bjdjPage/addBjdjPage.jsp</result>
+			<result name="editBjdjPage">/WEB-INF/jsp/manager/bjdjPage/editBjdjPage.jsp</result>
+			<result name="manageBjdjPage">/WEB-INF/jsp/manager/bjdjPage/manageBjdjPage.jsp</result>
+		</action>
+		
+		<!-- vpn断线管理 -->
+		<action name="vpnBroken_*" method="{1}" class="com.ticket.action.VpnBrokenAction">
+			<result name="manage">/WEB-INF/jsp/manager/vpnBroken/manage.jsp</result>
+			<result name="edit">/WEB-INF/jsp/manager/vpnBroken/edit.jsp</result>
+		</action>
+		
+		<!-- wifi区域 -->
+		<action name="wifiArea_*" method="{1}" class="com.ticket.action.WifiAreaAction">
+			<result name="addWifiArea">/WEB-INF/jsp/manager/wifiArea/addWifiArea.jsp</result>
+			<result name="editWifiArea">/WEB-INF/jsp/manager/wifiArea/editWifiArea.jsp</result>
+			<result name="manageWifiArea">/WEB-INF/jsp/manager/wifiArea/manageWifiArea.jsp</result>
+		</action>
+		
+		<!-- wifi设备 -->
+		<action name="wifi_*" method="{1}" class="com.ticket.action.WifiAction">
+			<result name="addWifi">/WEB-INF/jsp/manager/wifi/addWifi.jsp</result>
+			<result name="editWifi">/WEB-INF/jsp/manager/wifi/editWifi.jsp</result>
+			<result name="manageWifi">/WEB-INF/jsp/manager/wifi/manageWifi.jsp</result>
+		</action>
+		
+		<!-- 消息模板 -->
+		<action name="messageTemplate_*" method="{1}" class="com.ticket.action.MessageTemplateAction">
+			<result name="addMessageTemplate">/WEB-INF/jsp/manager/messageTemplate/addMessageTemplate.jsp</result>
+			<result name="editMessageTemplate">/WEB-INF/jsp/manager/messageTemplate/editMessageTemplate.jsp</result>
+			<result name="manageMessageTemplate">/WEB-INF/jsp/manager/messageTemplate/manageMessageTemplate.jsp</result>
+		</action>
+		
+		<!-- wifi消息关联 -->
+		<action name="wifiAreaMessage_*" method="{1}" class="com.ticket.action.WifiAreaMessageAction">
+			<result name="addWifiMessage">/WEB-INF/jsp/manager/wifiMessage/addWifiMessage.jsp</result>
+			<result name="editWifiMessage">/WEB-INF/jsp/manager/wifiMessage/editWifiMessage.jsp</result>
+			<result name="manageWifiMessage">/WEB-INF/jsp/manager/wifiMessage/manageWifiMessage.jsp</result>
+		</action>
+		
+		<!-- 用户的mac地址 -->
+		<action name="memberMac_*" method="{1}" class="com.ticket.action.MemberMacAction">
+			<result name="addMemberMac">/WEB-INF/jsp/manager/memberMac/addMemberMac.jsp</result>
+			<result name="editMemberMac">/WEB-INF/jsp/manager/memberMac/editMemberMac.jsp</result>
+			<result name="manageMemberMac">/WEB-INF/jsp/manager/memberMac/manageMemberMac.jsp</result>
+		</action>
+		
+		<!-- wifi推送接收的数据接口 -->
+		<action name="wifiPush_*" method="{1}" class="com.ticket.action.WifiPushAction">
+			<result name="add">/WEB-INF/jsp/manager/wifipush/add.jsp</result>
+			<result name="manage">/WEB-INF/jsp/manager/wifipush/manage.jsp</result>
+		</action>
+		
+		<action name="timeSearch_*" class="com.ticket.action.TimeSearchAction" method="{1}">
+			<result name="manageTimeSearch">/WEB-INF/jsp/manager/timeSearch/manageTimeSearch.jsp</result>
+			<result name="noData">/WEB-INF/jsp/manager/timeSearch/noData.jsp</result>
+			<result type="stream" name="download">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		
+		<action name="feedback_*" class="com.ticket.action.FeedbackAction" method="{1}">
+			<result name="manageFeedback">/WEB-INF/jsp/manager/feedback/manageFeedback.jsp</result>
+			<result name="detail">/WEB-INF/jsp/manager/feedback/detail.jsp</result>
+			<result type="stream" name="download">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		
+		<action name="bjdjPageTemplate_*" method="{1}" class="com.ticket.action.BjdjPageTemplateAction">
+			<result name="addBjdjPageTemplate">/WEB-INF/jsp/manager/bjdjPageTemplate/addBjdjPageTemplate.jsp</result>
+			<result name="editBjdjPageTemplate">/WEB-INF/jsp/manager/bjdjPageTemplate/editBjdjPageTemplate.jsp</result>
+			<result name="manageBjdjPageTemplate">/WEB-INF/jsp/manager/bjdjPageTemplate/manageBjdjPageTemplate.jsp</result>
+			<result name="detail">/WEB-INF/jsp/manager/bjdjPageTemplate/detail.jsp</result>
+		</action>
+		
+		<action name="feedbackReply_*" class="com.ticket.action.FeedbackReplyAction" method="{1}">
+			<result name="addFeedbackReply">/WEB-INF/jsp/manager/feedbackReply/addFeedbackReply.jsp</result>
+		</action>
+		
+		<!-- 关键词定位搜索 -->
+		<action name="keyWordLocation_*" method="{1}" class="com.ticket.action.KeyWordLocationAction">
+			<result name="addKeyWordLocation">/WEB-INF/jsp/manager/keyWordLocation/addKeyWordLocation.jsp</result>
+			<result name="editKeyWordLocation">/WEB-INF/jsp/manager/keyWordLocation/editKeyWordLocation.jsp</result>
+			<result name="manageKeyWordLocation">/WEB-INF/jsp/manager/keyWordLocation/manageKeyWordLocation.jsp</result>
+		</action>
+		
+		<!-- 词包搜索 -->
+		<action name="wordsPackage_*" method="{1}" class="com.ticket.action.WordsPackageAction">
+			<result name="addWordsPackage">/WEB-INF/jsp/manager/wordsPackage/addWordsPackage.jsp</result>
+			<result name="editWordsPackage">/WEB-INF/jsp/manager/wordsPackage/editWordsPackage.jsp</result>
+			<result name="manageWordsPackage">/WEB-INF/jsp/manager/wordsPackage/manageWordsPackage.jsp</result>
+		</action>
+		
+		<!-- 搜索关联页面 -->
+		<action name="keyWordLocationPage_*" method="{1}" class="com.ticket.action.KeyWordLocationPageAction">
+			<result name="addKeyWordLocationPage">/WEB-INF/jsp/manager/keyWordLocationPage/addKeyWordLocationPage.jsp</result>
+			<result name="editKeyWordLocationPage">/WEB-INF/jsp/manager/keyWordLocationPage/editKeyWordLocationPage.jsp</result>
+			<result name="manageKeyWordLocationPage">/WEB-INF/jsp/manager/keyWordLocationPage/manageKeyWordLocationPage.jsp</result>
+		</action>
+		
+		<!-- 搜索页面 -->
+		<action name="page_*" method="{1}" class="com.ticket.action.PageAction">
+			<result name="addPage">/WEB-INF/jsp/manager/page/addPage.jsp</result>
+			<result name="editPage">/WEB-INF/jsp/manager/page/editPage.jsp</result>
+			<result name="managePage">/WEB-INF/jsp/manager/page/managePage.jsp</result>
+		</action>
+		
+		<action name="scenicSpots_*" method="{1}" class="com.ticket.action.ScenicSpotsAction">
+			<result name="addScenicSpots">/WEB-INF/jsp/manager/scenicSpots/addScenicSpots.jsp</result>
+			<result name="editScenicSpots">/WEB-INF/jsp/manager/scenicSpots/editScenicSpots.jsp</result>
+			<result name="manageScenicSpots">/WEB-INF/jsp/manager/scenicSpots/manageScenicSpots.jsp</result>
+		</action>
+		
+		<action name="businessEvent_*" method="{1}" class="com.ticket.action.BusinessEventAction">
+			<result name="addBusinessEvent">/WEB-INF/jsp/manager/businessEvent/addBusinessEvent.jsp</result>
+			<result name="editBusinessEvent">/WEB-INF/jsp/manager/businessEvent/editBusinessEvent.jsp</result>
+			<result name="manageBusinessEvent">/WEB-INF/jsp/manager/businessEvent/manageBusinessEvent.jsp</result>
+		</action>
+		
+		<action name="businessEventBind_*" method="{1}" class="com.ticket.action.BusinessEventBindAction">
+			<result name="addBusinessEventBind">/WEB-INF/jsp/manager/businessEventBind/addBusinessEventBind.jsp</result>
+			<result name="editBusinessEventBind">/WEB-INF/jsp/manager/businessEventBind/editBusinessEventBind.jsp</result>
+			<result name="manageBusinessEventBind">/WEB-INF/jsp/manager/businessEventBind/manageBusinessEventBind.jsp</result>
+		</action>
+		
+		<action name="youZanGoodsInfo_*" method="{1}" class="com.ticket.action.YouZanGoodsInfoAction">
+			<result name="manageYouZanGoodsInfo">/WEB-INF/jsp/manager/youZanGoodsInfo/manageYouZanGoodsInfo.jsp</result>
+		</action>
+		
+		<action name="bindYouZan_*" method="{1}" class="com.ticket.action.BindYouZanAction">
+			<result name="bindYouZanGoods">/WEB-INF/jsp/manager/businessInfo/bindYouzanGoods.jsp</result>
+			<result name="editBindYouZan">/WEB-INF/jsp/manager/bindYouZan/editBindYouZan.jsp</result>
+		</action>
+	</package>
+</struts>

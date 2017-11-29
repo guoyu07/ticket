@@ -1,0 +1,1 @@
+function yanzheng(){var a=$("#code").val();$.ajax({url:"wapValidation_addElectromobile.action?operationFlag=site",type:"post",dataType:"json",data:{serviceCode:a},success:function(a){"y"==a.status?JM.goUrl("wapValidation_erWeiMaYanZhengSuccess.action"):JM.alert(a.info,2e3)}})}$(function(){$("#other").tap(function(){JM.goUrl("wapValidation_addElectromobile.action")})});

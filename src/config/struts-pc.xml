@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="pcMemberPackage" extends="json-package">
+		<interceptors>
+			<interceptor name="pcBjdjInterceptor" class="com.ticket.interceptor.PCBjdjInterceptor"></interceptor>
+			<interceptor name="pcInterceptor" class="com.ticket.interceptor.PcMemberInterceptor">
+				<param name="excludeMethods">
+					toLoginPage,register,memberLogin,memberLogout
+					,execute,logouts,login,generateAuthCode,checkAuthForMobile,confirmPage,
+					constructOrder,manage,resetPwd,resetPassword,domesticArriveHaveNo,
+					domesticGoNoFlightInfo,domesticToDomesticHaveNo,constructPage,generatePage,loginIndexAjax,
+					indexAjax,generatePageAjax
+				</param>
+			</interceptor>
+			<interceptor-stack name="PcDefaultInterceptor">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="pcInterceptor"/>
+				<interceptor-ref name="pcBjdjInterceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="PcDefaultInterceptor"></default-interceptor-ref>
+		<global-results>
+			<result name="memberLogin">/WEB-INF/jsp/template/pc/pcLoginIndex.jsp</result>
+			<result name="memberLogout">pcBjdjMember_logouts.action</result>
+			<result name="toLoginPage">/WEB-INF/jsp/template/pc/pcLoginIndex.jsp</result>
+			<result name="error">/error.html</result>
+		</global-results>
+		<!-- 全局异常处理类 -->
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		
+		<action name="airportPcM_*" method="{1}" class="com.ticket.action.PcMemberAction">
+			<result name="success">/WEB-INF/jsp/template/pc/index.jsp</result>
+		</action>
+		
+		<action name="pcElectromobile_*" method="{1}" class="com.ticket.action.PCElectromobileAction">
+			<result name="index">/WEB-INF/jsp/template/pc/convenientBoarding/buyEletromobile.jsp</result>
+			<result name="toPay">/WEB-INF/jsp/template/pc/convenientBoarding/payElectromobile.jsp</result>
+			<result name="paySuccess" type="redirect">pcElectromobile_paySuccessPage.action?orderId=${order.id}</result>
+			<result name="paySuccessPage">/WEB-INF/jsp/template/pc/convenientBoarding/paySuccess.jsp</result>
+		</action>
+		
+		<action name="pcOrder_*" method="{1}" class="com.ticket.action.PCBjdjOrderAction">
+			<result name="allOrder">/WEB-INF/jsp/template/pc/myShoppingMenu.jsp</result>
+			<result name="success">/WEB-INF/jsp/template/pc/convenientBoarding/bjdjIndex.jsp</result>
+			<result name="indexAjax">/WEB-INF/jsp/template/pc/convenientBoarding/bjdjIndexAjax.jsp</result>
+			<result name="generatePage">/WEB-INF/jsp/template/pc/convenientBoarding/generateOrder.jsp</result>
+			<result name="generatePageAjax">/WEB-INF/jsp/template/pc/convenientBoarding/generateOrderAjax.jsp</result>
+			<result name="toPayMethod" type="redirect">pcOrder_payMethod.action?id=${id}</result>
+			<result name="payMethod">/WEB-INF/jsp/template/pc/convenientBoarding/payMethod.jsp</result>
+			<result name="paySuccessPage">/WEB-INF/jsp/template/pc/convenientBoarding/paySuccess.jsp</result>
+			<result name="payFailPage">/WEB-INF/jsp/template/wap/convenientBoarding/purchaseFail.jsp</result>
+			<result name="activatePage">/WEB-INF/jsp/template/pc/convenientBoarding/activateIndex.jsp</result>
+			<result name="contentDispalay">/WEB-INF/jsp/template/pc/convenientBoarding/contentDisplay.jsp</result>
+			<result name="orderDetailsPage">/WEB-INF/jsp/template/pc/orderInfo.jsp</result>
+			<result name="orderDonationPage">/WEB-INF/jsp/template/pc/applyDonation.jsp</result>
+			<result name="orderRefundPage">/WEB-INF/jsp/template/pc/order/applyRefund.jsp</result>
+			<result name="alipay">/WEB-INF/jsp/template/wap/orderManager/alipay/alipayApi.jsp</result>
+			<result name="wxpay">/WEB-INF/jsp/template/pc/convenientBoarding/wxpay.jsp</result>
+		</action>
+		
+		<action name="pcServiceCode_*" method="{1}" class="com.ticket.action.PCServiceCodeAction">
+			<result name="activatePage">/WEB-INF/jsp/template/pc/convenientBoarding/activateIndex.jsp</result>
+			<result name="activateItem">/WEB-INF/jsp/template/pc/convenientBoarding/activateItem.jsp</result>
+			<result name="activateSuccessPage">/WEB-INF/jsp/template/pc/convenientBoarding/activateSuccess.jsp</result>
+			<result name="activateWaitPage">/WEB-INF/jsp/template/pc/convenientBoarding/activateWait.jsp</result>
+		</action>
+		
+		<action name="pcBjdjMember_*" method="{1}" class="com.ticket.action.PCBjdjMermberAction">
+			<result name="success">/WEB-INF/jsp/template/pc/bjdj_login.jsp</result>
+			<result name="loginIndexAjax">/WEB-INF/jsp/template/pc/bjdj_loginIndex.jsp</result>
+			<result name="confirmPage2" type="redirect">bjdjOrderTemplate_confirmPage2.action</result>
+			<result name="toPage" type="redirect">${destUrl}</result>
+			<result name="logout" type="redirect">airportPc.action</result>
+			<result name="loginIndex">/WEB-INF/jsp/template/pc/user_index.jsp</result>
+			<result name="loginPage">/WEB-INF/jsp/template/pc/pcLoginIndex.jsp</result>
+		</action>
+		
+		<action name="pcCommonTraller_*" class="com.ticket.action.PCCommonTravellerAction" method="{1}">
+			<result name="showCommonTraveller">/WEB-INF/jsp/template/pc/commonTraveller/showCommonTraveller.jsp</result>
+		</action>
+		<action name="pcCommonTrallerCard_*" class="com.ticket.action.PCCommonTravellerCardAction" method="{1}">
+		</action>
+		
+		<action name="pcMembers_*" method="{1}" class="com.ticket.action.PCMembersAction">
+			<result name="register">/WEB-INF/jsp/template/pc/register.jsp</result>
+			<result name="personalSetting">/WEB-INF/jsp/template/pc/myAccount.jsp</result>
+			<result name="myPayInfo">/WEB-INF/jsp/template/pc/paymentInfomation.jsp</result>
+			<result name="loginPage">/WEB-INF/jsp/template/pc/pcLoginIndex.jsp</result>
+			<result name="domesticArriveHaveNo">/WEB-INF/jsp/template/pc/setout/domesticArriveHaveNo.jsp</result>
+			<result name="domesticToDomesticHaveNo">/WEB-INF/jsp/template/pc/setout/domesticToDomesticHaveNo.jsp</result>
+			<result name="domesticGoNoFlightInfo">/WEB-INF/jsp/template/pc/setout/domesticGoNoFlightInfo.jsp</result>
+			<result name="resetPwd">/WEB-INF/jsp/template/pc/resetPwd.jsp</result>
+		</action>
+		
+		<action name="pCEvaluation_*" method="{1}" class="com.ticket.action.PCEvaluationAction">
+			<result name="evaluationPage">/WEB-INF/jsp/template/pc/evaluation.jsp</result>
+			<result name="manage">/WEB-INF/jsp/template/pc/evaluationList.jsp</result>
+		</action>
+	</package>
+
+</struts>

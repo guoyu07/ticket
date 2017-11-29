@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="便捷登机服务套餐" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="7ec9d522-12db-4759-aa32-5267044085bc">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="status.createTime" class="java.util.Date"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="price" class="java.lang.String"/>
+	<field name="bjdjHall.number" class="java.lang.String"/>
+	<field name="bjdjPage.name" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="74" height="20" uuid="0a5d9c9d-78fe-4257-9c8a-36bbf6fae198"/>
+				<text><![CDATA[创建时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="0" width="103" height="20" uuid="ea246af1-b0f7-42cd-a98e-678983095640"/>
+				<text><![CDATA[套餐名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="177" y="0" width="104" height="20" uuid="52895b5c-a98d-4f29-a8d4-b4396ed35d59"/>
+				<text><![CDATA[套餐价格]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="281" y="0" width="104" height="20" uuid="8930095e-94c8-441d-be76-b35aa8606f29"/>
+				<text><![CDATA[服务厅]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="0" width="110" height="20" uuid="19889540-edb2-44c7-a691-8aeccb903c19"/>
+				<text><![CDATA[前端显示页面]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="495" y="0" width="100" height="20" uuid="977002b2-b95c-414d-b59a-5d2e39ad29f4"/>
+				<text><![CDATA[服务项描述]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="74" height="20" uuid="71620bea-85f8-4294-99fc-0b293b5a1ac0"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{status.createTime})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="74" y="0" width="103" height="20" uuid="885a69c4-5dd8-4b2d-a7e6-f90e6244ad75"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="177" y="0" width="104" height="20" uuid="7020952e-7d74-4524-ae87-71cd6d55163b"/>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="281" y="0" width="104" height="20" uuid="c42d5ad9-bb6d-4233-a5f4-9db411dedd64"/>
+				<textFieldExpression><![CDATA[$F{bjdjHall.number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="385" y="0" width="110" height="20" uuid="7c80c229-d0a8-4079-be21-1b0ba0d807b3"/>
+				<textFieldExpression><![CDATA[$F{bjdjPage.name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="495" y="0" width="100" height="20" uuid="f9154509-756d-4699-954a-8a8228b17a9f"/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="230" y="16" width="100" height="20" uuid="3ae39584-69dc-49c2-93c7-a00b204d6079"/>
+				<text><![CDATA[没有数据可以显示]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

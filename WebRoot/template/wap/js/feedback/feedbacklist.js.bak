@@ -1,0 +1,1 @@
+function zhuijiafankui(a){JM.alert("追加反馈",2e3,function(){var i=$(a).next().val();JM.goUrl("feedBackReply_addFeedback.action?feedback_id="+i)})}function detail(a){var i=$(a).find("input").val();JM.goUrl("feedBack_detail.action?id="+i)}$(function(){});

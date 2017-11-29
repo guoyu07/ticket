@@ -1,0 +1,195 @@
+/*
+Uploadify v2.1.0
+Release Date: August 24, 2009
+
+Copyright (c) 2009 Ronnie Garcia, Travis Nickels
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+.uploadifyQueueItem {
+	font: 11px Verdana, Geneva, sans-serif;
+	border: 2px solid #E5E5E5;
+	background-color: #F5F5F5;
+	margin-top: 5px;
+	padding: 10px;
+	width: 350px;
+}
+.uploadifyError {
+	border: 2px solid #FBCBBC !important;
+	background-color: #FDE5DD !important;
+}
+.uploadifyQueueItem .cancel {
+	float: right;
+}
+.uploadifyProgress {
+	background-color: #FFFFFF;
+	border-top: 1px solid #808080;
+	border-left: 1px solid #808080;
+	border-right: 1px solid #C5C5C5;
+	border-bottom: 1px solid #C5C5C5;
+	margin-top: 10px;
+	width: 100%;
+}
+.uploadifyProgressBar {
+	background-color: #0099FF;
+	width: 1px;
+	height: 3px;
+}
+
+
+
+.uploadImg{
+	width:130px;
+	float:left;
+	margin:0 3px;
+	position:relative;
+}
+.uploadImg_content{
+	width:120px; 
+	height:80px;
+	border:1px solid #dce3ed;
+	padding:4px;
+}
+.uploadImg_content img{width:120px; height:80px;}
+.uploadImg_text{
+	width:130px;
+	clear:both;
+	padding:5px 0 0 0;
+}
+.uploadImg_close{
+	width:16px;
+	height:16px;
+	position:absolute;
+	z-index:20;
+	right:7px;
+	top:7px;
+}
+.uploadImg_big{
+	width:16px;
+	height:16px;
+	position:absolute;
+	z-index:20;
+	right:27px;
+	top:7px;
+	cursor:pointer;
+ } 
+.uploadImg_edito{
+	width:16px;
+	height:16px;
+	position:absolute;
+	z-index:20;
+	right:45px;
+	top:7px;
+	cursor:pointer;
+	}
+.uploadImg p{
+	height:20px;
+	width:120px;
+	background:#000;
+	filter:alpha(Opacity=50);
+	-moz-opacity:0.5;
+	opacity: 0.5;
+	left:4px;
+	top:5px;
+	position:absolute;
+	z-index:15;
+	}
+#preImages{
+	clear:both;
+	padding:10px 0;
+}
+.uploadImg_bnt{
+    clear:both; height:30px; padding:10px 0 0 0;
+}
+
+
+
+.container {
+	width: 900px;
+	margin: 0 auto;
+	font-size: 1.2em;
+	color: #555;
+}
+#content_bak {
+	background: #f0f0f0;
+	float: left;
+	width: 100%;
+}
+.post {
+	margin: 0;
+	padding: 10px 20px;
+	float: left;
+	width: 560px;
+}
+/*------------------POPUPS------------------------*/
+#fade {
+	display: none;
+	background:#fff;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 10;
+	width: 100%;
+	height: 100%;
+	opacity: .50;
+	z-index: 9999;
+}
+.popup_block{
+	display:none;
+	background:#fff;
+	border:1px solid #a0a0a0;
+	float:left;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 99999;
+}
+.popup_block_title{
+	clear:both;
+	height:25px;
+	border-bottom:1px solid #a0a0a0;
+	background:#ededed;
+	}
+.popup_block_title strong{
+	line-height:25px;
+	padding:0 0 0 10px;
+	display:block;
+	float:left;
+	}
+.popup_block_title span{
+	width:8px;
+	height:8px;
+	display:block;
+	float:right;
+	cursor:pointer;
+	background:url(close.jpg) no-repeat;
+	margin:8px 10px 0 0;
+	}
+	
+img.btn_close {
+	float: right;
+	margin: -55px -55px 0 0;
+}
+
+/*--Making IE6 Understand Fixed Positioning--*/
+*html #fade {
+	position: absolute;
+}
+*html .popup_block {
+	position: absolute;

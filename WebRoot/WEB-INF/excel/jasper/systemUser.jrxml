@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="后台管理员" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="0b0103f3-8eb2-44e8-ac89-04286c47376b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="loginId" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="status.createTime" class="java.util.Date"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="sex" class="java.lang.Integer"/>
+	<variable name="index" class="java.lang.Integer" resetType="None" incrementType="Column" calculation="Sum">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="99" y="0" width="103" height="20" uuid="6916dd29-c39c-486e-9ae7-67a89041eda8"/>
+				<text><![CDATA[登录名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="0" width="97" height="20" uuid="f14ccfac-7f02-4519-9063-e51a1624ca41"/>
+				<text><![CDATA[电话号码]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="99" height="20" uuid="81e82a64-4cd6-4802-81cd-f5d7f97c7628"/>
+				<text><![CDATA[创建时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="0" width="69" height="20" uuid="2090cebb-cd2e-4501-80af-94e0e23a64a9"/>
+				<text><![CDATA[性别]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="0" width="113" height="20" uuid="20a83eb4-f05e-4a60-aa41-0c447f0c2805"/>
+				<text><![CDATA[电话号码]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="0" width="114" height="20" uuid="fbd5ed9e-8970-4914-9ec1-27ccad68b83d"/>
+				<text><![CDATA[姓名]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="316" y="0" width="97" height="20" uuid="c394eace-b157-4985-bcfb-a8c49d78bc90"/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="413" y="0" width="69" height="20" uuid="cd0babc2-0768-4c21-a554-6b338901d810"/>
+				<textFieldExpression><![CDATA[$F{sex} == 0 ? "女" : "男"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="482" y="0" width="113" height="20" uuid="c8e93949-2c94-4bbc-84f6-a54244642b62"/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="202" y="0" width="114" height="20" uuid="8742b20a-5c96-4ef6-b07b-bdc484270751"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="99" height="20" uuid="96366aa7-32b1-43ca-81dd-7c9162c2ea4c"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy年MM月dd日").format($F{status.createTime})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="99" y="0" width="103" height="20" uuid="176ce2e7-a747-4459-b23c-f4eeb62a24fe"/>
+				<textFieldExpression><![CDATA[$F{loginId}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

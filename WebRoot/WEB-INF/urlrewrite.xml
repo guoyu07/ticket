@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 2.6//EN"
+        "http://tuckey.org/res/dtds/urlrewrite2.6.dtd">
+<urlrewrite>
+	<rule>
+		<from>/ewap.html</from>
+		<to>/employeeInfoWap.action</to>
+	</rule>
+	<rule>
+		<from>/cpc.html</from>
+		<to>/channelCustomerAdmin.action</to>
+	</rule>
+	<!-- app member login -->
+	<rule>
+		<!--<descript>/airport/chengjixuzhi.ticket</descript> -->
+		<from>/airport/([a-zA-Z]+)/([a-zA-Z]+).ticket/([0-9]{5,20}).member</from>
+		<to>/airport_infoType.action?alias=$1&amp;fromApp=true&amp;murl=$3</to>
+	</rule>
+	<rule>
+		<!--<descript>/airport/chengjixuzhi.ticket</descript> -->
+		<from>/airport/([a-zA-Z]+)/([a-zA-Z]+).airport/([0-9]{5,20}).member</from>
+		<to>/airport_infoType.action?alias=$1&amp;fromApp=true&amp;murl=$3</to>
+	</rule>
+	<!-- APP 新闻信息链接重新规则-->
+	<rule>
+		<from>/airport/([0-9]{5,20})/([a-zA-Z]+).ticket/([0-9]{5,20}).member</from>
+		<to>/airport_infoView.action?visitUrl=$1&amp;fromApp=true&amp;murl=$3</to>
+	</rule>
+	<rule>
+		<from>/airport/([0-9]{5,20})/([a-zA-Z]+).airport/([0-9]{5,20}).member</from>
+		<to>/airport_infoView.action?visitUrl=$1&amp;fromApp=true&amp;murl=$3</to>
+	</rule>
+	<!-- end -->
+	<!-- 新闻信息类别链接重新规则-->
+	<rule>
+		<from>/airport/([a-zA-Z]+).ticket?(\w*)</from>
+		<to>/airport_infoType.action?alias=$1&amp;$2</to>
+	</rule>
+	<!-- 新闻信息链接重新规则-->
+	<rule>
+		<from>/airport/([0-9]{5,20}).ticket?(\w*)</from>
+		<to>/airport_infoView.action?visitUrl=$1&amp;$2</to>
+	</rule>
+	<!-- APP 新闻信息类别链接重新规则-->
+	<rule>
+		<!--<descript>/airport/chengjixuzhi.ticket</descript> -->
+		<from>/airport/([a-zA-Z]+)/([a-zA-Z]+).ticket</from>
+		<to>/airport_infoType.action?alias=$1&amp;fromApp=true</to>
+	</rule>
+	<!-- APP 新闻信息链接重新规则-->
+	<rule>
+		<from>/airport/([0-9]{5,20})/([a-zA-Z]+).ticket</from>
+		<to>/airport_infoView.action?visitUrl=$1&amp;fromApp=true</to>
+	</rule>
+	
+	
+	<!-- dfq -->
+	<!-- 新闻信息类别快捷菜单重新规则-->
+	<rule>
+		<from>/airport/([a-zA-Z]+).airport</from>
+		<to>/airport_infoType.action?alias=$1&amp;fromQuickMenu=true</to>
+	</rule>
+	<!-- 新闻信息快捷菜单重新规则-->
+	<rule>
+		<from>/airport/([0-9]{5,20}).airport</from>
+		<to>/airport_infoView.action?visitUrl=$1&amp;fromQuickMenu=true</to>
+	</rule>
+	<rule>
+		<!--<descript>/airport/chengjixuzhi.ticket</descript> -->
+		<from>/airport/([a-zA-Z]+)/([a-zA-Z]+).airport/([0-9]{5,20}).member</from>
+		<to>/airport_infoType.action?alias=$1&amp;fromApp=true&amp;murl=$3</to>
+	</rule>
+	<!-- dfq end -->
+	<!-- wangjiafeng start -->
+	<!-- 新闻列表 -->
+	<rule>
+		<!--<descript>/airport/chengjixuzhi.ticket</descript> -->
+		<from>/airport/newsList/([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}).html(.*)$</from>
+		<to>/airportPc_newsList.action?[L,QSA]&amp;id=$1</to>
+	</rule>
+	<!-- 新闻详细 -->
+	<rule>
+		<!--<descript>/airport/chengjixuzhi.ticket</descript> -->
+		<from>/airport/newsView/([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}).html</from>
+		<to>/airportPc_newsView.action?id=$1</to>
+	</rule>
+	<rule>
+		<!--<descript>/airport/chengjixuzhi.ticket</descript> -->
+		<from>/airport/newsView/([0-9]{5,20}).html</from>
+		<to>/airportPc_newsView.action?visitUrl=$1</to>
+	</rule>
+	<rule>
+		<!--<descript>/airport/chengjixuzhi.ticket</descript> -->
+		<from>/airport/businessInfoView/([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}).html</from>
+		<to>/airportPc_businessInfoView.action?id=$1</to>
+	</rule>
+	<!-- wangjiafeng end -->
+</urlrewrite>

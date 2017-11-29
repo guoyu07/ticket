@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 请求参数的编码方式 --> 
+    <constant name="struts.i18n.encoding" value="UTF-8"/> 
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="false" />
+	<constant name="struts.locale" value="zh_CN" />
+	<constant name="struts.i18n.reload" value="true" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.action.extension" value="action,shtml" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.custom.i18n.resources" value="message" />
+	<constant name="struts.multipart.maxSize" value="9999999999999999"></constant>
+	<constant name="struts.multipart.saveDir" value="temp"></constant>
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+	
+	<!-- 指定全局国际化资源文件(value不带文件后缀名) -->
+	<constant name="struts.custom.i18n.resources" value="i18n"></constant>
+	
+	<!-- 全局的json类型 -->
+	<package name="json-package" extends="json-default">
+		<global-results>
+			<result name="JSON" type="json">
+				<param name="root">data</param>
+			</result>
+			<result name="TEXT" type="stream">
+				<param name="contentType">text/plain</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</global-results>
+	</package>
+	
+    <!-- Add packages here -->
+    <include file="struts-common.xml" />
+    <include file="struts-manager.xml" />
+    <include file="struts-template.xml" />
+    <include file="struts-app.xml" />
+    <include file="struts-pc.xml" />
+</struts>

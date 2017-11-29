@@ -1,0 +1,24 @@
+$(function(){
+	var quickMenuPosition = $("#quickMenuPosition").val();
+	$.ajax({
+		type:'POST',
+		dataType:'text',
+		url:'airport_reloadQuickMenu.action',
+		data:'quickMenuPosition='+quickMenuPosition,
+		success:function(data){
+			if(quickMenuPosition=='a'){
+				$(".SDQuickMenu").html(data);
+			}
+			if(quickMenuPosition=='b'){
+				$(".SIQuickMenu").html(data);
+			}
+			if(quickMenuPosition=='e'){
+				$(".RDQuickMenu").html(data);
+			}
+			if(quickMenuPosition=='f'){
+				$(".RIQuickMenu").html(data);
+			}
+			customerMenuInit();
+		}
+	});
+});

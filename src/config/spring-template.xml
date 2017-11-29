@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	<!-- 安检数据 -->
+    <bean id="securityDate" class="com.ticket.serviceImpl.SecurityDataServiceImpl"></bean>
+	
+	<!-- Service Defined Area -->
+	<bean id="customerAccountService" class="com.ticket.serviceImpl.CustomerAccountServiceImpl" scope="prototype"/>
+	<bean id="appService" class="com.ticket.serviceImpl.AppServiceImpl" scope="prototype"/>
+	<!-- <bean id="baiduService" class="com.ticket.serviceImpl.BaiduServiceImpl"></bean> -->
+	<bean id="alipayService" class="com.ticket.serviceImpl.AlipayServiceImpl"></bean>
+	<bean id="wxPublicService" class="com.ticket.serviceImpl.WxPublicServiceImpl"></bean>
+	<bean id="wxOpenService" class="com.ticket.serviceImpl.WxOpenServiceImpl"></bean>
+	<bean id="swiftService" class="com.ticket.serviceImpl.SwiftServiceImpl"></bean>
+	<bean id="ticketOrderService" class="com.ticket.serviceImpl.TicketOrderServiceImpl"></bean>
+	<bean id="mqService" class="com.ticket.serviceImpl.MqServiceImpl"></bean>
+	<bean id="preResultDefinitionService" class="com.ticket.serviceImpl.PreResultDefinitionServiceImpl" init-method="init"></bean>
+	<bean id="commonSearchService" class="com.ticket.serviceImpl.CommonSearchServiceImpl"></bean>
+	<bean id="commonTravellerService" class="com.ticket.serviceImpl.CommonTravellerServiceImpl"></bean>
+	<bean id="commonTravellerCardService" class="com.ticket.serviceImpl.CommonTravellerCardServiceImpl"></bean>
+	<bean id="checkinInfoService" class="com.ticket.serviceImpl.CheckinInfoServiceImpl"></bean>
+	<bean id="infringementService" class="com.ticket.serviceImpl.InfringementServiceImpl"></bean>
+	<bean id="memberQqService" class="com.ticket.serviceImpl.MemberQqServiceImpl"></bean>
+	<bean id="memberWeiBoService" class="com.ticket.serviceImpl.MemberWeiBoServiceImpl"></bean>
+	<bean id="memberWeixinService" class="com.ticket.serviceImpl.MemberWeixinServiceImpl"></bean>
+	
+	<!-- Action Defined Area -->
+	<bean id="employeeInfoWapAdminAction" class="com.ticket.action.EmployeeInfoWapAdminAction" scope="prototype"/>
+	<bean id="channelCustomerAdminAction" class="com.ticket.action.ChannelCustomerAdminAction" scope="prototype"/>
+	<bean id="wapAction" class="com.ticket.action.WapAction" scope="prototype"/>
+	<bean id="wapMemberAction" class="com.ticket.action.WapMemberAction" scope="prototype"/>
+	<bean id="bjdjIndexAction" class="com.ticket.action.BjdjIndexAction" scope="prototype"/>
+	<bean id="bjdjOrderTemplateAction" class="com.ticket.action.BjdjOrderAction"></bean>
+	<bean id="appAction" class="com.ticket.action.AppAction" scope="prototype"/>
+	<bean id="preResultDefinitionAction" class="com.ticket.action.PreResultDefinitionAction" scope="prototype"/>
+	<bean id="pcAction" class="com.ticket.action.PcAction" scope="prototype"></bean>
+	<bean id="commonTravellerAction" class="com.ticket.action.CommonTravellerAction"></bean>
+	<bean id="commonTravellerCardAction" class="com.ticket.action.CommonTravellerCardAction"></bean>
+	<!-- tags -->
+	<bean id="osCacheTag" class="com.ticket.tags.OSCacheTag" init-method="init" scope="prototype"></bean>
+	<bean id="mobileIntegralService" class="com.ticket.serviceImpl.MobileIntegralServiceImpl"></bean>
+	
+</beans>

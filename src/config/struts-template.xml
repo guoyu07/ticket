@@ -1,0 +1,937 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- config the wap package -->
+	<package name="wapPackage" extends="json-package">
+		<!-- Defined myself interceptors -->
+		<interceptors>
+			<interceptor name="paginationInterceptor" class="com.ticket.interceptor.PaginationInterceptor" />
+			<interceptor name="wapInterceptor" class="com.ticket.interceptor.WapInterceptor">
+				<param name="excludeMethods">login,logout,register,authenticate</param>
+			</interceptor>
+			<interceptor-stack name="MyDefaultInterceptor">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="paginationInterceptor" />
+				<interceptor-ref name="wapInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="MyDefaultInterceptor" />
+		<global-results>
+			<result name="error">/error.html</result>
+		</global-results>
+		<!-- 全局异常处理类 -->
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		<action name="airport_*" method="{1}" class="wapAction">
+			
+			<result name="announcementTemplate">WEB-INF/jsp/template/wap/common/announcementTemplate.jsp</result>			
+			<result name="tipDownload" type="redirect">airport_checkinServiceNotice.action</result>
+			<result name="searchResult">/WEB-INF/jsp/template/wap/common/searchResult.jsp</result>
+			<!-- 模板1（文案+导航+电话） -->
+			<result name="contentAndNavigationAndPhone">/WEB-INF/jsp/template/wap/template/contentAndNavigationAndPhone.jsp</result>
+			<!-- 模板2（文案+筛选（文案+导航+电话））+温馨提示 -->
+			<result name="contentAndSelectFlightCompany">/WEB-INF/jsp/template/wap/template/contentAndSelectFlightCompany.jsp</result>
+			<result name="contentAndSelectFlightCompanyAjax">/WEB-INF/jsp/template/wap/template/contentAndSelectFlightCompanyAjax.jsp</result>
+			
+			<!-- 模板3（筛选（文案+导航+电话）） -->
+			<result name="selectContentAndNavigationAndPhone">/WEB-INF/jsp/template/wap/template/selectContentAndNavigationAndPhone.jsp</result>
+			<!-- 模板4（文案+导航（点击进入下一页导航内容）） -->
+			<result name="contentAndSelectPoint">/WEB-INF/jsp/template/wap/template/contentAndSelectPoint.jsp</result>
+			<!-- 模板5（切换+文案+导航+电话） -->
+			<result name="changeContentAndNavigationAndPhone">/WEB-INF/jsp/template/wap/template/changeContentAndNavigationAndPhone.jsp</result>
+			<result name="changeContentAndNavigationAndPhoneAjax">/WEB-INF/jsp/template/wap/template/changeContentAndNavigationAndPhoneAjax.jsp</result>
+			
+			<!-- 长水动态模板 -->
+			<result name="airportDynamicsTemplate">/WEB-INF/jsp/template/wap/template/airportDynamicsTemplate.jsp</result>
+			
+			<!-- 返回首页 -->
+			<result name="success">/WEB-INF/jsp/template/wap/common/index.jsp</result>
+			<!-- 乘机须知 -->
+			<result name="flightNoticeTemplate">/WEB-INF/jsp/template/wap/flightNotice/flightNoticeTemplate.jsp</result>
+			
+			<result name="domisticFlightNotice">/WEB-INF/jsp/template/wap/flightNotice/domisticFlightNotice.jsp</result>
+			
+			<result name="internationalFlightNotice">/WEB-INF/jsp/template/wap/flightNotice/internationalFlightNotice.jsp</result>
+
+			<result name="buyTicketNotice">/WEB-INF/jsp/template/wap/flightNotice/buyTicketNotice.jsp</result>
+			<result name="buyTicketNoticeAjax">/WEB-INF/jsp/template/wap/flightNotice/buyTicketNoticeAjax.jsp</result>
+			<!-- 出发 -->
+			<result name="setoutTemplate">/WEB-INF/jsp/template/wap/setout/setoutTemplate.jsp</result>
+			<result name="SDQuickMenuAjax">/WEB-INF/jsp/template/wap/setout/SDQuickMenuAjax.jsp</result>
+			<result name="SIQuickMenuAjax">/WEB-INF/jsp/template/wap/setout/SIQuickMenuAjax.jsp</result>
+			<result name="setoutTemplateAjax">/WEB-INF/jsp/template/wap/setout/setoutTemplateAjax.jsp</result>
+			<result name="setoutFromInternational">/WEB-INF/jsp/template/wap/setout/setoutFromInternational.jsp</result>
+			
+			<!-- 到达 -->
+			<result name="reachTemplate">/WEB-INF/jsp/template/wap/reach/reachTemplate.jsp</result>
+			<result name="reachInternational">/WEB-INF/jsp/template/wap/reach/reachInternational.jsp</result>
+			<result name="reachInternationalNoLuggage">/WEB-INF/jsp/template/wap/reach/reachInternationalNoLuggage.jsp</result>
+			<result name="reachTemplateNoLuggage">/WEB-INF/jsp/template/wap/reach/reachTemplateNoLuggage.jsp</result>
+			<result name="reachDomesticLuggage">/WEB-INF/jsp/template/wap/reach/reachTemplate.jsp</result>
+			<result name="reachQuickMenuAjax">/WEB-INF/jsp/template/wap/reach/reachQuickMenuAjax.jsp</result>
+			<result name="reachTemplateAjax">/WEB-INF/jsp/template/wap/reach/reachTemplateAjax.jsp</result>
+			<result name="reachTemplateNoLuggage">/WEB-INF/jsp/template/wap/reach/reachTemplateNoLuggage.jsp</result>
+			<result name="reachTemplateNoLuggageAjax">/WEB-INF/jsp/template/wap/reach/reachTemplateNoLuggageAjax.jsp</result>
+			<result name="RDQuickMenuAjax">/WEB-INF/jsp/template/wap/reach/RDQuickMenuAjax.jsp</result>
+			<result name="RIQuickMenuAjax">/WEB-INF/jsp/template/wap/reach/RIQuickMenuAjax.jsp</result>
+			
+			<!-- 中转 -->
+			<result name="transferTemplate">/WEB-INF/jsp/template/wap/transfer/transferTemplate.jsp</result>
+			<result name="transferTemplateNoLuggage">/WEB-INF/jsp/template/wap/transfer/transferTemplateNoLuggage.jsp</result>
+			<result name="transferTemplateLuggage">/WEB-INF/jsp/template/wap/transfer/transferTemplate.jsp</result>
+			<result name="transferQuickMenuAjax">/WEB-INF/jsp/template/wap/transfer/transferQuickMenuAjax.jsp</result>
+			<result name="transferTemplateAjax">/WEB-INF/jsp/template/wap/transfer/transferTemplateAjax.jsp</result>
+			<result name="transferTemplateNoLuggageAjax">/WEB-INF/jsp/template/wap/transfer/transferTemplateNoLuggageAjax.jsp</result>
+
+			<!-- 航班查询 -->
+			<result name="flightQueryTemplate">/WEB-INF/jsp/template/wap/flightQuery/flightQueryTemplate.jsp</result>
+			<result name="flightQueryTemplateAjax">/WEB-INF/jsp/template/wap/flightQuery/flightQueryTemplateAjax.jsp</result>
+			<result name="flightQueryByFlightNum">/WEB-INF/jsp/template/wap/flightQuery/flightQueryByFlightNum.jsp</result>
+
+			<result name="flightQuery">/WEB-INF/jsp/template/wap/flightQuery/flightQuery.jsp</result>
+			
+			<result name="selectCity">/WEB-INF/jsp/template/wap/flightQuery/selectCity.jsp</result>
+			<result name="selectCityAjax">/WEB-INF/jsp/template/wap/flightQuery/selectCityAjax.jsp</result>
+			<result name="selectCityListAjax">/WEB-INF/jsp/template/wap/flightQuery/selectCityListAjax.jsp</result>
+			<result name="selectCityListAjaxOrder">/WEB-INF/jsp/template/wap/flightQuery/selectCityListAjaxOrder.jsp</result>
+
+			<result name="flightQuery01">/WEB-INF/jsp/template/wap/flightQuery/flightQuery01.jsp</result>
+			<result name="queryResultByCity">/WEB-INF/jsp/template/wap/flightQuery/queryResultByCity.jsp</result>
+			<result name="queryResultByNoAndDate">/WEB-INF/jsp/template/wap/flightQuery/flightResultByNoAndDate.jsp</result>
+			<result name="planFlightDetail">/WEB-INF/jsp/template/wap/flightQuery/planFlightDetail.jsp</result>
+			
+			<!-- 查询计划航班 -->
+			<result name="queryPlanFlightByCity">/WEB-INF/jsp/template/wap/flightQuery/queryPlanFlightByCity.jsp</result>
+			<result name="queryPlanFlightByNoAndDate">/WEB-INF/jsp/template/wap/flightQuery/queryPlanFlightByNoAndDate.jsp</result>
+			
+			<result name="querydepartFlightByNoAndDate">/WEB-INF/jsp/template/wap/flightQuery/querydepartFlightByNoAndDate.jsp</result>
+			<result name="queryArrivalFlightByNoAndDate">/WEB-INF/jsp/template/wap/flightQuery/queryArrivalFlightByNoAndDate.jsp</result>
+			
+			<result name="departFlightDetail">/WEB-INF/jsp/template/wap/flightQuery/departFlightDetail.jsp</result>
+			<result name="arrivalFlightDetail">/WEB-INF/jsp/template/wap/flightQuery/arrivalFlightDetail.jsp</result>
+			
+			<!-- 网上值机 -->
+			<result name="checkinOnlineService">/WEB-INF/jsp/template/wap/checkOnline/checkinOnline.jsp</result>
+			<result name="checkinNotice">/WEB-INF/jsp/template/wap/checkOnline/checkinNotice.jsp</result>
+			<result name="checkOnlineNotice">/WEB-INF/jsp/template/wap/checkOnline/checkOnlineNotice.jsp</result>
+			<result name="checkinServiceNotice">/WEB-INF/jsp/template/wap/checkOnline/checkOnlineNotice.jsp</result>
+			
+			<!-- 航班动态 -->
+			<!-- <result name="flightDynamic">/WEB-INF/jsp/template/wap/flightDynamic/flightDynamic.jsp</result>
+			<result name="myFlight">/WEB-INF/jsp/template/wap/flightDynamic/myFlight.jsp</result> -->
+			
+			<!-- 机票验真 -->
+			<result name="verificationTicket01">/WEB-INF/jsp/template/wap/verificationTicket/verificationTicket01.jsp</result>
+			<result name="verificationTicket02">/WEB-INF/jsp/template/wap/verificationTicket/verificationTicket02.jsp</result>
+			
+			<!-- 新闻公告 -->
+			<result name="airportFocusNews">/WEB-INF/jsp/template/wap/newsNotice/airportFocusNews.jsp</result>
+			<result name="airportFocusNewsAjax">/WEB-INF/jsp/template/wap/newsNotice/airportFocusNewsAjax.jsp</result>
+			
+			<result name="airportFocusNews-content">/WEB-INF/jsp/template/wap/newsNotice/airportFocusNews-content.jsp</result>
+			
+			<result name="airportFocusNewsContent">/WEB-INF/jsp/template/wap/newsNotice/airportFocusNews-content.jsp</result>
+			<result name="newsNoticeTemplate">/WEB-INF/jsp/template/wap/newsNotice/newsNoticeTemplate.jsp</result>
+			<result name="newsNotice01">/WEB-INF/jsp/template/wap/newsNotice/newsNotice01.jsp</result>
+			<result name="notice-board">/WEB-INF/jsp/template/wap/newsNotice/notice-board.jsp</result>
+			<result name="notice-boardAjax">/WEB-INF/jsp/template/wap/newsNotice/notice-boardAjax.jsp</result>
+			<result name="noticeBoardContent">/WEB-INF/jsp/template/wap/newsNotice/noticeBoard-content.jsp</result>
+			<result name="pictureNews">/WEB-INF/jsp/template/wap/newsNotice/pictureNews.jsp</result>
+			<result name="pictureNewsAjax">/WEB-INF/jsp/template/wap/newsNotice/pictureNewsAjax.jsp</result>
+			<result name="pictureNews-content">/WEB-INF/jsp/template/wap/newsNotice/pictureNews-content.jsp</result>
+			
+			<!-- 便捷登机 -->
+			<result name="bjdjIndex" type="redirectAction">bjdj</result>
+			<result name="graphicDetails">/WEB-INF/jsp/template/wap/convenientBoarding/graphicDetails.jsp</result>
+			<result name="graphicDetailsTemplate">/WEB-INF/jsp/template/wap/convenientBoarding/graphicDetailsTemplate.jsp</result>
+			
+			<!-- 电瓶车 -->
+			<result name="electromobile" type="redirectAction">electromobile</result>
+			<result name="mgraphicDetails">/WEB-INF/jsp/template/wap/electromobile/graphicDetails.jsp</result>
+			<result name="mgraphicDetailsTemplate">/WEB-INF/jsp/template/wap/electromobile/graphicDetailsTemplate.jsp</result>
+			
+			<!-- 厅内信息 -->
+			<result name="bjdjLoungeHall" type="chain">bjdjLoungeHall</result>
+			
+			<!-- 行李服务 -->
+			<result name="luggageServiceTemplate">/WEB-INF/jsp/template/wap/luggageService/luggageServiceTemplate.jsp</result>
+			
+			<result name="luggageQuery">/WEB-INF/jsp/template/wap/luggageService/luggageQuery.jsp</result>
+			<result name="luggageQueryAjax">/WEB-INF/jsp/template/wap/luggageService/luggageQueryAjax.jsp</result>
+			
+			<result name="luggageConsign">/WEB-INF/jsp/template/wap/luggageService/luggageConsign.jsp</result>
+			<result name="luggageConsignAjax">/WEB-INF/jsp/template/wap/luggageService/luggageConsignAjax.jsp</result>
+			
+			<!-- 旅游资讯 -->
+			<result name="domesticTravel">/WEB-INF/jsp/template/wap/travelInformation/domesticTravel.jsp</result>
+			<result name="foreignTravel">/WEB-INF/jsp/template/wap/travelInformation/foreignTravel.jsp</result>
+			<result name="freeWalker">/WEB-INF/jsp/template/wap/travelInformation/freeWalker.jsp</result>
+			<result name="freeWalkerCombo">/WEB-INF/jsp/template/wap/travelInformation/freeWalkerCombo.jsp</result>
+			<result name="lineDetail">/WEB-INF/jsp/template/wap/travelInformation/lineDetail.jsp</result>
+			<result name="scenicSpotDetail">/WEB-INF/jsp/template/wap/travelInformation/scenicSpotDetail.jsp</result>
+			<result name="serviceBook">/WEB-INF/jsp/template/wap/travelInformation/serviceBook.jsp</result>
+			<result name="travelInformation">/WEB-INF/jsp/template/wap/travelInformation/travelInformation.jsp</result>
+			<result name="travelInformationTwo">/WEB-INF/jsp/template/wap/travelInformation/travelInformationTwo.jsp</result>
+			
+			<!-- 便民服务 -->
+			<result name="convenientServiceTemplate">/WEB-INF/jsp/template/wap/convenientService/convenientServiceTemplate.jsp</result>
+			<result name="convenientThridTemplate">/WEB-INF/jsp/template/wap/convenientService/convenientThridTemplate.jsp</result>
+			<result name="currencyExchange">/WEB-INF/jsp/template/wap/convenientService/currencyExchange.jsp</result>
+			<result name="convenientSecondTemplate">/WEB-INF/jsp/template/wap/convenientService/convenientSecondTemplate.jsp</result>
+			<result name="lostGoodsQuery">/WEB-INF/jsp/template/wap/convenientService/lostGoodsQuery.jsp</result>
+			<result name="goodsQueryResult">/WEB-INF/jsp/template/wap/convenientService/goodsQueryResult.jsp</result>
+
+			<result name="theInformationDesk">/WEB-INF/jsp/template/wap/convenientService/theInformationDesk.jsp</result>
+			<result name="flightCompany">/WEB-INF/jsp/template/wap/convenientService/flightCompanyInfo.jsp</result>
+			<result name="flightAjax">/WEB-INF/jsp/template/wap/convenientService/flightCompanyInfoAjax.jsp</result>
+			<result name="baiduTranslate">/WEB-INF/jsp/template/wap/convenientService/baiduTranslate.jsp</result>
+			<result name="baiduExchangeRate">/WEB-INF/jsp/template/wap/convenientService/baiduExchangeRate.jsp</result>
+			
+			<!-- 公共设施 -->
+			<result name="publicFacilitiesTemplate">/WEB-INF/jsp/template/wap/publicFacilities/publicFacilitiesTemplate.jsp</result>
+			
+			<result name="childEntertainmentDistrict">/WEB-INF/jsp/template/wap/publicFacilities/childEntertainmentDistrict.jsp</result>
+			<!-- 爱心服务 -->
+			<result name="caringServiceTemplate">/WEB-INF/jsp/template/wap/caringService/caringServiceTemplate.jsp</result>
+			<result name="careServiceList">/WEB-INF/jsp/template/wap/caringService/careServiceList.jsp</result>
+			
+			<result name="caringTemplate">/WEB-INF/jsp/template/wap/caringService/caringTemplate.jsp</result>
+			<result name="caringTemplateAjax">/WEB-INF/jsp/template/wap/caringService/caringTemplateAjax.jsp</result>
+			
+			<!--商旅服务  -->
+			<result name="travelServiceTemplate">/WEB-INF/jsp/template/wap/travelService/travelServiceTemplate.jsp</result>
+			<result name="travelThirdTemplate">/WEB-INF/jsp/template/wap/travelService/travelThirdTemplate.jsp</result>
+			<result name="firstBusinessCabinLounge">/WEB-INF/jsp/template/wap/travelService/firstBusinessCabinLounge.jsp</result>
+			<result name="businessCenter">/WEB-INF/jsp/template/wap/travelService/businessCenter.jsp</result>
+			
+			<!-- 航班延误 -->
+			<result name="businessDetail">/WEB-INF/jsp/template/wap/flightDelay/airportBusinessDetail.jsp</result>
+			<result name="hotel">/WEB-INF/jsp/template/wap/flightDelay/airportBusinessHotelTemplate.jsp</result>
+			<result name="restaurant">/WEB-INF/jsp/template/wap/flightDelay/airportBusinessRestuarantTemplate.jsp</result>
+			<result name="goYouZanUrl">/WEB-INF/jsp/template/wap/flightDelay/goYouZanUrl.jsp</result>
+			<result name="businessSecondTypeAjax">/WEB-INF/jsp/template/wap/flightDelay/businessSecondTypeAjax.jsp</result>
+			<result name="businessListAjax">/WEB-INF/jsp/template/wap/flightDelay/businessListAjax.jsp</result>
+			<result name="businessListAjaxByWz">/WEB-INF/jsp/template/wap/flightDelay/businessListAjaxByWz.jsp</result>
+			<result name="businessListAjaxByEvent">/WEB-INF/jsp/template/wap/flightDelay/businessListAjaxByEvent.jsp</result>
+			<result name="businessListAjaxByOrder">/WEB-INF/jsp/template/wap/flightDelay/businessListAjaxByOrder.jsp</result>
+			<result name="shopping">/WEB-INF/jsp/template/wap/flightDelay/airportBusiness-shopping.jsp</result>
+			<result name="flightDelay">/WEB-INF/jsp/template/wap/flightDelay/flightDelay.jsp</result>
+			<result name="lawsAndRegulations">/WEB-INF/jsp/template/wap/flightDelay/lawsAndRegulations.jsp</result>
+			<result name="mealTicket">/WEB-INF/jsp/template/wap/flightDelay/mealTicket.jsp</result>
+			<result name="delayNotice">/WEB-INF/jsp/template/wap/flightDelay/delayNotice.jsp</result>
+			
+			<!-- 关注我们 -->
+			<result name="payAttentionToUsTemplate">/WEB-INF/jsp/template/wap/payAttentionToUs/payAttentionToUsTemplate.jsp</result>
+			<result name="payAttentionToUsTemplate2">/WEB-INF/jsp/template/wap/payAttentionToUs/payAttentionToUsTemplate2.jsp</result>
+			
+			<result name="payAttentionToUs">/WEB-INF/jsp/template/wap/payAttentionToUs/payAttentionToUs.jsp</result>
+			<!-- 长水文化 -->
+			<result name="cultureDisplayTemplate">/WEB-INF/jsp/template/wap/culture/cultureDisplayTemplate.jsp</result>
+			
+			<result name="cultureDisplay-video">/WEB-INF/jsp/template/wap/culture/cultureDisplay-video.jsp</result>
+			<result name="cultureDisplay-videoDetail">/WEB-INF/jsp/template/wap/culture/cultureDisplay-videoDetail.jsp</result>
+			
+			<result name="cultureDisplay">/WEB-INF/jsp/template/wap/culture/cultureDisplay.jsp</result>
+			<result name="cultureDisplay01">/WEB-INF/jsp/template/wap/culture/cultureDisplay01.jsp</result>
+			<result name="cultureDisplayVideo">/WEB-INF/jsp/template/wap/culture/cultureDisplay-video.jsp</result>
+			<result name="cultureDisplayVideoDetail">/WEB-INF/jsp/template/wap/culture/cultureDisplay-videoDetail.jsp</result>
+		
+			<!-- 免责申明 -->
+			<result name="disclaimerTemplate">/WEB-INF/jsp/template/wap/disclaimer/disclaimerTemplate.jsp</result>
+			
+			<result name="disclaimer">/WEB-INF/jsp/template/wap/disclaimer/disclaimer.jsp</result>
+			
+			<!-- 员工登录 -->
+			<result name="internalEmployeeChannel">/WEB-INF/jsp/template/wap/employeeLogin/internalEmployeeChannel.jsp</result>
+			<result name="internalEmployeeLogin">/WEB-INF/jsp/template/wap/employeeLogin/internalEmployeeLogin.jsp</result>
+			<result name="internalEmployeePwdReset">/WEB-INF/jsp/template/wap/employeeLogin/internalEmployeePwdRest.jsp</result>
+			<result name="internalEmployeePwdResetNewPwd">/WEB-INF/jsp/template/wap/employeeLogin/internalEmployeePwdRest-newPwd.jsp</result>
+			
+			<!-- 左滑菜单 -->
+			<result name="index">/WEB-INF/jsp/template/wap/leftSlidingMenu/index.jsp</result>
+			<!-- 员工通道 -->
+			<result name="employeeLogin">/WEB-INF/jsp/template/wap/employeeLogin/internalEmployeeLogin.jsp</result>
+			<result name="employeeHome">/WEB-INF/jsp/template/wap/employeeLogin/internalEmployeeChannel.jsp</result>
+			<result name="regulationDetail">/WEB-INF/jsp/template/wap/employeeLogin/regulationDetail.jsp</result>
+			<result name="internalEmployeeIndex">/WEB-INF/jsp/template/wap/employeeLogin/internalEmployeeIndex.jsp</result>
+						
+			<!-- 交通指南 -->
+			<result name="trafficGuide">/WEB-INF/jsp/template/wap/trafficGuide/trafficGuide.jsp</result>
+			<result name="trafficGuideLine">/WEB-INF/jsp/template/wap/trafficGuide/trafficGuideLine.jsp</result>
+			<result name="trafficGuideDetail">/WEB-INF/jsp/template/wap/trafficGuide/trafficGuideDetail.jsp</result>
+			<result name="trafficLineAjax">/WEB-INF/jsp/template/wap/trafficGuide/trafficLineAjax.jsp</result>
+			<result name="trafficLineDetailAjax">/WEB-INF/jsp/template/wap/trafficGuide/trafficLineDetailAjax.jsp</result>
+			<result name="trafficTypeAjax">/WEB-INF/jsp/template/wap/trafficGuide/trafficTypeAjax.jsp</result>
+			<result name="selectStationAjax">/WEB-INF/jsp/template/wap/trafficGuide/selectStationAjax.jsp</result>
+			<result name="resultBySearchTraffic">/WEB-INF/jsp/template/wap/trafficGuide/resultBySearchTraffic.jsp</result>
+		
+			<!-- 机场热线 -->
+			<result name="hotLinePhone">/WEB-INF/jsp/template/wap/hotLinePhone/hotLinePhone.jsp</result>
+			<result name="flightCompanyPhone">/WEB-INF/jsp/template/wap/hotLinePhone/flightCompanyPhone.jsp</result>
+		
+			<!-- 公告 -->
+			<!-- <result name="announcement">/WEB-INF/jsp/template/wap/common/announcement.jsp</result> -->
+		
+			<!-- 景点 -->
+			<result name="scenicSpotsList">/WEB-INF/jsp/template/wap/travelService/scenicSpotsList.jsp</result>
+			<result name="scenicSpotsDetail">/WEB-INF/jsp/template/wap/travelService/scenicSpotsDetail.jsp</result>
+		</action>
+		<action name="newss_*" method="{1}" class="com.ticket.action.NewsAction">
+			<result name="announcement">/WEB-INF/jsp/template/wap/common/announcement.jsp</result>
+			<result name="item">/WEB-INF/jsp/template/wap/common/announcementItem.jsp</result>
+			<result name="scenicSpotsNewsItem">/WEB-INF/jsp/template/wap/travelService/scenicSpotsNewsItem.jsp</result>
+			<result name="announcement1">/WEB-INF/jsp/template/wap/common/announcement1.jsp</result>
+		</action>
+		<!-- 员工罚单 -->
+		<action name="infringement_*" method="{1}" class="com.ticket.action.InfringementAction">
+			<result name="addInfringement">/WEB-INF/jsp/template/wap/infringement/commitInfringement.jsp</result>
+			<result name="lookInfringement">/WEB-INF/jsp/template/wap/infringement/lookInfrigement.jsp</result>
+			<result name="manageInfringement">/WEB-INF/jsp/template/wap/infringement/manageInfringement.jsp</result>
+		</action>
+		
+		<!-- 收藏 -->
+		<action name="memberFavorite_*" method="{1}" class="com.ticket.action.MemberFavoriteAction"></action>
+		
+		
+		<action name="baiduExchangeRate_*" method="{1}" class="com.ticket.action.BaiduExchangeRateAction">
+			<result name="success">/WEB-INF/jsp/template/wap/convenientService/baiduExchangeRate.jsp</result>
+		</action>
+		
+		<action name="memberQq_*" method="{1}" class="com.ticket.action.MemberQQAction">
+			<result name="success">/WEB-INF/jsp/template/wap/common/index.jsp</result>
+			<result name="pc">/WEB-INF/jsp/template/pc/index.jsp</result>
+			<result name="pcBjdj" type="redirect">pcOrder.action</result>
+			<result name="bjdjSuccess" type="redirect">bjdj.action</result>
+		</action>
+		
+		<action name="memberWeiBo_*" method="{1}" class="com.ticket.action.MemberWeiBoAction">
+			<result name="success">/WEB-INF/jsp/template/wap/common/index.jsp</result>
+			<result name="pc">/WEB-INF/jsp/template/pc/index.jsp</result>
+			<result name="pcBjdj" type="redirect">pcOrder.action</result>
+			<result name="bjdjSuccess" type="redirect">bjdj.action</result>
+		</action>
+		
+		<action name="memberWeixin_*" method="{1}" class="com.ticket.action.MemberWeixinAction">
+			<result name="success">/WEB-INF/jsp/template/wap/common/index.jsp</result>
+			<result name="pc">/WEB-INF/jsp/template/pc/index.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 罚单图片上传 -->
+	<package name="json" extends="json-package">
+	
+		<interceptors>
+			<interceptor name="wapMemberInterceptor" class="com.ticket.interceptor.BjdjMemberInterceptor"></interceptor>
+			<interceptor-stack name="MyDefaultInterceptor">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="wapMemberInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="MyDefaultInterceptor" />
+		<global-results>
+			<result name="error">/error.html</result>
+		</global-results>
+		<!-- 全局异常处理类 -->
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		
+		<action name="file_*" class="com.ticket.action.FileAction" method="{1}">
+            <result type="json" name="success">
+                <param name="contentType">
+                    text/html
+                </param>
+            </result>
+            <result type="json" name="error">
+                <param name="contentType">
+                    text/html
+                </param>  
+            </result>
+            <result name="ss">/ShowUpload.jsp</result>
+        </action>
+	</package>
+	
+	<!-- 便捷登机（不需要登录） -->
+	<package name="bjdj_nologin" extends="json-package">
+		
+		<interceptors>
+			<interceptor name="wapMemberInterceptor" class="com.ticket.interceptor.BjdjMemberInterceptor"></interceptor>
+			<interceptor-stack name="MyDefaultInterceptor">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="wapMemberInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="MyDefaultInterceptor" />
+		
+		<global-results>
+			<result name="error">/error.html</result>
+		</global-results>
+		<!-- 全局异常处理类 -->
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		
+		<!-- 航班状态消息推送 -->
+		<action name="autoSendMessage_*" method="{1}" class="com.ticket.action.AutoSendMessageAction"></action>
+		
+		<!-- 首页 -->
+		<action name="pay_*" method="{1}" class="com.ticket.action.PayAction"></action>
+		
+		<!-- 首页 -->
+		<action name="bjdj_*" method="{1}" class="com.ticket.action.BjdjIndexAction">
+			<result name="success">/WEB-INF/jsp/template/wap/convenientBoarding/index.jsp</result>
+			<result name="confirmPage" type="redirect">bjdjOrderTemplate_confirmPage.action</result>
+			<result name="confirmPageAjax" type="redirect">bjdjOrderTemplate_confirmPageAjax.action?bjdjPage_id=${bjdjPage_id}</result>
+			<result name="indexAjax">/WEB-INF/jsp/template/wap/convenientBoarding/indexAjax.jsp</result>
+		</action>
+		
+		<action name="bjdjServiceCodeLog_*" method="{1}" class="com.ticket.action.BjdjServiceCodeLogAction">
+			<result name="manageBjdjServiceCodeLog">/WEB-INF/jsp/manager/rechargeRecord/userServicesCode.jsp</result>
+		</action>
+	
+		<!-- 便捷登机用户操作 -->
+		<action name="bjdjMember_*" method="{1}" class="com.ticket.action.BjdjMemberAction">
+			<result name="success">/WEB-INF/jsp/template/wap/convenientBoarding/login.jsp</result>
+			<result name="loginAjax">/WEB-INF/jsp/template/wap/convenientBoarding/loginAjax.jsp</result>
+			<result name="input">/WEB-INF/jsp/template/wap/convenientBoarding/login.jsp</result>
+			<result name="toPage" type="redirect">${destUrl}</result>
+			<result name="confirmPage2" type="redirect">bjdjOrderTemplate_confirmPage2.action</result>
+			<result name="registPage">/WEB-INF/jsp/template/wap/convenientBoarding/regist.jsp</result>
+			<result name="retrievePasswordPage">/WEB-INF/jsp/template/wap/convenientBoarding/retrievePassword.jsp</result>
+			<result name="retrievePasswordForMobile1Page">/WEB-INF/jsp/template/wap/convenientBoarding/retrievePasswordForMobile1.jsp</result>
+			<result name="retrievePasswordForMobile2Page">/WEB-INF/jsp/template/wap/convenientBoarding/retrievePasswordForMobile2.jsp</result>
+			<result name="retrievePasswordForEmail1Page">/WEB-INF/jsp/template/wap/convenientBoarding/retrievePasswordForEmail1.jsp</result>
+			<result name="retrievePasswordForEmail2Page">/WEB-INF/jsp/template/wap/convenientBoarding/retrievePasswordForEmail2.jsp</result>
+		</action>
+		
+		<!-- 休息厅 -->
+		<action name="bjdjLoungeHall_*" method="{1}" class="com.ticket.action.BjdjLoungeHallAction">
+			<result name="success">/WEB-INF/jsp/template/wap/convenientBoarding/loungeDetails.jsp</result>
+		</action>
+		
+		<!-- 字典 -->
+		<action name="systemDictionaryTemplate_*" method="{1}" class="com.ticket.action.SystemDictionaryTemplateAction"></action>
+		
+		<!-- 文件上传 -->
+		<action name="fileUpload" class="com.ticket.action.FileUploadAction"></action>
+		
+		<!-- 移动积分 -->
+		<action name="mobileRequest_*" method="{1}" class="com.ticket.action.MobileRequestAction"></action>
+		
+		<!-- 机票预订 -->
+		<action name="ticketOrder_*" method="{1}" class="com.ticket.action.TicketOrderAction">
+			<result name="flightInformationPage">/WEB-INF/jsp/template/wap/ticketOrder/flightIInformation.jsp</result>
+			<result name="ticketInformationPage">/WEB-INF/jsp/template/wap/ticketOrder/ticketInformation.jsp</result>
+			<result name="ticketOrderInternationMultipassPage">/WEB-INF/jsp/template/wap/ticketOrder/ticketOrder-internationMultipass.jsp</result>
+			
+			
+			<result name="ticketSingle">/WEB-INF/jsp/template/wap/ticketOrder/ticketSingle.jsp</result>
+			<result name="selectCity">/WEB-INF/jsp/template/wap/ticketOrder/selectCity.jsp</result>
+			<result name="ticketGoAndBack">/WEB-INF/jsp/template/wap/ticketOrder/ticketGoAndBack.jsp</result>
+			<result name="ticketInternational">/WEB-INF/jsp/template/wap/ticketOrder/ticketInternational.jsp</result>
+			<result name="ticketInternationalGoAndBack">/WEB-INF/jsp/template/wap/ticketOrder/ticketInternationalGoAndBack.jsp</result>
+		</action>
+		
+		<!-- 旅游咨询 -->
+		<action name="travelOrder_*" method="{1}" class="com.ticket.action.TravelOrderAction">
+			<result name="domesticTravelPage">/WEB-INF/jsp/template/wap/travelInformation/domesticTravel.jsp</result>
+			<result name="foreignTravelPage">/WEB-INF/jsp/template/wap/travelInformation/foreignTravel.jsp</result>
+			<result name="freeWalkerPage">/WEB-INF/jsp/template/wap/travelInformation/freeWalker.jsp</result>
+			<result name="freeWalkerComboPage">/WEB-INF/jsp/template/wap/travelInformation/freeWalkerCombo.jsp</result>
+			<result name="lineDetailPage">/WEB-INF/jsp/template/wap/travelInformation/lineDetail.jsp</result>
+			<result name="scenicSpotDetailPage">/WEB-INF/jsp/template/wap/travelInformation/scenicSpotDetail.jsp</result>
+			<result name="serviceCombinationPage">/WEB-INF/jsp/template/wap/travelInformation/serviceCombination.jsp</result>
+			<result name="serviceOrderPage">/WEB-INF/jsp/template/wap/travelInformation/serviceOrder.jsp</result>
+			<result name="travelInformationPage">/WEB-INF/jsp/template/wap/travelInformation/travelInformation.jsp</result>
+			<result name="travelInformationPage2">/WEB-INF/jsp/template/wap/travelInformation/travelInformation2.jsp</result>
+			<result name="travelOrderPage">/WEB-INF/jsp/template/wap/travelInformation/travelOrder.jsp</result>
+		</action>
+		
+	</package>
+	
+	<!-- <package name="pay" extends="wapMemberPackage" namespace="pay">
+		便捷登机订单
+		<action name="bjdjOrderTemplate_*" method="{1}" class="com.ticket.action.BjdjOrderTemplateAction">
+			<result name="index" type="redirect">bjdj.action</result>
+			<result name="confirmPage">/WEB-INF/jsp/template/wap/convenientBoarding/orderConfirm.jsp</result>
+			<result name="confirmPageAjax">/WEB-INF/jsp/template/wap/convenientBoarding/orderConfirmAjax.jsp</result>
+			<result name="payPage">/WEB-INF/jsp/template/wap/convenientBoarding/orderPay.jsp</result>
+			<result name="paySuccess" type="redirect">bjdjOrderTemplate_paySuccessPage.action?orderId=${order.id}</result>
+			<result name="paySuccessPage">/WEB-INF/jsp/template/wap/convenientBoarding/purchaseSuccess.jsp</result>
+			<result name="payFailPage">/WEB-INF/jsp/template/wap/convenientBoarding/purchaseFail.jsp</result>
+			<result name="input" type="chain">bjdjOrderTemplate_confirmPage</result>
+			<result name="allOrder">/WEB-INF/jsp/template/wap/orderManager/allOrder.jsp</result>
+			<result name="orderAjax">/WEB-INF/jsp/template/wap/orderManager/orderAjax.jsp</result>
+			<result name="orderRefundPage">/WEB-INF/jsp/template/wap/orderManager/applyRefund.jsp</result>
+			<result name="refundSuccess" type="redirect">bjdjOrderTemplate_allOrder.action?orderId=${orderId}</result>
+			<result name="refundFail" type="redirect">bjdjOrderTemplate_orderRefundPage.action?orderId=${orderId}</result>
+			<result name="orderDonationPage">/WEB-INF/jsp/template/wap/orderManager/applyDonation.jsp</result>
+			<result name="donationSuccess" type="redirect">bjdjOrderTemplate_allOrder.action</result>
+			<result name="orderDetailsPage">/WEB-INF/jsp/template/wap/orderManager/orderDetails.jsp</result>
+			<result name="serviceCodeDelayPage">/WEB-INF/jsp/template/wap/orderManager/applyDelay.jsp</result>
+			<result name="activatePage" type="redirect">bjdjServiceCodeActivate_page.action</result>
+			<result name="alipay">/WEB-INF/jsp/template/wap/orderManager/alipay/alipayPay.jsp</result>
+		</action>
+	</package> -->
+	
+	<!-- 便捷登机（需要登录的） -->
+	<package name="bjdj" extends="wapMemberPackage">
+		
+		<!-- 便捷登机订单 -->
+		<action name="bjdjOrderTemplate_*" method="{1}" class="com.ticket.action.BjdjOrderTemplateAction">
+			<result name="index" type="redirect">bjdj.action</result>
+			<result name="confirmPage">/WEB-INF/jsp/template/wap/convenientBoarding/orderConfirm.jsp</result>
+			<result name="confirmPageAjax">/WEB-INF/jsp/template/wap/convenientBoarding/orderConfirmAjax.jsp</result>
+			<result name="payPage">/WEB-INF/jsp/template/wap/convenientBoarding/orderPay.jsp</result>
+			<result name="paySuccess" type="redirect">bjdjOrderTemplate_paySuccessPage.action?orderId=${order.id}</result>
+			<result name="paySuccessPage">/WEB-INF/jsp/template/wap/convenientBoarding/purchaseSuccess.jsp</result>
+			<result name="payFailPage">/WEB-INF/jsp/template/wap/convenientBoarding/purchaseFail.jsp</result>
+			<result name="input" type="chain">bjdjOrderTemplate_confirmPage</result>
+			<result name="allOrder">/WEB-INF/jsp/template/wap/orderManager/allOrder.jsp</result>
+			<result name="orderAjax">/WEB-INF/jsp/template/wap/orderManager/orderAjax.jsp</result>
+			<result name="orderRefundPage">/WEB-INF/jsp/template/wap/orderManager/applyRefund.jsp</result>
+			<result name="refundSuccess" type="redirect">bjdjOrderTemplate_allOrder.action?orderId=${orderId}</result>
+			<result name="refundFail" type="redirect">bjdjOrderTemplate_orderRefundPage.action?orderId=${orderId}</result>
+			<result name="orderDonationPage">/WEB-INF/jsp/template/wap/orderManager/applyDonation.jsp</result>
+			<result name="donationSuccess" type="redirect">bjdjOrderTemplate_allOrder.action</result>
+			<result name="orderDetailsPage">/WEB-INF/jsp/template/wap/orderManager/orderDetails.jsp</result>
+			<result name="serviceCodeDelayPage">/WEB-INF/jsp/template/wap/orderManager/applyDelay.jsp</result>
+			<result name="activatePage" type="redirect">bjdjServiceCodeActivate_page.action</result>
+			<result name="alipay">/WEB-INF/jsp/template/wap/orderManager/alipay/alipayApi.jsp</result>
+		</action>
+		
+		
+		<!-- 服务码激活 -->
+		<action name="bjdjServiceCodeActivate_*" method="{1}" class="com.ticket.action.BjdjServiceCodeActivateAction">
+			<result name="page">/WEB-INF/jsp/template/wap/convenientBoarding/serviceCodeActivate.jsp</result>
+			<result name="success">/WEB-INF/jsp/template/wap/convenientBoarding/serviceCodeActivateSuccess.jsp</result>
+			<result name="error">/WEB-INF/jsp/template/wap/convenientBoarding/serviceCodeActivateFail.jsp</result>
+			
+			<!-- ajax请求的html片段 -->
+			<result name="activateItem">/WEB-INF/jsp/template/wap/convenientBoarding/serviceCodeActivateItem.jsp</result>
+		</action>
+		
+		<!-- 评价表 -->
+		<action name="bjdjCommentTemplate_*" method="{1}" class="com.ticket.action.BjdjCommentTemplateAction">
+			<result name="success" type="redirect">bjdjCommentTemplate_listPage.action</result>
+			<result name="list">/WEB-INF/jsp/template/wap/convenientBoarding/evaluateList.jsp</result>
+			<result name="page">/WEB-INF/jsp/template/wap/convenientBoarding/evaluate.jsp</result>
+			<result name="input">/WEB-INF/jsp/template/wap/convenientBoarding/evaluate.jsp</result>
+			
+			<!-- ajax请求的html片段 -->
+			<result name="listItem">/WEB-INF/jsp/template/wap/convenientBoarding/evaluateListItem.jsp</result>
+		</action>
+		
+		<!-- 评价系统 -->
+		<action name="evaluation_*" method="{1}" class="com.ticket.action.EvaluationAction">
+			<result name="page">/WEB-INF/jsp/template/wap/convenientBoarding/evaluate.jsp</result>
+			<result name="listPage">/WEB-INF/jsp/template/wap/evaluation/listPage.jsp</result>
+			<result name="myEvaluatePage">/WEB-INF/jsp/template/wap/evaluation/myEvaluatePage.jsp</result>
+			<result name="evaluatePage">/WEB-INF/jsp/template/wap/evaluation/evaluatePage.jsp</result>
+			
+			<!-- ajax请求的html片段 -->
+			<result name="listItem">/WEB-INF/jsp/template/wap/evaluation/listItem.jsp</result>
+			<result name="myListItem">/WEB-INF/jsp/template/wap/evaluation/myListItem.jsp</result>
+		</action>
+		
+		<action name="feedBack_*" class="com.ticket.action.FeedbackAction" method="{1}">
+			<result name="feedBackPage">/WEB-INF/jsp/template/wap/feedback/feedBackPage.jsp</result>
+			<result name="myFeedBack">/WEB-INF/jsp/template/wap/feedback/feedBackList.jsp</result>
+			<result name="listItem">/WEB-INF/jsp/template/wap/feedback/feedBackAjax.jsp</result>
+			<result name="detail">/WEB-INF/jsp/template/wap/feedback/detail.jsp</result>
+		</action>
+		
+		<action name="feedBackReply_*" class="com.ticket.action.FeedbackReplyAction" method="{1}">
+			<result name="addFeedback">/WEB-INF/jsp/template/wap/feedback/addfeedback.jsp</result>
+		</action>
+		
+		
+		<!-- 电瓶车 -->
+		<action name="electromobile_*" method="{1}" class="com.ticket.action.ElectromobileAction">
+			<!-- 首页 -->
+			<result name="index">/WEB-INF/jsp/template/wap/electromobile/index.jsp</result>
+			<!-- 订单生成页 -->
+			<result name="confirmPage">/WEB-INF/jsp/template/wap/electromobile/orderConfirm.jsp</result>
+			<!-- 订单确认页 -->
+			<result name="confirmPage2">/WEB-INF/jsp/template/wap/electromobile/orderConfirm2.jsp</result>
+			<!-- 支付页 -->
+			<result name="payPage">/WEB-INF/jsp/template/wap/electromobile/orderPay.jsp</result>
+			<!-- 支付成功 -->
+			<result name="paySuccess" type="redirect">electromobile_paySuccessPage.action?orderId=${order.id}</result>
+			<!-- 支付成功页 -->			
+			<result name="paySuccessPage">/WEB-INF/jsp/template/wap/electromobile/paySuccessPage.jsp</result>
+			<!-- 支付失败 -->			
+			<result name="payFailPage">/WEB-INF/jsp/template/wap/convenientBoarding/purchaseFail.jsp</result>
+			<!-- 支付 -->
+			<result name="pay" type="redirect">electromobile_pay.action?orderId=${order.id}</result>
+			<!-- 电瓶车服务介绍页 -->
+			<!-- <result name="serviceIntroducePage">/WEB-INF/jsp/template/wap/electromobile/serviceIntroduce.jsp</result> -->
+			<!-- 电瓶车位置导航页 -->
+			<result name="positionNavigationPage">/WEB-INF/jsp/template/wap/electromobile/positionNavigation.jsp</result>
+			<!-- 电瓶车详情提示页 -->
+			<result name="detailPromptPage">/WEB-INF/jsp/template/wap/electromobile/detailPrompt.jsp</result>
+			<!-- 电瓶车详情消费提示页 -->
+			<result name="consumeTipPage">/WEB-INF/jsp/template/wap/electromobile/consumeTip.jsp</result>
+		</action>
+		
+		<action name="commonTraveller_*" class="commonTravellerAction" method="{1}">
+			<result name="addCommonTraveller">/WEB-INF/jsp/template/wap/commonTraveller/addCommonTraveller.jsp</result>
+			<result name="showCommonTraveller">/WEB-INF/jsp/template/wap/commonTraveller/showCommonTraveller.jsp</result>
+			<result name="editCommonTraveller">/WEB-INF/jsp/template/wap/commonTraveller/editCommonTraveller.jsp</result>
+			<result name="simpleList">/WEB-INF/jsp/template/wap/commonTraveller/travellerList.jsp</result>
+		</action>
+		
+		<action name="commonTravellerCard_*" class="commonTravellerCardAction" method="{1}">
+			
+		</action>
+	</package>
+	
+	<!-- config the memberCenter package -->
+	<package name="wapMemberPackage" extends="json-package">
+		<!-- Defined myself interceptors -->
+		<interceptors>
+			<interceptor name="paginationInterceptor" class="com.ticket.interceptor.PaginationInterceptor" />
+			<interceptor name="wapMemberInterceptor" class="com.ticket.interceptor.WapMemberInterceptor">
+				<param name="excludeMethods">
+					login,logout,isLogin,register,regist,authenticate,personalCenterNoLogin,toResetPassword,resetPassword,
+					<!-- 便捷登机首页 -->	
+					execute,appInterface,indexImageInterface,
+					<!-- 订单管理 -->
+					execute,confirmPage,bjdjPriceInterface,generateAuthCode,generateAuthCodeInterface,constructOrder,generateOrGetUserInterface,
+					generateOrderInterface,orderRefundNotice,wxReturnUrl,alipayReturnUrl,baiduReturnUrl,generateOrder,confirmPageAjax,
+					<!-- 评价页面 -->
+					listPage,list,
+					<!-- 机场员工CRM -->
+					loginPage,login,logout,
+					<!-- 电瓶车页面 -->
+					execute,indexInterface,confirmPage,priceInterface,orderInterface,
+					generateAuthCode,constructOrder,constructOrderInterface,constructOrderInterface2,pay,
+					<!-- 评价系统 -->
+					listPage, list,
+				</param>
+			</interceptor>
+			<interceptor-stack name="MyDefaultInterceptor">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="paginationInterceptor" />
+				<interceptor-ref name="wapMemberInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="MyDefaultInterceptor" />
+		<global-results>
+			<result name="error">/error.html</result>
+			<result name="login">/WEB-INF/jsp/template/wap/personalCenter/login.jsp</result>
+			<result name="index">/WEB-INF/jsp/template/wap/common/index.jsp</result>
+			<result name="exception" type="chain">processException</result>
+		</global-results>
+		<!-- 全局异常处理类 -->
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		<action name="processException" class="com.ticket.exception.ProcessException"></action>
+		<action name="airportm_*" method="{1}" class="wapMemberAction">
+			<result name="success">/WEB-INF/jsp/template/wap/personalCenter/personalCenter.jsp</result>
+			<result name="tipDownload" type="redirect">airport_checkinServiceNotice.action</result>
+			<result name="activePage" type="redirect">bjdjServiceCodeActivate_page.action</result>
+			
+			<result name="register">/WEB-INF/jsp/template/wap/personalCenter/airportService.jsp</result>
+			<result name="found">/WEB-INF/jsp/template/wap/personalCenter/found.jsp</result>
+			<result name="myMessage">/WEB-INF/jsp/template/wap/personalCenter/myMessage.jsp</result>
+			<result name="myFavorite">/WEB-INF/jsp/template/wap/personalCenter/myFavorite.jsp</result>
+			<result name="myFlightRecord">/WEB-INF/jsp/template/wap/personalCenter/myFlightRecord.jsp</result>
+			<result name="myFocusOn">/WEB-INF/jsp/template/wap/personalCenter/myFocusOn.jsp</result>
+			<result name="personalCenterNoLogin">/WEB-INF/jsp/template/wap/personalCenter/personalCenterNoLogin.jsp?direct=true</result>
+			<result name="login">/WEB-INF/jsp/template/wap/personalCenter/login.jsp</result>
+			<result name="personalCenter">/WEB-INF/jsp/template/wap/personalCenter/personalCenter.jsp</result>
+			<result name="personalSetting">/WEB-INF/jsp/template/wap/personalCenter/personalSetting.jsp</result>
+			<result name="register">/WEB-INF/jsp/template/wap/personalCenter/register.jsp</result>
+			<result name="toResetPassword">/WEB-INF/jsp/template/wap/personalCenter/resetPassword.jsp</result>
+			<result name="validateAddV">/WEB-INF/jsp/template/wap/personalCenter/validateAddV.jsp</result>
+			<result name="VIPMember">/WEB-INF/jsp/template/wap/personalCenter/VIPMember.jsp</result>
+			<result name="airportService">/WEB-INF/jsp/template/wap/personalCenter/airportService.jsp</result>
+			<result name="messageDetail">/WEB-INF/jsp/template/wap/personalCenter/messageDetail.jsp</result>
+			<result name="updatePersonalInfo">/WEB-INF/jsp/template/wap/personalCenter/updatePersonalInfo.jsp</result>
+			<result name="baseInfo">/WEB-INF/jsp/template/wap/personalCenter/baseInfo.jsp</result>
+			<result name="companyInfo">/WEB-INF/jsp/template/wap/personalCenter/companyInfo.jsp</result>
+			<result name="detailInfo">/WEB-INF/jsp/template/wap/personalCenter/detailInfo.jsp</result>
+			<result name="otherInfo">/WEB-INF/jsp/template/wap/personalCenter/otherInfo.jsp</result>
+			<result name="educationInfo">/WEB-INF/jsp/template/wap/personalCenter/educationInfo.jsp</result>
+			<result name="checkinInfo">/WEB-INF/jsp/template/wap/personalCenter/checkinInfo.jsp</result>
+			<result name="checkinInfoNoData">/WEB-INF/jsp/template/wap/personalCenter/xzqzj.html</result>
+		
+			<!-- 出发旅程助手  -->
+			<result name="SDServiceNoCheckin">/WEB-INF/jsp/template/wap/setout/SDServiceNoCheckin.jsp</result>
+			<result name="SDServiceCheckinTakeLuggage">/WEB-INF/jsp/template/wap/setout/SDServiceCheckinTakeLuggage.jsp</result>
+			<result name="SDServiceCheckinNoLuggage">/WEB-INF/jsp/template/wap/setout/SDServiceCheckinNoLuggage.jsp</result>
+			<result name="SDAjax">/WEB-INF/jsp/template/wap/setout/SDAjax.jsp</result>
+			
+			<result name="SDServiceQuickMenuAjax">/WEB-INF/jsp/template/wap/setout/SDServiceQuickMenuAjax.jsp</result>
+			<result name="SIServiceQuickMenuAjax">/WEB-INF/jsp/template/wap/setout/SIServiceQuickMenuAjax.jsp</result>
+			
+			<result name="SIServiceNoCheckin">/WEB-INF/jsp/template/wap/setout/SIServiceNoCheckin.jsp</result>
+			<result name="SIServiceCheckinTakeLuggage">/WEB-INF/jsp/template/wap/setout/SIServiceCheckinTakeLuggage.jsp</result>
+			<result name="SIServiceCheckinNoLuggage">/WEB-INF/jsp/template/wap/setout/SIServiceCheckinNoLuggage.jsp</result>
+			<result name="SIAjax">/WEB-INF/jsp/template/wap/setout/SIAjax.jsp</result>
+			
+			<!-- 中转旅程助手  -->
+			<result name="DTDServiceTakeLuggage">/WEB-INF/jsp/template/wap/transfer/DTDServiceTakeLuggage.jsp</result>
+			<result name="DTIServiceTakeLuggage">/WEB-INF/jsp/template/wap/transfer/DTIServiceTakeLuggage.jsp</result>
+			<result name="ITDServiceTakeLuggage">/WEB-INF/jsp/template/wap/transfer/ITDServiceTakeLuggage.jsp</result>
+			<result name="ITIService">/WEB-INF/jsp/template/wap/transfer/ITIService.jsp</result>
+			
+			<result name="TTDServiceQuickMenuAjax">/WEB-INF/jsp/template/wap/transfer/TTDServiceQuickMenuAjax.jsp</result>
+			<result name="TTIServiceQuickMenuAjax">/WEB-INF/jsp/template/wap/transfer/TTIServiceQuickMenuAjax.jsp</result>
+			
+			<result name="DTDServiceNoLuggage">/WEB-INF/jsp/template/wap/transfer/DTDServiceNoLuggage.jsp</result>
+			<result name="DTIServiceNoLuggage">/WEB-INF/jsp/template/wap/transfer/DTIServiceNoLuggage.jsp</result>
+			<result name="ITDServiceNoLuggage">/WEB-INF/jsp/template/wap/transfer/ITDServiceNoLuggage.jsp</result>
+			
+			<result name="DTDAjax">/WEB-INF/jsp/template/wap/transfer/DTDAjax.jsp</result>
+			<result name="DTIAjax">/WEB-INF/jsp/template/wap/transfer/DTIAjax.jsp</result>
+			<result name="ITDAjax">/WEB-INF/jsp/template/wap/transfer/ITDAjax.jsp</result>
+			
+			<!-- 到达旅程助手 -->
+			<result name="RDServiceTakeLuggage">/WEB-INF/jsp/template/wap/reach/RDServiceTakeLuggage.jsp</result>
+			<result name="RDServiceNoLuggage">/WEB-INF/jsp/template/wap/reach/RDServiceNoLuggage.jsp</result>
+			<result name="RDAjax">/WEB-INF/jsp/template/wap/reach/RDAjax.jsp</result>
+			
+			<result name="RDServiceQuickMenuAjax">/WEB-INF/jsp/template/wap/reach/RDServiceQuickMenuAjax.jsp</result>
+			<result name="RIServiceQuickMenuAjax">/WEB-INF/jsp/template/wap/reach/RIServiceQuickMenuAjax.jsp</result>
+			
+			<result name="RIServiceTakeLuggage">/WEB-INF/jsp/template/wap/reach/RIServiceTakeLuggage.jsp</result>
+			<result name="RIServiceNoLuggage">/WEB-INF/jsp/template/wap/reach/RIServiceNoLuggage.jsp</result>
+			<result name="RIAjax">/WEB-INF/jsp/template/wap/reach/RIAjax.jsp</result>
+			
+			<!-- 旅程指南 -->
+			<result name="journeyGuide">/WEB-INF/jsp/template/wap/journeyGuide/journeyGuide.jsp</result>
+			<!-- 会员关注 -->
+			<result name="editFocus">/WEB-INF/jsp/template/wap/personalCenter/editFocus.jsp</result>
+			<!-- 网上值机 -->
+			<result name="checkOnline">/WEB-INF/jsp/template/wap/checkOnline/checkOnline.jsp</result>
+			
+			<!-- 会员设置快捷菜单 -->
+			<result name="setQuickMenu">/WEB-INF/jsp/template/wap/quickMenu/setQuickMenu.jsp</result>
+			<result name="setServiceQuickMenu">/WEB-INF/jsp/template/wap/quickMenu/setServiceQuickMenu.jsp</result>
+			<result name="deleteQuickMenuAjax">/WEB-INF/jsp/template/wap/personalCenter/deleteQuickMenuAjax.jsp</result>
+		</action>
+		<action name="quickMenuMemberSetting_*" method="{1}" class="quickMenuMemberSettingAction">
+		</action>
+	</package>
+	
+	<package name="appPackage" extends="json-package">
+		<interceptors>
+			<interceptor name="appInterceptor" class="com.ticket.interceptor.AppInterceptor">
+				<param name="excludeMethods">
+					login,logout,register,authenticate
+				</param>
+			</interceptor>
+			<interceptor-stack name="MyDefaultInterceptor">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="appInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="MyDefaultInterceptor" />
+		
+	</package>
+	
+	<package name="otherPackage" extends="json-package">
+		<!-- Defined myself interceptors -->
+		<interceptors>
+			<interceptor name="paginationInterceptor" class="com.ticket.interceptor.PaginationInterceptor" />
+			<interceptor-stack name="MyDefaultInterceptor">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="paginationInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="MyDefaultInterceptor" />
+		<action name="app_*" method="{1}" class="appAction"></action>
+		<action name="airportPc_*" method="{1}" class="pcAction">
+			<result name="success">/WEB-INF/jsp/template/pc/index.jsp</result>
+			<result name="flightCompanyInfo">/WEB-INF/jsp/template/pc/flightCompanyInfo.jsp</result>
+			<result name="flightCompanyList">/WEB-INF/jsp/template/pc/flightCompanyList.jsp</result>
+			<result name="newsDynamic">/WEB-INF/jsp/template/pc/newsDynamic.jsp</result>
+			<result name="passengerService">/WEB-INF/jsp/template/pc/passengerService.jsp</result>
+			<result name="trafficGuide">/WEB-INF/jsp/template/pc/trafficGuide.jsp</result>
+			<result name="businessDisplay">/WEB-INF/jsp/template/pc/businessDisplay.jsp</result>
+			<result name="serviceHotLine">/WEB-INF/jsp/template/pc/serviceHotLine.jsp</result>
+			<result name="payAttentionToUs">/WEB-INF/jsp/template/pc/payAttentionToUs.jsp</result>
+			<result name="flightDelayNotice">/WEB-INF/jsp/template/pc/flightDelayNotice.jsp</result>
+			<result name="flightDelayNotice">/WEB-INF/jsp/template/pc/flightDelayNotice.jsp</result>
+			<result name="disclaimer">/WEB-INF/jsp/template/pc/disclaimer.jsp</result>
+			<result name="personalCenter">/WEB-INF/jsp/template/pc/user_index.jsp</result>
+			<result name="myFavorite">/WEB-INF/jsp/template/pc/myFavorite.jsp</result>
+			<result name="myWay">/WEB-INF/jsp/template/pc/myWay.jsp</result>
+			<result name="myMessage">/WEB-INF/jsp/template/pc/message.jsp</result>
+			<result name="airportFAQ">/WEB-INF/jsp/template/pc/airportFAQ.jsp</result>
+			<result name="helpCenter">/WEB-INF/jsp/template/pc/helpCenter.jsp</result>
+			<result name="flightNotice">/WEB-INF/jsp/template/pc/flightNotice.jsp</result>
+			<result name="trafficGuideMenu">/WEB-INF/jsp/template/pc/trafficGuideMenu.jsp</result>
+			<!--网上值机 -->
+			<result name="checkOnLine">/WEB-INF/jsp/template/pc/news/checkOnLine.jsp</result>
+			<result name="flightDynamic">/WEB-INF/jsp/template/pc/flightDynamic.jsp</result>
+			<result name="flightQuery">/WEB-INF/jsp/template/pc/flightQuery.jsp</result>
+			<result name="find">/WEB-INF/jsp/template/pc/find.jsp</result>
+			<result name="payInfo">/WEB-INF/jsp/template/pc/payInfo.jsp</result>
+			<result name="myOrder">/WEB-INF/jsp/template/pc/myOrder.jsp</result>
+			<result name="myAccount">/WEB-INF/jsp/template/pc/myAccount.jsp</result>
+			<result name="convenientBoardingIndex">/WEB-INF/jsp/template/pc/bjdj_index.jsp</result>
+			<!-- 新闻列表 -->
+			<result name="newsAllList">/WEB-INF/jsp/template/pc/news/newsAllList.jsp</result>
+			<result name="newsAllList2">/WEB-INF/jsp/template/pc/news/newsAllList2.jsp</result>
+			<result name="newsAllList3">/WEB-INF/jsp/template/pc/news/newsAllList3.jsp</result>
+			<result name="newsAllList4">/WEB-INF/jsp/template/pc/news/newsAllList4.jsp</result>
+			<result name="newsAllImg">/WEB-INF/jsp/template/pc/news/newsAllImg.jsp</result>
+			<result name="newsAllVideo">/WEB-INF/jsp/template/pc/news/newsAllVideo.jsp</result>
+			<!-- 新闻详细 -->
+			<result name="newsView">/WEB-INF/jsp/template/pc/news/newsView.jsp</result>
+			<result name="newsView2">/WEB-INF/jsp/template/pc/news/newsView2.jsp</result>
+			<result name="newsView3">/WEB-INF/jsp/template/pc/news/newsView3.jsp</result>
+			<!-- 全站搜索 -->
+			<result name="searchResult">/WEB-INF/jsp/template/pc/news/searchResult.jsp</result>
+			<!-- 商家详细 -->
+			<result name="businessInfoView">/WEB-INF/jsp/template/pc/businessInfoView.jsp</result>
+			<!-- 航班查询结果 -->
+			<result name="flightQueryResultList">/WEB-INF/jsp/template/pc/flightQueryResultList.jsp</result>
+			<result name="flightQueryResult">/WEB-INF/jsp/template/pc/flightQueryAjax.jsp</result>
+		</action>
+	</package>
+	
+	<package name="airportEmployeePackage" extends="json-package">
+		<interceptors>
+			<interceptor name="airportEmployeeInterceptor" class="com.ticket.interceptor.AirportEmployeeInterceptor">
+				<param name="excludeMethods">
+					login,execute,logout
+				</param>
+			</interceptor>
+			<interceptor-stack name="airportDefaultInterceptor">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="airportEmployeeInterceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="airportDefaultInterceptor"></default-interceptor-ref>
+		
+		<!-- 机场员工 -->
+		<action name="employeeCRM_*" method="{1}" class="com.ticket.action.EmployeeCRMAction">
+		
+			<!-- 页面 -->
+			<result name="loginPage">/WEB-INF/jsp/template/wap/employeeCRM/login.jsp</result>
+			<result name="personInfoPage">/WEB-INF/jsp/template/wap/employeeCRM/personalInfo.jsp</result>
+			<result name="workOrderPage">/WEB-INF/jsp/template/wap/employeeCRM/workOrder.jsp</result>
+			<result name="workOrderNoReceivePage">/WEB-INF/jsp/template/wap/employeeCRM/workOrderNoReceive.jsp</result>
+			<result name="workOrderReceivedPage">/WEB-INF/jsp/template/wap/employeeCRM/workOrderReceived.jsp</result>
+			<result name="workOrderEndedPage">/WEB-INF/jsp/template/wap/employeeCRM/workOrderEnded.jsp</result>
+			<result name="detailsNoReceivePage">/WEB-INF/jsp/template/wap/employeeCRM/detailsNoReceive.jsp</result>
+			<result name="detailsReceivedPage">/WEB-INF/jsp/template/wap/employeeCRM/detailsReceived.jsp</result>
+			<result name="detailsEndedPage">/WEB-INF/jsp/template/wap/employeeCRM/detailsEnded.jsp</result>
+			<result name="loginIndex">/WEB-INF/jsp/template/wap/employeeCRM/loginIndex.jsp</result>
+			<result name="orderSchedule">/WEB-INF/jsp/template/wap/employeeCRM/orderSchedule.jsp</result>
+			<result name="yanZhengCaoZuo">/WEB-INF/jsp/template/wap/employeeCRM/yanZhengIndex.jsp</result>
+			<result name="paiDanCaoZuo">/WEB-INF/jsp/template/wap/employeeCRM/SingleOperation.jsp</result>
+			<result name="appointmentSituation">/WEB-INF/jsp/template/wap/employeeCRM/AppointmentSituation.jsp</result>			
+			<!-- 逻辑控制 -->
+			<result name="loginSuccess" type="redirect">employeeCRM_workOrderPage.action</result>
+			<result name="logoutSuccess" type="redirect">employeeCRM_loginPage.action</result>
+		</action>
+		
+		<action name="wapBjdjAppointment_*" method="{1}" class="com.ticket.action.WapBjdjAppointmentAction">
+			<result name="appointmentSituation">/WEB-INF/jsp/template/wap/employeeCRM/AppointmentSituation.jsp</result>
+			<result name="index">/WEB-INF/jsp/template/wap/employeeCRM/loginIndex.jsp</result>
+			<result name="loginPage">/WEB-INF/jsp/template/wap/employeeCRM/login.jsp</result>
+		</action>
+		
+		<action name="wapValidation_*" method="{1}" class="com.ticket.action.WapValidationAction">
+			<result name="yzIndex">/WEB-INF/jsp/template/wap/employeeCRM/yanZhengIndex.jsp</result>
+			<result name="yzIndex1">/WEB-INF/jsp/template/wap/employeeCRM/yanZhengIndex1.jsp</result>
+			<result name="yanzhengjilu1">/WEB-INF/jsp/template/wap/employeeCRM/yanZhengJiLu.jsp</result>
+			<result name="yanzhengjilu2">/WEB-INF/jsp/template/wap/employeeCRM/yanzhengjilu1.jsp</result>
+			<result name="yanZhengErWeiMaIndex">/WEB-INF/jsp/template/wap/employeeCRM/yanzhengErWeiMa.jsp</result>
+			<result name="yanzhengerweimabjdj">/WEB-INF/jsp/template/wap/employeeCRM/yanzhengerweimabjdj.jsp</result>
+			<result name="erweimasuccess">/WEB-INF/jsp/template/wap/employeeCRM/yanZhengErWeiMa1.jsp</result>
+			<result name="erweimasuccess1">/WEB-INF/jsp/template/wap/employeeCRM/yanzhengerweima11.jsp</result>
+			<result name="erWeiMaYanZhengSuccess">/WEB-INF/jsp/template/wap/employeeCRM/yanZhengErWeiMa2.jsp</result>
+			<result name="erWeiMaYanZhengSuccess1">/WEB-INF/jsp/template/wap/employeeCRM/yanZhengErWeiMa22.jsp</result>
+			<result name="loginPage">/WEB-INF/jsp/template/wap/employeeCRM/login.jsp</result>
+		</action>
+		
+		<action name="wapBjdjDispatch_*" method="{1}" class="com.ticket.action.WapBjdjDispatchAction">
+			<result name="manageBjdj">/WEB-INF/jsp/template/wap/employeeCRM/SingleOperation.jsp</result>
+			<result name="manageElemobile">/WEB-INF/jsp/template/wap/employeeCRM/SingleOperation1.jsp</result>
+			<result name="bjdjJinDu">/WEB-INF/jsp/template/wap/employeeCRM/bjdjorderSchedule.jsp</result>
+			<result name="elemobileJinDu">/WEB-INF/jsp/template/wap/employeeCRM/elemobileorderSchedule.jsp</result>
+			<result name="loginPage">/WEB-INF/jsp/template/wap/employeeCRM/login.jsp</result>
+		</action>
+		
+		<action name="wapBjdjDispatchList_*" method="{1}" class="com.ticket.action.WapBjdjDispatchListAction">
+			<result name="manageWapBjdjDispatchList">/WEB-INF/jsp/template/wap/employeeCRM/bjdjHeXiao.jsp</result>
+			<result name="manageWapElemobileDispatchList">/WEB-INF/jsp/template/wap/employeeCRM/elemobileHeXiao.jsp</result>
+			<result name="loginPage">/WEB-INF/jsp/template/wap/employeeCRM/login.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 安检数据 -->
+	<package name="securityData" extends="json-package">
+	
+		<!-- 配置这个值栈是为了让prepare 只是执行一次 -->
+		<interceptors>
+			<interceptor-stack name="securityDataStack">
+				<interceptor-ref name="paramsPrepareParamsStack">
+					<param name="prepare.alwaysInvokePrepare">false</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="securityDataStack"></default-interceptor-ref>
+	
+		<action name="securityData_*" class="com.ticket.action.SecurityDataAction" method="{1}">
+		  <result type="json">
+               <param name="contentType">
+                      text/html
+               </param>
+           </result>
+           <result name="input">/WEB-INF/jsp/template/wap/testSecurityData/testSecurityData.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 销售用户管理员 -->
+	<package name="employeeInfoWapAdminPackage" extends="json-package">
+		<!-- Defined myself interceptors -->
+		<interceptors>
+			<interceptor name="paginationInterceptor" class="com.ticket.interceptor.PaginationInterceptor" />
+			<interceptor name="employeeInfoWapAdminInterceptor" class="com.ticket.interceptor.EmployeeInfoWapAdminInterceptor">
+				<param name="excludeMethods">login,logout</param>
+			</interceptor>
+			<interceptor-stack name="MyDefaultInterceptor">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="paginationInterceptor" />
+				<interceptor-ref name="employeeInfoWapAdminInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="MyDefaultInterceptor" />
+		<global-results>
+			<result name="login">/WEB-INF/jsp/employeeWap/login.jsp</result>
+			<result name="error">/error.html</result>
+		</global-results>
+		<!-- 全局异常处理类 -->
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		
+		<!-- 销售用户管理员 -->
+		<action name="employeeInfoWap_*" method="{1}" class="employeeInfoWapAdminAction">
+			<result name="index">/WEB-INF/jsp/employeeWap/index.jsp</result>
+			<result name="success" type="redirect">/employeeInfoWap_index.action</result>
+			<result name="reLogin" type="redirect">/employeeInfoWap_index.action</result>
+			<result name="channelCustomerInfoAdd">/WEB-INF/jsp/employeeWap/channelCustomerInfoAdd.jsp</result>
+			<result name="employeeInfoZengLogAdd">/WEB-INF/jsp/employeeWap/employeeInfoZengLogAdd.jsp</result>
+			<result name="iWillActivate">/WEB-INF/jsp/employeeWap/iWillActivate.jsp</result>
+			<result name="getUnusedCodeByChannelCutomerInfo">/WEB-INF/jsp/employeeWap/getUnusedCodeByChannelCutomerInfo.jsp</result>
+			<result name="batchGetServiceCode">/WEB-INF/jsp/employeeWap/batchGetServiceCode.jsp</result>
+			<result name="getAgreement">/WEB-INF/jsp/employeeWap/getAgreement.jsp</result>
+			<result name="getAgreementList">/WEB-INF/jsp/employeeWap/getAgreementList.jsp</result>
+			<result name="letterStationList">/WEB-INF/jsp/employeeWap/letterStationList.jsp</result>
+			<result name="myTextList">/WEB-INF/jsp/employeeWap/myTextList.jsp</result>
+			<result name="myTextView">/WEB-INF/jsp/employeeWap/myTextView.jsp</result>
+		</action>
+	</package>
+</struts>

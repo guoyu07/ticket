@@ -1,0 +1,1 @@
+function showCode(){for(var o=$("h3 input"),n=new Array,e=0;e<o.length;e++){var a=$(o[e]).val();n[e]=a}easyDialog.open({container:{header:"服务码",content:"服务码为："+n.join(",")+"，请务必记住此服务码！"},drag:!1})}$(function(){$("#showCode").click(showCode)});

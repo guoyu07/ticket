@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="预约数据" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="8d303c85-1ca3-407c-8f59-d8f718044b2e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="serviceCode.code" class="java.lang.String"/>
+	<field name="idCard" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="member.phone" class="java.lang.String"/>
+	<field name="time" class="java.util.Date"/>
+	<field name="way.text" class="java.lang.String"/>
+	<field name="useTime" class="java.util.Date"/>
+	<field name="flightNo" class="java.lang.String"/>
+	<field name="hall" class="java.lang.String"/>
+	<field name="serviceCode.packageType.name" class="java.lang.String"/>
+	<field name="serviceCode.state.value" class="java.lang.String"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="55" height="20" uuid="8e939cdb-25de-47e4-b309-8c6cd2ef3974"/>
+				<text><![CDATA[服务码]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="0" width="68" height="20" uuid="dd497ed5-b91b-4811-893f-fe15b7b0d1ae"/>
+				<text><![CDATA[身份证号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="123" y="0" width="44" height="20" uuid="0d1c2360-feb0-4ca6-8489-e5c7f7865a8a"/>
+				<text><![CDATA[姓名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="0" width="53" height="20" uuid="727f90ff-bbd0-4a8b-bca9-5703e8c2cca2"/>
+				<text><![CDATA[预约人]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="0" width="54" height="20" uuid="6c164d85-1c52-435d-aaff-4676a548f1aa"/>
+				<text><![CDATA[预约时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="0" width="40" height="20" uuid="be48656f-d6c1-4a88-9051-f62dc419be62"/>
+				<text><![CDATA[预约方式]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="313" y="0" width="59" height="20" uuid="05a205ca-471c-4ea0-a1a4-a7c348ceae14"/>
+				<text><![CDATA[起飞时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="0" width="53" height="20" uuid="7e753a63-81fc-4d06-a03a-e58fedbcb6f6"/>
+				<text><![CDATA[航班号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="0" width="45" height="20" uuid="a0527127-48d7-4dc4-85f2-c3e3a813387f"/>
+				<text><![CDATA[是否进厅]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="0" width="76" height="20" uuid="3eeb4841-ee2f-4d7c-bc0e-9bd3b4b514f3"/>
+				<text><![CDATA[套餐类型]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="546" y="0" width="49" height="20" uuid="0baf0037-c289-4770-a0dc-4f204aeb5a5f"/>
+				<text><![CDATA[状态]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="20" uuid="68e74316-e53b-447f-baad-7b5d0f3ef221"/>
+				<textFieldExpression><![CDATA[$F{serviceCode.code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="55" y="0" width="68" height="20" uuid="cf1c84cd-f7b7-41fe-878e-937524efbd83"/>
+				<textFieldExpression><![CDATA[$F{idCard}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="123" y="0" width="44" height="20" uuid="fdda571c-924a-4c8e-b31d-fb03e08269b5"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="167" y="0" width="53" height="20" uuid="9ae23039-59af-487b-adbc-144cc444e756"/>
+				<textFieldExpression><![CDATA[$F{member.phone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="219" y="0" width="54" height="20" uuid="91758721-8a18-4d28-b655-ca6db36dddb0"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{time})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="273" y="0" width="40" height="20" uuid="f6174c3d-5b9e-4efd-8562-6097cd897732"/>
+				<textFieldExpression><![CDATA[$F{way.text}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="313" y="0" width="59" height="20" uuid="f2ce0168-eeb8-4d08-8630-9c428d55c9dd"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{useTime})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="372" y="0" width="53" height="20" uuid="29dd8355-f343-478f-992a-83da4637f3ef"/>
+				<textFieldExpression><![CDATA[$F{flightNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="425" y="0" width="45" height="20" uuid="712fef17-4cb1-49e1-9563-ff620081e2a9"/>
+				<textFieldExpression><![CDATA[$F{hall} == null ? "是" : "否"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="470" y="0" width="76" height="20" uuid="f9e3d011-d179-40fc-adca-ac264fc428c1"/>
+				<textFieldExpression><![CDATA[$F{serviceCode.packageType.name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="546" y="0" width="49" height="20" uuid="9ce86981-f612-4519-8785-e9e33e424867"/>
+				<textFieldExpression><![CDATA[$F{serviceCode.state.value}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="220" y="23" width="100" height="20" uuid="61bec790-acd5-477e-8ba0-ef6bb06ab306"/>
+				<text><![CDATA[暂无数据可以显示]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

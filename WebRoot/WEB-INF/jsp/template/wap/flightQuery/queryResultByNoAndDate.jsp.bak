@@ -1,0 +1,102 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+	<%@ include file="../common/head.jsp" %>
+    <style type="text/css">
+    .tit_tab a{ width:120px !important; height:120px !important; line-height:120px; border-radius:60px !important;}
+    
+    </style>
+	<body class="mobile">
+		<div class="mobile-view">
+			<div class="mobile-page">
+				<jsp:include page="../common/title.jsp">
+					<jsp:param value="航班查询结果" name="title"/>
+				</jsp:include>
+				<div class="mobile-main">
+					<div class="new_fly_ls">
+		                <ul class="">
+		                    <li style='margin-bottom:0px;'>
+		                        <div class="fly_line clearfix no-background">
+		                            <span class='text-center'><em class='c_black fz30'>
+		                            	<s:if test="departFromPort.flt != null">
+		                            		${departFromPort.flt }
+		                            	</s:if>
+		                            	<s:else>
+		                            		${flightNumber }
+		                            	</s:else>
+		                            </em></span>
+		                        </div>
+		                        <div class="fly_time clearfix text-center">
+		                            <img src="/template/wap/images/pic/62.png" height="24" width="24" style='position:relative;top:5px;'>&nbsp;&nbsp;中国国航
+		                        </div>
+		                    </li>
+		                </ul>
+		            </div>
+					<s:if test="#request.departFromPort != null">
+						<div class='from_or_to_fly'>
+							<div class="c_content">
+								<s:if test="departFromPort.abt != null">
+		                        		<s:set name="setoutTime" var="setoutTime" value="departFromPort.abt"></s:set>
+			                        		<s:set name="planeFlag" var="planeFlag" value="'实际起飞'"></s:set>
+			                        	</s:if>
+			                        	<s:else>
+			                        		<s:set name="setoutTime" var="setoutTime" value="departFromPort.std"></s:set>
+			                        		<s:set name="planeFlag" var="planeFlag" value="'实际起飞'"></s:set>
+			                        	</s:else>
+				                    <dl>
+			                        <dt>
+			                            <i class='from_fly'></i>昆明长水机场 <span><s:date name="departFromPort.std" format="MM-dd HH:mm"/></span>
+									</dt>
+			                        <dd class='line'>
+			                            <div class="xl4"><s:property value="#planeFlag"/><p class='c_blue'><s:date name="#setoutTime" format="HH:mm"/></p></div>
+			                            <div class="xl4">值机柜台<p>${departFromPort.cid }</p></div>
+			                            <div class="xl4">登机口<p>${departFromPort.gat }</p></div>
+			                        </dd>
+			                    </dl>
+			                </div>
+			                <div class="c_content">
+			                		<s:if test="departFromPort.abt != null">
+		                        		<s:set name="reachTime" var="reachTime" value="departFromPort.tdt"></s:set>
+		                        		<s:set name="planeflag" var="planeFlag" value="'实际到达'"></s:set>
+		                        	</s:if>
+		                        	<s:else>
+		                        		<s:set name="reachTime" var="reachTime" value="departFromPort.sta"></s:set>
+		                        		<s:set name="planeflag" var="planeFlag" value="'预计到达'"></s:set>
+		                        	</s:else>
+			                    <dl>
+			                        <dt>
+			                            <i class='from_to'></i>
+			                            	<ticket:common type="systemDicObjByName" value="${departFromPort.des }"/>
+			                            	${systemDicObjByName.description }
+			                             <span><s:date name="departFromPort.sta " format="MM-dd HH:mm"/></span>
+									</dt>
+			                        <dd class='line'>
+			                            <div class="xl4"><s:property value="#planeFlag"/><p class='c_blue'><s:date name="#reachTime" format="HH:mm"/></p></div>
+			                            <div class="xl4">行李转盘<p>--</p></div>
+			                            <div class="xl4">到达口<p>--</p></div>
+			                        </dd>
+			                    </dl>
+			                </div>
+						</div>
+					<div class="tit_tab">
+						<a href="#" flightNumber="${flightNumber }" flightDate="${departFromPort.std }" class='focusFlight'>关注航班</a>
+						<a href="#">在线值机</a>
+					</div>
+					</s:if>
+					<s:else>
+						<div class="c_content">
+							${noDataMessage }
+						</div>
+						<div class="tit_tab">
+							<a href="javascript:return_prepage();">返回</a>
+						</div>
+					</s:else>
+				</div>
+				<%@ include file="../common/quickNav.jsp" %>
+			</div>
+		</div>
+		<div class="dialog" style="display: none;">
+			<%@ include file="../common/left.jsp" %>
+		</div>
+	</body>
+</html>

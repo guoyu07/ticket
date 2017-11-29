@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<context:property-placeholder location="classpath*:jdbc.properties" />
+	<context:annotation-config />
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.jdbc.batch_size">20</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+				<prop key="javax.persistence.sharedCache.mode">ALL</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	
+	<!-- spring注释事务配置 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        destroy-method="close">
+        <property name="driverClass">
+            <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property name="jdbcUrl">
+      	<value>jdbc:mysql://${db_host}:${db_port}/${db_name}?useUnicode=true&amp;characterEncoding=UTF-8</value> 
+        </property>
+        <property name="user">
+            <value>${db_user}</value>
+        </property>
+        <property name="password">
+            <value>${db_password}</value>
+        </property>
+        <property name="minPoolSize">
+            <value>5</value>
+        </property>
+        <property name="maxPoolSize">
+            <value>300</value>
+        </property>
+        <property name="initialPoolSize">
+            <value>10</value>
+        </property>
+        <property name="maxIdleTime">
+            <value>60</value>
+        </property>
+        <property name="acquireIncrement">
+            <value>5</value>
+        </property>
+        <property name="maxStatements">
+            <value>0</value>
+        </property>
+        <property name="idleConnectionTestPeriod">
+            <value>60</value>
+        </property>
+        <property name="acquireRetryAttempts">
+            <value>30</value>
+        </property>
+        <property name="breakAfterAcquireFailure">
+            <value>true</value>
+        </property>
+        <property name="testConnectionOnCheckout">
+            <value>false</value>
+        </property>
+    </bean>
+</beans>

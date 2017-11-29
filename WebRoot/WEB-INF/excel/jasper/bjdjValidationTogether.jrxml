@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bjdjValidationTogether" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="de2af1a2-616d-4780-b239-7cd242c28c0d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tableDs" uuid="e7da8e59-4f43-40d2-9b86-797758f403f2">
+		<field name="region" class="java.lang.String"/>
+		<field name="hall" class="java.lang.String"/>
+		<field name="packageName" class="java.lang.String"/>
+		<field name="appointment" class="java.lang.String"/>
+		<field name="count" class="java.lang.Integer"/>
+		<field name="amount" class="java.lang.Double"/>
+		<field name="rollCount" class="java.lang.Integer"/>
+		<field name="sameCount" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="title" class="java.lang.String"/>
+	<field name="validationReport" class="java.util.List"/>
+	<field name="validationDetailReport" class="java.util.List"/>
+	<title>
+		<band height="50">
+			<textField>
+				<reportElement x="0" y="0" width="595" height="50" uuid="9efc2e8d-7c99-4edb-aa16-f9839d572efc"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<summary>
+		<band height="380">
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="0" y="0" width="595" height="380" uuid="9ca1175b-cfca-4bc8-90e8-43b32eb29dfa"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tableDs" uuid="15c56afb-3b80-4aec-85c6-68fcd7757740">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{validationReport})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="02a79f53-bb90-48cc-b8cd-152d5ec5c045">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="5baef361-74bd-42db-b413-399011a2aa09"/>
+								<text><![CDATA[时间]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="cabb8dbd-22c0-487d-b14d-bb39ac04a36a"/>
+								<textFieldExpression><![CDATA[$F{region}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="bea11050-ed52-4205-a70d-31db96b14829">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="473a0872-8f5e-4112-8d89-56107b66361e"/>
+								<text><![CDATA[服务厅]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="cb0cb96c-d9a8-41e2-833c-1741f448db9a"/>
+								<textFieldExpression><![CDATA[$F{hall}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="36278eb2-41ec-4bdf-8944-ca91e24f5d12">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="ea17c785-6b89-478a-8857-0d5b4fd7cd39"/>
+								<text><![CDATA[套餐类型]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="0b4b11d4-d611-4f90-907e-27531fad4894"/>
+								<textFieldExpression><![CDATA[$F{packageName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="52159243-e855-4c97-93da-710834dce07f">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="6f06b631-e8ec-4b91-a28a-93e758fc984c"/>
+								<text><![CDATA[预约方式]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="25916d46-e109-463c-ab83-7f45999113d0"/>
+								<textFieldExpression><![CDATA[$F{appointment}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="abc39ac2-e73e-4828-ab77-92db4be43cd8">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="996fd619-5fd2-4598-be45-90e3737d929c"/>
+								<text><![CDATA[服务码数量]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="c64fa342-b3e9-4801-ba8e-b2f27a965a47"/>
+								<textFieldExpression><![CDATA[$F{count}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="d027835b-0c73-4776-8cc5-5eb66a0a1f8b">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="b8b5eef0-812c-4b91-b7c0-5bda2e3c891e"/>
+								<text><![CDATA[金额]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="98117ad6-d03c-4978-8427-389c44488e6c"/>
+								<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="5d0c7955-db97-4190-963f-4713d1d36d15">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="342c652c-b2bd-410f-ae2b-bd0a7aa22e51"/>
+								<text><![CDATA[环比]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="38cc6d95-8bc4-46aa-8de0-a9b00d79d8eb"/>
+								<textFieldExpression><![CDATA[$F{rollCount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="102" uuid="492e599f-b942-4934-8bb1-d5865357b020">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="102" height="30" uuid="07c33f73-c2f8-4124-9e42-7edbd6f9e346"/>
+								<text><![CDATA[环比增长]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="102" height="30" uuid="9e9c4f04-0927-4abb-8a19-f290773b6c50"/>
+								<textFieldExpression><![CDATA[$F{rollCount} == 0 ? 99999 : ($F{count} - $F{rollCount}) / $F{rollCount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="289f1b0b-bbad-448b-a777-ea0b2acd4928">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" backcolor="#00CCFF" uuid="031e4036-3f12-4d90-ba87-4bc236dacbf7"/>
+								<text><![CDATA[同比]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="4d1ace43-0af7-48a9-8237-c4e75bd5e1b4"/>
+								<textFieldExpression><![CDATA[$F{sameCount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e3e2900d-cb2e-4d4a-81b5-3254bc7622b3">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="887a9fe2-9786-4fcb-92d4-99691b9a588e"/>
+								<text><![CDATA[同比增长]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="a45505fa-9a0e-4134-8ec1-d9fc204c5867"/>
+								<textFieldExpression><![CDATA[$F{sameCount} == 0 ? 99999 : ($F{count} - $F{sameCount}) / $F{sameCount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

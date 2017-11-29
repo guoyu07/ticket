@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="机场设施位置管理" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="a02e70fe-96bd-402f-8992-65fea4a1972b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="status.createTime" class="java.util.Date"/>
+	<field name="positionAlias" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="longitude" class="java.lang.String"/>
+	<field name="latitude" class="java.lang.String"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="119" height="20" uuid="57aceae6-bfe8-4f59-a7ab-4d07396b11ad"/>
+				<text><![CDATA[创建时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="119" y="0" width="123" height="20" uuid="ad0f5c9a-1540-45f2-b8cc-c289d4817f3c"/>
+				<text><![CDATA[位置别名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="0" width="125" height="20" uuid="f1796ca6-f705-4582-a951-c5074828d97c"/>
+				<text><![CDATA[位置名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="367" y="0" width="108" height="20" uuid="698cda1c-ae3d-4044-b836-c85d5e0120f4"/>
+				<text><![CDATA[经度]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="0" width="120" height="20" uuid="745100b7-d022-427a-9c57-cd70d77b5a90"/>
+				<text><![CDATA[维度]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="119" height="20" uuid="e2b20dc2-50a1-4f9a-8a09-89f2c8c94624"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{status.createTime})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="119" y="0" width="123" height="20" uuid="26fdd766-1fa7-4bca-8309-520f4c595bbb"/>
+				<textFieldExpression><![CDATA[$F{positionAlias}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="242" y="0" width="125" height="20" uuid="281529e2-2990-408e-95cc-20a6f9c17793"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="367" y="0" width="108" height="20" uuid="e16e64f2-024e-450c-8339-09e902e1914d"/>
+				<textFieldExpression><![CDATA[$F{longitude}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="475" y="0" width="120" height="20" uuid="0f42d88f-9db7-4772-bcc2-389ea078d9ba"/>
+				<textFieldExpression><![CDATA[$F{latitude}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="242" y="14" width="100" height="20" uuid="66652361-5f7d-48d8-9e61-0830e73bdae0"/>
+				<text><![CDATA[暂无数据]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

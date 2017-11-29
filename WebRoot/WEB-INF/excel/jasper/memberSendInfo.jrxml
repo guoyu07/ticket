@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="memberSendInfo" language="groovy" pageWidth="800" pageHeight="788" whenNoDataType="AllSectionsNoDetail" columnWidth="800" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="78dc5080-d939-4845-9d60-9dac38d860b4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="status.createTime" class="java.util.Date"/>
+	<field name="method.text" class="java.lang.String"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="message" class="java.lang.String"/>
+	<field name="url" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="h5" class="java.lang.Boolean"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="f5272f63-ca94-42b4-89c2-abdd1d1f3080"/>
+				<text><![CDATA[推送时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="c07b434e-2fc1-4caf-be45-e89c9df162e5"/>
+				<text><![CDATA[推送方式]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="f521d97d-2ee4-4d55-b6cd-165bb7a36e0f"/>
+				<text><![CDATA[推送标题]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="6dab6c7f-089f-4a92-8ca1-14bd7a202964"/>
+				<text><![CDATA[推送内容]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="200" height="20" uuid="852d92ce-2f4c-4dbf-8fc7-d271e84c6382"/>
+				<text><![CDATA[推送链接]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="0" width="100" height="20" uuid="53890fb0-5877-4393-abf7-925f081c317d"/>
+				<text><![CDATA[电话号码]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="100" height="20" uuid="92f08473-3e26-4765-8803-887c18e6359e"/>
+				<text><![CDATA[是否已读]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="e920d6a7-c3fa-47ea-92f1-51ccf71f5b75"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd HH-mm").format($F{status.createTime})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="100" height="20" uuid="bda737c7-1a77-4f83-b786-ce5dbabd773c"/>
+				<textFieldExpression><![CDATA[$F{method.text}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="200" y="0" width="100" height="20" uuid="b06d928a-1323-47b1-b522-b6cca1be17c4"/>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="300" y="0" width="100" height="20" uuid="1daa45a2-9135-4512-8588-eb193b67df5e"/>
+				<textFieldExpression><![CDATA[$F{message}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="200" height="20" uuid="a67f22f7-3f9e-4de4-8313-df612058b30e"/>
+				<textFieldExpression><![CDATA[$F{url}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="600" y="0" width="100" height="20" uuid="8b0c3f3e-a0d2-442b-a537-3afa6f0d1e53"/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="700" y="0" width="100" height="20" uuid="5fa95906-195e-4c86-8bb9-0d567fa3c353"/>
+				<textFieldExpression><![CDATA[$F{h5} ?  "已读" : "未读"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

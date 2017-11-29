@@ -1,0 +1,27 @@
+/*==========以下部分是Validform必须的===========*/
+
+.Validform_checktip{
+	width:100% !important;
+	overflow:hidden !important;
+	color:#999 !important;
+	font-size:12px !important;
+}
+.Validform_right{
+	color:#71b83d !important; 
+	padding-left:20px !important;
+	background:url(../../wap/images/yes.gif) no-repeat left center !important;
+}
+.Validform_wrong{
+	color:#cb1325 !important; 
+	background:url(../../wap/images/no.gif) no-repeat left center !important;
+	padding-left:20px !important;
+	white-space:nowrap !important;
+
+}
+.Validform_loading{
+	padding-left:20px !important;
+	background:url(../../wap/images/onLoad.gif) no-repeat left center !important;
+}
+
+
+

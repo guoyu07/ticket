@@ -1,0 +1,16 @@
+video {
+  max-width: 100%;
+
+  /* just in case, to force correct aspect ratio */
+  height: auto !important;
+}
+
+.video-wrapper {
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 */
+  position: relative;
+}
+.video-wrapper video {
+  position: absolute;
+  top: 0; left: 25%; right: 0; bottom: 0;
+}
